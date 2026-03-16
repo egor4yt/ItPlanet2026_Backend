@@ -21,7 +21,7 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore
-      run: dotnet restore src/API
+      run: dotnet restore src/Launchpad/Launchpad.Api
       
     - name: Build
-      run: dotnet build --no-restore src/API
+      run: dotnet build --no-restore src/Launchpad/Launchpad.Api
