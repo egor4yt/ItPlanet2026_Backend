@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Configuration.Options;
 using Launchpad.Api.Contracts.Employee;
+using Launchpad.Application.Commands.Employees.Authorize;
 using Launchpad.Application.Commands.Employees.Create;
 using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employees.GetOne;
@@ -57,6 +58,27 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
         var command = new GetOneEmployeeQueryRequest
         {
             Id = employeeId
+        };
+
+        var response = await Mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    ///     Employee authorization
+    /// </summary>
+    /// <returns>Employee data</returns>
+    [AllowAnonymous]
+    [HttpPost("authorization")]
+    [ProducesResponseType(typeof(AuthorizeEmployeeCommandResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Authorize([FromBody] AuthorizeEmployeeBody body)
+    {
+        var command = new AuthorizeEmployeeCommandRequest
+        {
+            Email = body.Email.Trim().ToLower(),
+            PasswordHash = SecurityHelper.ComputeSha256Hash(body.Password.Trim()),
+            JwtDescriptorDetails = jwtOptions.Value.ToJwtDescriptorDetails()
         };
 
         var response = await Mediator.Send(command);

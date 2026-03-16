@@ -1,7 +1,7 @@
 ﻿using Launchpad.Persistence;
 using MediatR;
 
-namespace Launchpad.Application.Queries.Template.Action;
+namespace Launchpad.Application.Queries._Template.Action;
 
 public class ActionTemplateQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<ActionTemplateQueryRequest, ActionTemplateQueryResponse>
 {
@@ -9,8 +9,7 @@ public class ActionTemplateQueryHandler(ApplicationDbContext applicationDbContex
     {
         var response = new ActionTemplateQueryResponse();
 
-        
-        
+
         return response;
     }
 }
