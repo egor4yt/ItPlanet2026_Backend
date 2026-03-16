@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Launchpad.Api/Launchpad.Api.csproj" />
+    <Project Path="Launchpad.Api/Launchpad.Api.csproj"/>
+    <Project Path="Launchpad.Application/Launchpad.Application.csproj"/>
+    <Project Path="Launchpad.Domain/Launchpad.Domain.csproj"/>
+    <Project Path="Launchpad.Shared/Launchpad.Shared.csproj"/>
 </Solution>

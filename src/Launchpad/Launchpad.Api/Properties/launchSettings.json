@@ -3,9 +3,9 @@
   "profiles": {
     "Api": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
+      "dotnetRunMessages": false,
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:7231;http://localhost:5294",
+      "applicationUrl": "https://localhost:3322",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
