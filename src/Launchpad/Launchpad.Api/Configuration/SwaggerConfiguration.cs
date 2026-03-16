@@ -53,7 +53,7 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
             {
                 [new OpenApiSecuritySchemeReference(authorizationScheme, document)] = []
             };
-            
+
             return requirement;
         });
 
