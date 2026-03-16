@@ -50,7 +50,7 @@ namespace Launchpad.Persistence.Migrations
                         .HasColumnType("varchar(64)");
 
                     b.Property<DateTime>("RegisteredOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

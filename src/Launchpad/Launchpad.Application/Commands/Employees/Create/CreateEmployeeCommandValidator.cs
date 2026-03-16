@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Launchpad.Application.Commands.Users.Create;
+namespace Launchpad.Application.Commands.Employees.Create;
 
 public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommandRequest>
 {

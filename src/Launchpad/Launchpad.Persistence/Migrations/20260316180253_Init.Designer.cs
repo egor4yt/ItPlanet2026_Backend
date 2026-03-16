@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Launchpad.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260316174350_Init")]
+    [Migration("20260316180253_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Launchpad.Persistence.Migrations
                         .HasColumnType("varchar(64)");
 
                     b.Property<DateTime>("RegisteredOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

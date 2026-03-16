@@ -35,6 +35,6 @@ public class UserConfiguration : IEntityTypeConfiguration<Employee>
 
         builder
             .Property(x => x.RegisteredOn)
-            .HasColumnType("timestamp without time zone");
+            .HasColumnType("timestamp with time zone");
     }
 }

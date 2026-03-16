@@ -1,6 +1,8 @@
 ﻿using Launchpad.Api.Configuration.Options;
 using Launchpad.Api.Contracts.Employee;
-using Launchpad.Application.Commands.Users.Create;
+using Launchpad.Application.Commands.Employees.Create;
+using Launchpad.Application.Exceptions;
+using Launchpad.Application.Queries.Employees.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +17,10 @@ namespace Launchpad.Api.Controllers.V1;
 public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControllerBase
 {
     /// <summary>
-    ///     User registration
+    ///     Employee registration
     /// </summary>
-    /// <param name="body">Registration user data</param>
-    /// <returns>Registered user data and a JSON web token</returns>
+    /// <param name="body">Registration employee data</param>
+    /// <returns>Registered employee data and a JSON web token</returns>
     [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -37,6 +39,28 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
 
         var response = await Mediator.Send(command);
 
-        return Created($"user/{response.EmployeeId}", response);
+        return Created($"employee/{response.EmployeeId}", response);
+    }
+
+    /// <summary>
+    ///     Employee account details
+    /// </summary>
+    /// <returns>Employee data</returns>
+    [Authorize]
+    [HttpGet("{employeeId:long}")]
+    [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetById(long employeeId)
+    {
+        if (CurrentUserService.UserId != employeeId)
+            throw new NotFoundException("NotFound");
+
+        var command = new GetOneEmployeeQueryRequest
+        {
+            Id = employeeId
+        };
+
+        var response = await Mediator.Send(command);
+
+        return Ok(response);
     }
 }

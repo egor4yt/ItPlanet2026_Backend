@@ -1,7 +1,7 @@
 ﻿using Launchpad.Shared;
 using MediatR;
 
-namespace Launchpad.Application.Commands.Users.Create;
+namespace Launchpad.Application.Commands.Employees.Create;
 
 public class CreateEmployeeCommandRequest : IRequest<CreateEmployeeCommandResponse>
 {

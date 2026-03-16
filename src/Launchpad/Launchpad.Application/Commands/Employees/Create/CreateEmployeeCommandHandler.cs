@@ -5,7 +5,7 @@ using Launchpad.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Launchpad.Application.Commands.Users.Create;
+namespace Launchpad.Application.Commands.Employees.Create;
 
 public class CreateEmployeeCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<CreateEmployeeCommandRequest, CreateEmployeeCommandResponse>
 {

@@ -35,14 +35,26 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
             }
         });
 
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        const string authorizationScheme = "Bearer";
+
+        options.AddSecurityDefinition(authorizationScheme, new OpenApiSecurityScheme
         {
             Type = SecuritySchemeType.Http,
             Description = "Please provide a valid token",
             Name = "JWT Bearer authorization",
             In = ParameterLocation.Header,
-            Scheme = "Bearer",
+            Scheme = authorizationScheme,
             BearerFormat = "JWT"
+        });
+
+        options.AddSecurityRequirement(document =>
+        {
+            var requirement = new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference(authorizationScheme, document)] = []
+            };
+            
+            return requirement;
         });
 
         var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

@@ -23,7 +23,7 @@ namespace Launchpad.Persistence.Migrations
                     LastName = table.Column<string>(type: "varchar(64)", nullable: false),
                     MiddleName = table.Column<string>(type: "varchar(64)", nullable: true),
                     PasswordHash = table.Column<string>(type: "varchar(64)", nullable: false),
-                    RegisteredOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    RegisteredOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
