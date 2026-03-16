@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Launchpad.Api.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Launchpad.Api.Controllers.V1;
@@ -15,12 +16,12 @@ namespace Launchpad.Api.Controllers.V1;
 public class ApiControllerBase : ControllerBase
 {
     private ICurrentUserService? _currentUserService;
-    // private IMediator? _mediator;
+    private IMediator? _mediator;
 
     /// <summary>
     ///     Mediator instance in current HTTP request scope
     /// </summary>
-    // protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>()!;
+    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>()!;
 
     /// <summary>
     ///     CurrentUserService instance in current HTTP request scope

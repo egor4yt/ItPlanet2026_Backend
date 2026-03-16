@@ -13,7 +13,7 @@ namespace Launchpad.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -27,12 +27,12 @@ namespace Launchpad.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "UX_Users_Email",
-                table: "Users",
+                table: "Employees",
                 column: "Email",
                 unique: true);
         }
@@ -41,7 +41,7 @@ namespace Launchpad.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Employees");
         }
     }
 }

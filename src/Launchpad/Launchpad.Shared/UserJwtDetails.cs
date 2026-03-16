@@ -1,7 +1,22 @@
 ﻿namespace Launchpad.Shared;
 
-public class UserJwtDetails(Domain.Entities.User user)
+public class JwtDetails
 {
-    public long Id { get; set; } = user.Id;
-    public string Email { get; set; } = user.Email;
+    public JwtDetails(Domain.Entities.Employee employee)
+    {
+        Id = employee.Id;
+        Email = employee.Email;
+        IsEmployee = true;
+    }
+
+    public JwtDetails()
+    {
+        Id = 0;
+        Email = string.Empty;
+        IsEmployee = false;
+    }
+
+    public long Id { get; }
+    public string Email { get; }
+    public bool IsEmployee { get; }
 }

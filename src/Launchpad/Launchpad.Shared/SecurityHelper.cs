@@ -16,7 +16,7 @@ public class SecurityHelper
         return Convert.ToHexString(hashBytes);
     }
 
-    public static string GenerateJwtToken(JwtDescriptorDetails jwtDescriptorDetails, UserJwtDetails user)
+    public static string GenerateJwtToken(JwtDescriptorDetails jwtDescriptorDetails, JwtDetails jwtDetails)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var jwtKeyBytes = Encoding.UTF8.GetBytes(jwtDescriptorDetails.Key);
@@ -24,8 +24,9 @@ public class SecurityHelper
         var claims = new List<Claim>
         {
             /* Custom claim types */
-            new Claim(UserJwtClaimNames.UserEmail, user.Email),
-            new Claim(UserJwtClaimNames.UserId, user.Id.ToString()),
+            new Claim(UserJwtClaimNames.UserEmail, jwtDetails.Email),
+            new Claim(UserJwtClaimNames.UserId, jwtDetails.Id.ToString()),
+            new Claim(UserJwtClaimNames.IsEmployee, jwtDetails.IsEmployee.ToString()),
 
             /* RFC claim types */
             new Claim(UserJwtClaimNames.JsonTokenIdentifier, Guid.NewGuid().ToString())

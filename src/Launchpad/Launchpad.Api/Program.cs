@@ -1,5 +1,6 @@
 using Launchpad.Api.Configuration;
 using Launchpad.Api.Services;
+using Launchpad.Application.Configuration;
 using Launchpad.Persistence.Configuration;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -9,7 +10,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
     builder.ConfigureApi();
     builder.ConfigurePersistence();
-    // builder.ConfigureApplication();
+    builder.ConfigureApplication();
 
     var app = builder.Build();
 

@@ -1,6 +1,6 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class User
+public class Employee
 {
     public long Id { get; set; }
     public string Email { get; set; } = null!;

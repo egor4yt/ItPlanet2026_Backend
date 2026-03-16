@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Launchpad.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260316165916_Init")]
+    [Migration("20260316174350_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Launchpad.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Launchpad.Domain.Entities.User", b =>
+            modelBuilder.Entity("Launchpad.Domain.Entities.Employee", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace Launchpad.Persistence.Migrations
                     b.HasIndex(new[] { "Email" }, "UX_Users_Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Employees");
                 });
 #pragma warning restore 612, 618
         }
