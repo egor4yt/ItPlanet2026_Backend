@@ -1,5 +1,6 @@
 using Launchpad.Api.Configuration;
 using Launchpad.Api.Services;
+using Launchpad.Persistence.Configuration;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
@@ -7,12 +8,10 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.ConfigureApi();
-    // builder.ConfigurePersistence();
+    builder.ConfigurePersistence();
     // builder.ConfigureApplication();
 
     var app = builder.Build();
-
-    // app.Services.MigrateDatabase();
 
     app.UseRequestLogging();
     app.UseSwagger();
@@ -34,6 +33,8 @@ try
                 .AllowAnyMethod()
                 .WithOrigins(corsOrigin.Value)
                 .AllowCredentials());
+
+    app.UseInitializeDatabase();
 
     app.MapHealthChecks("/health", new HealthCheckOptions
     {

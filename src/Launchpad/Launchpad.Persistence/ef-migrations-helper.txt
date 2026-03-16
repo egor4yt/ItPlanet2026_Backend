@@ -1,0 +1,7 @@
+﻿dotnet ef migrations add Message --project LaunchPad.Persistence --startup-project LaunchPad.Api
+
+dotnet ef database update --project LaunchPad.Persistence --startup-project LaunchPad.Api
+
+dotnet ef database drop --project LaunchPad.Persistence --startup-project LaunchPad.Api
+
+dotnet ef migrations remove --project LaunchPad.Persistence --startup-project LaunchPad.Api

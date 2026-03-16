@@ -1,0 +1,19 @@
+# docker compose -p launchpad-local-infrastructure up -d
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: launchpad-postgres-local
+    restart: unless-stopped
+    ports:
+      - "1299:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=launchpad
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d connector"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
