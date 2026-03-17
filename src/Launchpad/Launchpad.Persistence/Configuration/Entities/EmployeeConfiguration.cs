@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Launchpad.Persistence.Configuration.Entities;
 
-public class UserConfiguration : IEntityTypeConfiguration<Employee>
+public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {

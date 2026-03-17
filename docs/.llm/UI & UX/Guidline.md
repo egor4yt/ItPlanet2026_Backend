@@ -38,6 +38,17 @@
 
 В качестве референса используй сайт head hunter (hh ru), но не нарушай авторские права.
 
+Используй следующие цвета:
+- `$primary-color: #007bff;`
+- `$secondary-color: #6c757d;`
+- `$background-color: #f8f9fa;`
+- `$text-color: #212529;`
+- `$border-color: #dee2e6;`
+- `$error-color: #dc3545;`
+- `$white: #ffffff;`
+- `$gray-light: #e9ecef;`
+- `$gray-dark: #343a40;`
+
 # Специфика ответов
 
 Твои ответы должны быть понятны frontend разработчику без дополнительных разъяснений:
