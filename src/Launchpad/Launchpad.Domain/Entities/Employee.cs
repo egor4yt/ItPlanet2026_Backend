@@ -12,4 +12,5 @@ public class Employee
 
     public virtual ICollection<EmployeeEducation> EmployeeEducations { get; set; } = null!;
     public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; } = null!;
+    public virtual ICollection<Skill> Skills { get; set; } = null!;
 }

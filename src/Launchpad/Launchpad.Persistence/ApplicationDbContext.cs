@@ -9,6 +9,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<EmployeeEducation> EmployeeEducations { get; set; }
     public DbSet<EducationLevel> EducationLevels { get; set; }
     public DbSet<EmployeeProject> EducationProjects { get; set; }
+    public DbSet<Skill> Skills { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
