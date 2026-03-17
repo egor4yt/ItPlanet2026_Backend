@@ -11,4 +11,5 @@ public class Employee
     public DateTime RegisteredOn { get; set; }
 
     public virtual ICollection<EmployeeEducation> EmployeeEducations { get; set; } = null!;
+    public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; } = null!;
 }
