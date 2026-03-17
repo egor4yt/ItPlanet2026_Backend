@@ -11,20 +11,20 @@ public class EmployeeProjectConfiguration : IEntityTypeConfiguration<EmployeePro
         builder
             .Property(x => x.Description)
             .HasColumnType("text");
-        
+
         builder
             .Property(x => x.Specialization)
             .HasColumnType("varchar(64)");
-        
+
         builder
             .Property(x => x.Title)
             .HasColumnType("varchar(64)");
-        
+
         builder
             .Property(x => x.Link)
             .HasColumnType("varchar(256)")
             .IsRequired(false);
-        
+
         builder
             .HasOne(x => x.Employee)
             .WithMany(x => x.EmployeeProjects)

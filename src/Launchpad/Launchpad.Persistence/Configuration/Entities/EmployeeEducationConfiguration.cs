@@ -11,15 +11,15 @@ public class EmployeeEducationConfiguration : IEntityTypeConfiguration<EmployeeE
         builder
             .Property(x => x.Faculty)
             .HasColumnType("varchar(64)");
-        
+
         builder
             .Property(x => x.Specialization)
             .HasColumnType("varchar(64)");
-        
+
         builder
             .Property(x => x.Organization)
             .HasColumnType("varchar(64)");
-        
+
         builder
             .HasOne(x => x.Employee)
             .WithMany(x => x.EmployeeEducations)

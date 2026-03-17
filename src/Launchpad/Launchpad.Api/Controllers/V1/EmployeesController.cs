@@ -49,6 +49,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     /// <returns>Employee data</returns>
     [Authorize]
     [HttpGet("{employeeId:long}")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetById(long employeeId)
     {

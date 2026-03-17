@@ -15,16 +15,13 @@ namespace Launchpad.Api.Controllers.V1;
 [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
 public class ApiControllerBase : ControllerBase
 {
-    private ICurrentUserService? _currentUserService;
-    private IMediator? _mediator;
-
     /// <summary>
     ///     Mediator instance in current HTTP request scope
     /// </summary>
-    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>()!;
+    protected IMediator Mediator => field ??= HttpContext.RequestServices.GetService<IMediator>()!;
 
     /// <summary>
     ///     CurrentUserService instance in current HTTP request scope
     /// </summary>
-    protected ICurrentUserService CurrentUserService => _currentUserService ??= HttpContext.RequestServices.GetService<ICurrentUserService>()!;
+    protected ICurrentUserService CurrentUserService => field ??= HttpContext.RequestServices.GetService<ICurrentUserService>()!;
 }
