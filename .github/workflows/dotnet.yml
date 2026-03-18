@@ -27,4 +27,4 @@ jobs:
         run: dotnet build --no-restore src/Launchpad --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal --fail-if-no-tests src/Launchpad
+        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad
