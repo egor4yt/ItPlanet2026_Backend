@@ -116,6 +116,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     /// <returns>Employee data</returns>
     [AllowAnonymous]
     [HttpPost("authorization")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(AuthorizeEmployeeCommandResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Authorize([FromBody] AuthorizeEmployeeBody body)
     {

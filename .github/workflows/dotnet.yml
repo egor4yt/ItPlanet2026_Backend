@@ -25,3 +25,6 @@ jobs:
       
     - name: Build
       run: dotnet build --no-restore src/Launchpad/Launchpad.Api
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal src/Launchpad/Launchpad.Application.Tests
