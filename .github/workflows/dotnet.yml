@@ -13,18 +13,18 @@ jobs:
   build-api:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.0.x
-        
-    - name: Restore
-      run: dotnet restore src/Launchpad/Launchpad.Api
-      
-    - name: Build
-      run: dotnet build --no-restore src/Launchpad/Launchpad.Api
+      - uses: actions/checkout@v4
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal src/Launchpad/Launchpad.Application.Tests
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore src/Launchpad
+
+      - name: Build
+        run: dotnet build --no-restore src/Launchpad --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal --fail-if-no-tests src/Launchpad
