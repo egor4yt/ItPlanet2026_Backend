@@ -18,35 +18,28 @@ public class UpdateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldUpdateEducation_WhenRequestIsValid()
     {
         // Arrange
-        var employee = new Employee { FirstName = "A", LastName = "B", Email = "update@example.com", PasswordHash = "h" };
-        var educationLevel = new EducationLevel { Id = 100, Title = "Bachelor" };
-        var otherEducationLevel = new EducationLevel { Id = 101, Title = "Master" };
+        var employee = Fixture.Create<Employee>();
+        var educationLevel = Fixture.Create<EducationLevel>();
+        var otherEducationLevel = Fixture.Create<EducationLevel>();
+        
         await DbContext.Employees.AddAsync(employee);
         await DbContext.EducationLevels.AddAsync(educationLevel);
         await DbContext.EducationLevels.AddAsync(otherEducationLevel);
         await DbContext.SaveChangesAsync();
+        DbContext.ChangeTracker.Clear();
 
-        var education = new EmployeeEducation
-        {
-            EmployeeId = employee.Id,
-            EducationLevelId = educationLevel.Id,
-            Organization = "Old Org",
-            Faculty = "Old Faculty",
-            Specialization = "Old Spec",
-            CompletionYear = 2020
-        };
+        var education = Fixture.Build<EmployeeEducation>()
+            .With(x => x.EmployeeId, employee.Id)
+            .With(x => x.EducationLevelId, educationLevel.Id)
+            .Create();
         await DbContext.EmployeeEducations.AddAsync(education);
         await DbContext.SaveChangesAsync();
+        DbContext.ChangeTracker.Clear();
 
-        var request = new UpdateEmployeeEducationsCommandRequest
-        {
-            EducationId = education.Id,
-            EducationLevelId = otherEducationLevel.Id,
-            Organization = "New Org",
-            Faculty = "New Faculty",
-            Specialization = "New Spec",
-            CompletionYear = 2024
-        };
+        var request = Fixture.Build<UpdateEmployeeEducationsCommandRequest>()
+            .With(x => x.EducationId, education.Id)
+            .With(x => x.EducationLevelId, otherEducationLevel.Id)
+            .Create();
 
         // Act
         await _handler.Handle(request, CancellationToken.None);

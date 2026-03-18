@@ -14,7 +14,7 @@ public class EmployeeEducationConfiguration : IEntityTypeConfiguration<EmployeeE
 
         builder
             .Property(x => x.Specialization)
-            .HasColumnType("varchar(64)");
+            .HasColumnType("varchar(256)");
 
         builder
             .Property(x => x.Organization)

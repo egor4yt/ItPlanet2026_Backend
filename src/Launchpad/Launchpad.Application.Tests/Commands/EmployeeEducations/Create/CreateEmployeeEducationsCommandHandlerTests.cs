@@ -18,21 +18,23 @@ public class CreateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldCreateEducation_WhenRequestIsValid()
     {
         // Arrange
-        var employee = new Employee { FirstName = "A", LastName = "B", Email = "a@b.com", PasswordHash = "h" };
-        var educationLevel = new EducationLevel { Title = "Bachelor" };
+        var employee = Fixture.Create<Employee>();
+        var educationLevel = Fixture.Create<EducationLevel>();
+            
         await DbContext.Employees.AddAsync(employee);
         await DbContext.EducationLevels.AddAsync(educationLevel);
         await DbContext.SaveChangesAsync();
 
-        var request = new CreateEmployeeEducationsCommandRequest
-        {
-            EmployeeId = employee.Id,
-            EducationLevelId = educationLevel.Id,
-            Organization = "MSU",
-            Faculty = "CMC",
-            Specialization = "CS",
-            CompletionYear = 2025
-        };
+        var request = Fixture.Build<CreateEmployeeEducationsCommandRequest>()
+            .With(x => x.EmployeeId, employee.Id)
+            .With(x => x.EducationLevelId, educationLevel.Id)
+            .Without(x => x.Organization)
+            .Without(x => x.Faculty)
+            .Without(x => x.Specialization)
+            .Create();
+        request.Organization = "MSU";
+        request.Faculty = "CMC";
+        request.Specialization = "CS";
 
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);

@@ -19,8 +19,14 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldAttachNewAndExistingSkills_WhenRequestIsValid()
     {
         // Arrange
-        var employee = new Employee { FirstName = "A", LastName = "B", Email = "a@b.com", PasswordHash = "h" };
-        var existingSkill = new Skill { Title = "C#", IsSystemTag = true };
+        var employee = Fixture.Build<Employee>()
+            .Without(x => x.Id)
+            .Without(x => x.Skills)
+            .Create();
+        var existingSkill = Fixture.Build<Skill>()
+            .Without(x => x.Id)
+            .With(x => x.Title, "C#")
+            .Create();
         await DbContext.Employees.AddAsync(employee);
         await DbContext.Skills.AddAsync(existingSkill);
         await DbContext.SaveChangesAsync();
@@ -30,7 +36,7 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
             EmployeeId = employee.Id,
             Skills = new List<AttachEmployeeSkillsCommandRequestItem>
             {
-                new() { SkillId = (int)existingSkill.Id, Title = "C#" }, // Existing
+                new() { SkillId = (int)existingSkill.Id, Title = existingSkill.Title }, // Existing
                 new() { SkillId = null, Title = "Unit Testing" }         // New
             }
         };
@@ -52,12 +58,13 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldClearExistingSkills_WhenNewSkillsProvided()
     {
         // Arrange
-        var oldSkill = new Skill { Title = "Old", IsSystemTag = false };
-        var employee = new Employee 
-        { 
-            FirstName = "A", LastName = "B", Email = "a@b.com", PasswordHash = "h",
-            Skills = new List<Skill> { oldSkill }
-        };
+        var oldSkill = Fixture.Build<Skill>()
+            .Without(x => x.Id)
+            .Create();
+        var employee = Fixture.Build<Employee>()
+            .Without(x => x.Id)
+            .With(x => x.Skills, new List<Skill> { oldSkill })
+            .Create();
         await DbContext.Employees.AddAsync(employee);
         await DbContext.SaveChangesAsync();
 
@@ -80,7 +87,7 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
 
         employeeWithSkills.Skills.Should().HaveCount(1);
         employeeWithSkills.Skills.Should().Contain(s => s.Title == "New");
-        employeeWithSkills.Skills.Should().NotContain(s => s.Title == "Old");
+        employeeWithSkills.Skills.Should().NotContain(s => s.Title == oldSkill.Title);
     }
 
     [Fact]

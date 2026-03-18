@@ -23,6 +23,7 @@ public class CreateEmployeeCommandHandler(ApplicationDbContext applicationDbCont
             FirstName = request.FirstName,
             LastName = request.LastName,
             MiddleName = request.MiddleName,
+            Biography = string.Empty,
             RegisteredOn = DateTime.UtcNow
         };
 

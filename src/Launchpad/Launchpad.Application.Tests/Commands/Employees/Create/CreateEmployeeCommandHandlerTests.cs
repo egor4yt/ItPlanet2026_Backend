@@ -19,15 +19,9 @@ public class CreateEmployeeCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldCreateEmployee_WhenRequestIsValid()
     {
         // Arrange
-        var request = new CreateEmployeeCommandRequest
-        {
-            FirstName = "Иван",
-            LastName = "Иванов",
-            MiddleName = "Иванович",
-            Email = "ivanov@example.com",
-            PasswordHash = "hashed_password",
-            JwtDescriptorDetails = DefaultJwtDetails
-        };
+        var request = Fixture.Build<CreateEmployeeCommandRequest>()
+            .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
+            .Create();
 
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -51,24 +45,17 @@ public class CreateEmployeeCommandHandlerTests : BaseApplicationTest
     {
         // Arrange
         var existingEmail = "existing@example.com";
-        var existingEmployee = new Employee
-        {
-            FirstName = "Test",
-            LastName = "User",
-            Email = existingEmail,
-            PasswordHash = "hash"
-        };
+        var existingEmployee = Fixture.Build<Employee>()
+            .Without(x => x.Id)
+            .With(x => x.Email, existingEmail)
+            .Create();
         await DbContext.Employees.AddAsync(existingEmployee);
         await DbContext.SaveChangesAsync();
 
-        var request = new CreateEmployeeCommandRequest
-        {
-            FirstName = "New",
-            LastName = "User",
-            Email = existingEmail, // Duplicate email
-            PasswordHash = "new_hash",
-            JwtDescriptorDetails = DefaultJwtDetails
-        };
+        var request = Fixture.Build<CreateEmployeeCommandRequest>()
+            .With(x => x.Email, existingEmail)
+            .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
+            .Create();
 
         // Act
         var act = async () => await _handler.Handle(request, CancellationToken.None);

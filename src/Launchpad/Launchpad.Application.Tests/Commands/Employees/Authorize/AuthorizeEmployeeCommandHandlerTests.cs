@@ -18,24 +18,15 @@ public class AuthorizeEmployeeCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldReturnToken_WhenCredentialsAreValid()
     {
         // Arrange
-        var email = "test@example.com";
-        var passwordHash = "correct_hash";
-        var employee = new Employee
-        {
-            Email = email,
-            PasswordHash = passwordHash,
-            FirstName = "Test",
-            LastName = "User"
-        };
+        var employee = Fixture.Create<Employee>();
         await DbContext.Employees.AddAsync(employee);
         await DbContext.SaveChangesAsync();
 
-        var request = new AuthorizeEmployeeCommandRequest
-        {
-            Email = email,
-            PasswordHash = passwordHash,
-            JwtDescriptorDetails = DefaultJwtDetails
-        };
+        var request = Fixture.Build<AuthorizeEmployeeCommandRequest>()
+            .With(x => x.Email, employee.Email)
+            .With(x => x.PasswordHash, employee.PasswordHash)
+            .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
+            .Create();
 
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -50,12 +41,9 @@ public class AuthorizeEmployeeCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldThrowForbiddenException_WhenCredentialsAreInvalid()
     {
         // Arrange
-        var request = new AuthorizeEmployeeCommandRequest
-        {
-            Email = "nonexistent@example.com",
-            PasswordHash = "wrong_hash",
-            JwtDescriptorDetails = DefaultJwtDetails
-        };
+        var request = Fixture.Build<AuthorizeEmployeeCommandRequest>()
+            .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
+            .Create();
 
         // Act
         var act = async () => await _handler.Handle(request, CancellationToken.None);
