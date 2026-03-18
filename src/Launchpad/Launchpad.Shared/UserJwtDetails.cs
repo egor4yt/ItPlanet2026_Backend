@@ -8,10 +8,12 @@ public class JwtDetails
         ContactEmail = employee.Email;
         ProfileRole = JwtDetailsRole.Employee;
     }
-
-    public JwtDetails()
+    
+    public JwtDetails(Domain.Entities.Employer employee)
     {
-        throw new InvalidOperationException("Cannot create a new instance of JwtDetails");
+        ProfileId = employee.Id.ToString();
+        ContactEmail = employee.Email;
+        ProfileRole = JwtDetailsRole.Employer;
     }
 
     public string ProfileId { get; }
