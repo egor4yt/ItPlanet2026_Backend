@@ -48,7 +48,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     ///     Employee account details
     /// </summary>
     /// <returns>Employee data</returns>
-    [Authorize]
+    [Authorize(JwtDetailsRole.Employee)]
     [HttpGet("{employeeId:long}")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
@@ -73,7 +73,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     ///     Authorized employee account details
     /// </summary>
     /// <returns>Employee data</returns>
-    [Authorize]
+    [Authorize(JwtDetailsRole.Employee)]
     [HttpGet]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
@@ -94,7 +94,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     /// <summary>
     ///     Update authorized employee skills
     /// </summary>
-    [Authorize]
+    [Authorize(JwtDetailsRole.Employee)]
     [HttpPost("skills")]
     [ProducesResponseType(typeof(AttachEmployeeSkillsCommandResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]

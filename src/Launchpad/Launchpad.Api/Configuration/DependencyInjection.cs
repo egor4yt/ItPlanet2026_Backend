@@ -4,6 +4,7 @@ using Launchpad.Api.Filters;
 using Launchpad.Api.HealthChecks;
 using Launchpad.Api.Services;
 using Launchpad.Api.Services.Interfaces;
+using Launchpad.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -59,7 +60,10 @@ public static class DependencyInjection
             x.TokenLifetimeInHours = jwtOptions.TokenLifetimeInHours;
         });
 
-        services.AddAuthorization();
+        services.AddAuthorizationBuilder()
+            .AddPolicy(JwtDetailsRole.Employee, policy => policy.RequireRole(JwtDetailsRole.Employee))
+            .AddPolicy(JwtDetailsRole.Employer, policy => policy.RequireRole(JwtDetailsRole.Employer));
+
         services
             .AddAuthentication(x =>
             {
@@ -77,7 +81,8 @@ public static class DependencyInjection
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtOptions.Issuer,
                     ValidAudience = jwtOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+                    RoleClaimType = UserJwtClaimNames.ProfileRole
                 };
             });
     }

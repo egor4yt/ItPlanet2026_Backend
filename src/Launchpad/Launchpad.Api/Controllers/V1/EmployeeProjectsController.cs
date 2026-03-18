@@ -1,6 +1,7 @@
 ﻿using Launchpad.Api.Contracts.EmployeeProjects;
 using Launchpad.Application.Commands.EmployeeProjects.Create;
 using Launchpad.Application.Commands.EmployeeProjects.Update;
+using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace Launchpad.Api.Controllers.V1;
 /// <summary>
 ///     Education levels controller
 /// </summary>
-[Authorize]
+[Authorize(JwtDetailsRole.Employee)]
 [Route("employee-projects")]
 public class EmployeeProjectsController : ApiControllerBase
 {
