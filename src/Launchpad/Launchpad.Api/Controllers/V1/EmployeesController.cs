@@ -1,5 +1,5 @@
 ﻿using Launchpad.Api.Configuration.Options;
-using Launchpad.Api.Contracts.Employee;
+using Launchpad.Api.Contracts.Employees;
 using Launchpad.Application.Commands.Employees.Authorize;
 using Launchpad.Application.Commands.Employees.Create;
 using Launchpad.Application.Commands.Skills.AttachEmployee;

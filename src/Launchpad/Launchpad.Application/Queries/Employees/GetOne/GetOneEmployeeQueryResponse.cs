@@ -7,9 +7,26 @@ public class GetOneEmployeeQueryResponse
     public string LastName { get; set; } = null!;
     public string? MiddleName { get; set; }
     public IEnumerable<GetOneEmployeeQueryResponseSkill> Skills { get; set; } = null!;
+    public IEnumerable<GetOneEmployeeQueryResponseEducation> Education { get; set; } = null!;
 }
 
 public class GetOneEmployeeQueryResponseSkill
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = null!;
+}
+
+public class GetOneEmployeeQueryResponseEducation
+{
+    public long Id { get; set; }
+    public string Organization { get; set; } = null!;
+    public string Faculty { get; set; } = null!;
+    public string Specialization { get; set; } = null!;
+    public int CompletionYear { get; set; }
+    public GetOneEmployeeQueryResponseEducationLevel EducationLevel { get; set; } = null!;
+}
+
+public class GetOneEmployeeQueryResponseEducationLevel
 {
     public int Id { get; set; }
     public string Title { get; set; } = null!;

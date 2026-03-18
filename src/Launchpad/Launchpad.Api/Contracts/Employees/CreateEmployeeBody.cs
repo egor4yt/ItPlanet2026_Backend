@@ -1,4 +1,4 @@
-﻿namespace Launchpad.Api.Contracts.Employee;
+﻿namespace Launchpad.Api.Contracts.Employees;
 
 /// <summary>
 ///     New employee details
