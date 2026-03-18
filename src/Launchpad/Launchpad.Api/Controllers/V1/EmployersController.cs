@@ -2,6 +2,7 @@
 using Launchpad.Api.Contracts.Employers;
 using Launchpad.Application.Commands.Employers.Authorize;
 using Launchpad.Application.Commands.Employers.Create;
+using Launchpad.Application.Queries.Employers.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
 
         var response = await Mediator.Send(command);
 
-        return Created($"employers/{response.EmployerId}", response);
+        return Created($"employers", response);
     }
 
     /// <summary>
@@ -54,6 +55,28 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
             Email = body.Email.Trim().ToLower(),
             PasswordHash = SecurityHelper.ComputeSha256Hash(body.Password.Trim()),
             JwtDescriptorDetails = jwtOptions.Value.ToJwtDescriptorDetails()
+        };
+
+        var response = await Mediator.Send(command);
+
+        return Ok(response);
+    }
+    
+    /// <summary>
+    ///     Authorized employee account details
+    /// </summary>
+    /// <returns>Employee data</returns>
+    [Authorize(JwtDetailsRole.Employer)]
+    [HttpGet]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(GetOneEmployersQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Me()
+    {
+        var command = new GetOneEmployersQueryRequest
+        {
+            Id = CurrentUserService.ProfileId
         };
 
         var response = await Mediator.Send(command);

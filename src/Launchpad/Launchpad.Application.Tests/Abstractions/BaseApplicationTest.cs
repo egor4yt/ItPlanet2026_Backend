@@ -22,6 +22,18 @@ public abstract class BaseApplicationTest : IDisposable
 
     protected BaseApplicationTest()
     {
+        _connection = new SqliteConnection("DataSource=:memory:;Foreign Keys=False");
+        _connection.Open();
+
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlite(_connection)
+            .EnableSensitiveDataLogging()
+            .Options;
+
+        DbContext = new ApplicationDbContext(options);
+        DbContext.Database.EnsureCreated();
+        
+        
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));
         Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
@@ -56,17 +68,6 @@ public abstract class BaseApplicationTest : IDisposable
         
         Fixture.Customize<Employer>(composer => composer
             .Without(x => x.Id));
-
-        _connection = new SqliteConnection("DataSource=:memory:;Foreign Keys=False");
-        _connection.Open();
-
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseSqlite(_connection)
-            .EnableSensitiveDataLogging()
-            .Options;
-
-        DbContext = new ApplicationDbContext(options);
-        DbContext.Database.EnsureCreated();
     }
 
     public void Dispose()
