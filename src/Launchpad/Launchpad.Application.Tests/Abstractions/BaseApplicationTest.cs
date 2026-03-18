@@ -1,3 +1,4 @@
+using AutoFixture;
 using Launchpad.Domain.Entities;
 using Launchpad.Persistence;
 using Launchpad.Shared;
@@ -12,7 +13,7 @@ public abstract class BaseApplicationTest : IDisposable
     protected readonly Fixture Fixture = new Fixture();
     private readonly SqliteConnection _connection;
 
-    protected readonly JwtDescriptorDetails DefaultJwtDetails = new()
+    protected readonly JwtDescriptorDetails DefaultJwtDetails = new JwtDescriptorDetails
     {
         Key = "super_secret_key_that_is_long_enough_for_sha256",
         Audience = "test-audience",
@@ -33,41 +34,7 @@ public abstract class BaseApplicationTest : IDisposable
         DbContext = new ApplicationDbContext(options);
         DbContext.Database.EnsureCreated();
         
-        
-        Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-            .ForEach(b => Fixture.Behaviors.Remove(b));
-        Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-        Fixture.Customize<DateOnly>(composer => composer.FromFactory<DateTime>(DateOnly.FromDateTime));
-
-        Fixture.Customize<Employee>(composer => composer
-            .Without(x => x.Id)
-            .Without(x => x.EmployeeEducations)
-            .Without(x => x.EmployeeProjects)
-            .Without(x => x.Skills));
-        
-        Fixture.Customize<EducationLevel>(composer => composer
-            .Without(x => x.EmployeeEducations)
-            .With(x => x.Title, () => "Level " + Guid.NewGuid()));
-        
-        Fixture.Customize<EmployeeEducation>(composer => composer
-            .Without(x => x.Id)
-            .Without(x => x.EmployeeId)
-            .Without(x => x.EducationLevelId)
-            .Without(x => x.Employee)
-            .Without(x => x.EducationLevel));
-        
-        Fixture.Customize<Skill>(composer => composer
-            .Without(x => x.Id)
-            .Without(x => x.Employees));
-        
-        Fixture.Customize<EmployeeProject>(composer => composer
-            .Without(x => x.Id)
-            .Without(x => x.EmployeeId)
-            .Without(x => x.Employee));
-        
-        Fixture.Customize<Employer>(composer => composer
-            .Without(x => x.Id));
+        Fixture.Customize(new FixtureCustomization());
     }
 
     public void Dispose()
