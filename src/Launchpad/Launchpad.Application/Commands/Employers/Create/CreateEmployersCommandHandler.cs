@@ -21,7 +21,8 @@ public class CreateEmployersCommandHandler(ApplicationDbContext applicationDbCon
             Email = request.Email,
             Description = string.Empty,
             CompanyName = request.CompanyName,
-            RegisteredOn = DateTime.UtcNow
+            RegisteredOn = DateTime.UtcNow,
+            PasswordHash =  request.PasswordHash
         };
 
         await applicationDbContext.Employers.AddAsync(newEmployer, cancellationToken);

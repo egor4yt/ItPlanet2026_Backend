@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Commands.Employees.Create;
 
-public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommandRequest>
+public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeesCommandRequest>
 {
     public CreateEmployeeCommandValidator()
     {

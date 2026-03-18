@@ -6,20 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Commands.Employees.Create;
 
-public class CreateEmployeeCommandHandlerTests : BaseApplicationTest
+public class CreateEmployeesCommandHandlerTests : BaseApplicationTest
 {
-    private readonly CreateEmployeeCommandHandler _handler;
+    private readonly CreateEmployeesCommandHandler _handler;
 
-    public CreateEmployeeCommandHandlerTests()
+    public CreateEmployeesCommandHandlerTests()
     {
-        _handler = new CreateEmployeeCommandHandler(DbContext);
+        _handler = new CreateEmployeesCommandHandler(DbContext);
     }
 
     [Fact]
     public async Task Handle_ShouldCreateEmployee_WhenRequestIsValid()
     {
         // Arrange
-        var request = Fixture.Build<CreateEmployeeCommandRequest>()
+        var request = Fixture.Build<CreateEmployeesCommandRequest>()
             .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
             .Create();
 
@@ -52,7 +52,7 @@ public class CreateEmployeeCommandHandlerTests : BaseApplicationTest
         await DbContext.Employees.AddAsync(existingEmployee);
         await DbContext.SaveChangesAsync();
 
-        var request = Fixture.Build<CreateEmployeeCommandRequest>()
+        var request = Fixture.Build<CreateEmployeesCommandRequest>()
             .With(x => x.Email, existingEmail)
             .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
             .Create();

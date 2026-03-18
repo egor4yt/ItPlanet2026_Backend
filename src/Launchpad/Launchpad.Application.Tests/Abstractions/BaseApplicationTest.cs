@@ -9,7 +9,7 @@ namespace Launchpad.Application.Tests.Abstractions;
 public abstract class BaseApplicationTest : IDisposable
 {
     protected readonly ApplicationDbContext DbContext;
-    protected readonly Fixture Fixture = new();
+    protected readonly Fixture Fixture = new Fixture();
     private readonly SqliteConnection _connection;
 
     protected readonly JwtDescriptorDetails DefaultJwtDetails = new()

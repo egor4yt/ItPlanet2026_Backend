@@ -26,10 +26,10 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(CreateEmployeeCommandResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CreateEmployeesCommandResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateEmployeeBody body)
     {
-        var command = new CreateEmployeeCommandRequest
+        var command = new CreateEmployeesCommandRequest
         {
             Email = body.Email.Trim().ToLower(),
             PasswordHash = SecurityHelper.ComputeSha256Hash(body.Password.Trim()),
@@ -41,7 +41,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
 
         var response = await Mediator.Send(command);
 
-        return Created($"employee/{response.EmployeeId}", response);
+        return Created($"employees/{response.EmployeeId}", response);
     }
 
     /// <summary>

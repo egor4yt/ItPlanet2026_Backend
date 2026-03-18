@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Commands.Employees.Create;
 
-public class CreateEmployeeCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<CreateEmployeeCommandRequest, CreateEmployeeCommandResponse>
+public class CreateEmployeesCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<CreateEmployeesCommandRequest, CreateEmployeesCommandResponse>
 {
-    public async Task<CreateEmployeeCommandResponse> Handle(CreateEmployeeCommandRequest request, CancellationToken cancellationToken)
+    public async Task<CreateEmployeesCommandResponse> Handle(CreateEmployeesCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new CreateEmployeeCommandResponse();
+        var response = new CreateEmployeesCommandResponse();
 
         var userExists = await applicationDbContext.Employees.AnyAsync(x => x.Email == request.Email, cancellationToken);
         if (userExists) throw new ConflictException("EmployeeAlreadyExists");

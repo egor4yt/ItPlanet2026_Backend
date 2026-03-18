@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Launchpad.Application.Commands.Employees.Create;
 
-public class CreateEmployeeCommandRequest : IRequest<CreateEmployeeCommandResponse>
+public class CreateEmployeesCommandRequest : IRequest<CreateEmployeesCommandResponse>
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
