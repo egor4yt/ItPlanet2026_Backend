@@ -15,13 +15,11 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
 
         RuleFor(x => x.FirstName)
             .NotEmpty()
-            .MaximumLength(64)
-            .MinimumLength(2);
+            .Length(2, 64);
 
         RuleFor(x => x.LastName)
             .NotEmpty()
-            .MaximumLength(64)
-            .MinimumLength(2);
+            .Length(2, 64);
 
         RuleFor(x => x.MiddleName)
             .MaximumLength(64);

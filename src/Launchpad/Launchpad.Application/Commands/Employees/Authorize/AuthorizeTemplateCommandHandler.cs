@@ -13,6 +13,7 @@ public class AuthorizeEmployeeCommandHandler(ApplicationDbContext applicationDbC
         var response = new AuthorizeEmployeeCommandResponse();
 
         var employee = await applicationDbContext.Employees
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == request.Email
                                       && x.PasswordHash == request.PasswordHash
                 , cancellationToken);

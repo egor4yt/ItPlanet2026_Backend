@@ -6,14 +6,19 @@
 public interface ICurrentUserService
 {
     /// <summary>
-    ///     User Id
+    ///     Profile ID
     /// </summary>
-    public int UserId { get; }
+    public int ProfileId { get; }
 
     /// <summary>
-    ///     User email
+    ///     Contact email
     /// </summary>
-    public string UserEmail { get; }
+    public string ContactEmail { get; }
+
+    /// <summary>
+    ///     Profile role
+    /// </summary>
+    public string ProfileRole { get; }
 
     /// <summary>
     ///     Is user authenticated or not

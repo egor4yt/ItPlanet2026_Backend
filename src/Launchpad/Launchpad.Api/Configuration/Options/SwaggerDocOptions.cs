@@ -21,7 +21,7 @@ public class SwaggerDocOptions
     public string Organization { get; set; } = string.Empty;
 
     /// <summary>
-    ///     Email
+    ///     Contact Email
     /// </summary>
     public string Email { get; set; } = string.Empty;
 }

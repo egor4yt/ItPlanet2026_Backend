@@ -11,11 +11,11 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     private readonly ClaimsPrincipal? _user = httpContextAccessor.HttpContext?.User;
 
     /// <inheritdoc />
-    public int UserId
+    public int ProfileId
     {
         get
         {
-            var stringUserId = _user?.FindFirstValue(UserJwtClaimNames.UserId);
+            var stringUserId = _user?.FindFirstValue(UserJwtClaimNames.ProfileId);
             if (string.IsNullOrWhiteSpace(stringUserId)) throw new ForbiddenException("User id was null");
 
             var longUserId = int.Parse(stringUserId);
@@ -24,7 +24,10 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     }
 
     /// <inheritdoc />
-    public string UserEmail => _user?.FindFirstValue(UserJwtClaimNames.UserEmail) ?? throw new ForbiddenException("User id was null");
+    public string ContactEmail => _user?.FindFirstValue(UserJwtClaimNames.ContactEmail) ?? throw new ForbiddenException("User id was null");
+
+    /// <inheritdoc />
+    public string ProfileRole => _user?.FindFirstValue(UserJwtClaimNames.ProfileRole) ?? throw new ForbiddenException("User id was null");
 
     /// <inheritdoc />
     public bool IsAuthenticated => httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false;

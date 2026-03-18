@@ -11,6 +11,7 @@ public class SearchSkillsQueryHandler(ApplicationDbContext applicationDbContext)
         var response = new SearchSkillsQueryResponse();
 
         response.Items = await applicationDbContext.Skills
+            .AsNoTracking()
             .Where(x => EF.Functions.ILike(x.Title, $"%{request.Title}%"))
             .Take(request.Count)
             .Select(x => new SearchSkillsQueryResponseItem

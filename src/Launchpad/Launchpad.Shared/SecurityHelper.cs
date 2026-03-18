@@ -24,9 +24,9 @@ public class SecurityHelper
         var claims = new List<Claim>
         {
             /* Custom claim types */
-            new Claim(UserJwtClaimNames.UserEmail, jwtDetails.Email),
-            new Claim(UserJwtClaimNames.UserId, jwtDetails.Id.ToString()),
-            new Claim(UserJwtClaimNames.IsEmployee, jwtDetails.IsEmployee.ToString()),
+            new Claim(UserJwtClaimNames.ContactEmail, jwtDetails.ContactEmail),
+            new Claim(UserJwtClaimNames.ProfileId, jwtDetails.ProfileId),
+            new Claim(UserJwtClaimNames.ProfileRole, jwtDetails.ProfileRole),
 
             /* RFC claim types */
             new Claim(UserJwtClaimNames.JsonTokenIdentifier, Guid.NewGuid().ToString())

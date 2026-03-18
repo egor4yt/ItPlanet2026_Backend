@@ -4,19 +4,17 @@ public class JwtDetails
 {
     public JwtDetails(Domain.Entities.Employee employee)
     {
-        Id = employee.Id;
-        Email = employee.Email;
-        IsEmployee = true;
+        ProfileId = employee.Id.ToString();
+        ContactEmail = employee.Email;
+        ProfileRole = JwtDetailsRole.Employee;
     }
 
     public JwtDetails()
     {
-        Id = 0;
-        Email = string.Empty;
-        IsEmployee = false;
+        throw new InvalidOperationException("Cannot create a new instance of JwtDetails");
     }
 
-    public long Id { get; }
-    public string Email { get; }
-    public bool IsEmployee { get; }
+    public string ProfileId { get; }
+    public string ContactEmail { get; }
+    public string ProfileRole { get; }
 }

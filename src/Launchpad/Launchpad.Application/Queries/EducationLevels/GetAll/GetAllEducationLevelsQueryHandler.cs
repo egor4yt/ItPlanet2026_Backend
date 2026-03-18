@@ -11,6 +11,7 @@ public class GetAllEducationLevelsQueryHandler(ApplicationDbContext applicationD
         var response = new GetAllEducationLevelsQueryResponse();
 
         response.Items = await applicationDbContext.EducationLevels
+            .AsNoTracking()
             .Select(x => new GetAllEducationLevelsQueryResponseItem
             {
                 Id = x.Id,

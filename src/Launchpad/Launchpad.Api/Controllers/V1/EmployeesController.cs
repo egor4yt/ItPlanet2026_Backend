@@ -2,6 +2,7 @@
 using Launchpad.Api.Contracts.Employee;
 using Launchpad.Application.Commands.Employees.Authorize;
 using Launchpad.Application.Commands.Employees.Create;
+using Launchpad.Application.Commands.Skills.AttachEmployee;
 using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employees.GetOne;
 using Launchpad.Shared;
@@ -53,7 +54,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetById(long employeeId)
     {
-        if (CurrentUserService.UserId != employeeId)
+        if (CurrentUserService.ProfileId != employeeId)
             throw new NotFoundException("NotFound");
 
         var command = new GetOneEmployeeQueryRequest
@@ -64,6 +65,49 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
         var response = await Mediator.Send(command);
 
         return Ok(response);
+    }
+
+    /// <summary>
+    ///     Authorized employee account details
+    /// </summary>
+    /// <returns>Employee data</returns>
+    [Authorize]
+    [HttpGet]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Me()
+    {
+        var command = new GetOneEmployeeQueryRequest
+        {
+            Id = CurrentUserService.ProfileId
+        };
+
+        var response = await Mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    ///     Update authorized employee skills
+    /// </summary>
+    [Authorize]
+    [HttpPost("skills")]
+    [ProducesResponseType(typeof(AttachEmployeeSkillsCommandResponse), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateSkills([FromBody] UpdateEmployeeSkillsBody body)
+    {
+        var command = new AttachEmployeeSkillsCommandRequest
+        {
+            EmployeeId = CurrentUserService.ProfileId,
+            Skills = body.Skills.Select(x => new AttachEmployeeSkillsCommandRequestItem
+            {
+                SkillId = x.SkillId,
+                Title = x.Title
+            })
+        };
+
+        _ = await Mediator.Send(command);
+
+        return NoContent();
     }
 
     /// <summary>
