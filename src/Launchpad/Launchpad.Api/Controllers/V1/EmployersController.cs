@@ -63,9 +63,9 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     }
     
     /// <summary>
-    ///     Authorized employee account details
+    ///     Authorized employer account details
     /// </summary>
-    /// <returns>Employee data</returns>
+    /// <returns>Employer data</returns>
     [Authorize(JwtDetailsRole.Employer)]
     [HttpGet]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
