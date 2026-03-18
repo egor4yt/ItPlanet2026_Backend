@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Contracts.EmployeeEducations;
 using Launchpad.Application.Commands.EmployeeEducations.Create;
+using Launchpad.Application.Commands.EmployeeEducations.Update;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,28 @@ public class EmployeeEducationsController : ApiControllerBase
 
         var response = await Mediator.Send(command);
 
-        return Ok(response);
+        return Created("", response);
+    }
+
+    /// <summary>
+    ///     Update education
+    /// </summary>
+    [HttpPut("{educationId:long}")]
+    [ProducesResponseType(typeof(UpdateEmployeeEducationsCommandResponse), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Update([FromRoute] long educationId, [FromBody] UpdateEmployeeEducationBody body)
+    {
+        var command = new UpdateEmployeeEducationsCommandRequest
+        {
+            Organization = body.Organization,
+            Faculty = body.Faculty,
+            Specialization = body.Specialization,
+            CompletionYear = body.CompletionYear,
+            EducationLevelId = body.EducationLevelId,
+            EducationId = educationId
+        };
+
+        _ = await Mediator.Send(command);
+
+        return NoContent();
     }
 }
