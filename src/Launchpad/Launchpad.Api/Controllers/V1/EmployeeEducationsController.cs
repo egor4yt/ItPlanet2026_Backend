@@ -19,6 +19,8 @@ public class EmployeeEducationsController : ApiControllerBase
     /// <returns>Education levels</returns>
     [HttpPost]
     [ProducesResponseType(typeof(CreateEmployeeEducationsCommandResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Create([FromBody] CreateEmployeeEducationBody body)
     {
         var command = new CreateEmployeeEducationsCommandRequest
@@ -41,6 +43,8 @@ public class EmployeeEducationsController : ApiControllerBase
     /// </summary>
     [HttpPut("{educationId:long}")]
     [ProducesResponseType(typeof(UpdateEmployeeEducationsCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Update([FromRoute] long educationId, [FromBody] UpdateEmployeeEducationBody body)
     {
         var command = new UpdateEmployeeEducationsCommandRequest

@@ -52,6 +52,8 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [HttpGet("{employeeId:long}")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetById(long employeeId)
     {
         if (CurrentUserService.ProfileId != employeeId)
@@ -75,6 +77,8 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [HttpGet]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Me()
     {
         var command = new GetOneEmployeeQueryRequest
@@ -93,6 +97,8 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [Authorize]
     [HttpPost("skills")]
     [ProducesResponseType(typeof(AttachEmployeeSkillsCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> UpdateSkills([FromBody] UpdateEmployeeSkillsBody body)
     {
         var command = new AttachEmployeeSkillsCommandRequest
