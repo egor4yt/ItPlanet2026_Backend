@@ -1,5 +1,4 @@
-using AutoFixture;
-using Launchpad.Domain.Entities;
+using Launchpad.Application.Tests.Fixtures;
 using Launchpad.Persistence;
 using Launchpad.Shared;
 using Microsoft.Data.Sqlite;
@@ -9,9 +8,8 @@ namespace Launchpad.Application.Tests.Abstractions;
 
 public abstract class BaseApplicationTest : IDisposable
 {
-    protected readonly ApplicationDbContext DbContext;
-    protected readonly Fixture Fixture = new Fixture();
     private readonly SqliteConnection _connection;
+    protected readonly ApplicationDbContext DbContext;
 
     protected readonly JwtDescriptorDetails DefaultJwtDetails = new JwtDescriptorDetails
     {
@@ -20,6 +18,7 @@ public abstract class BaseApplicationTest : IDisposable
         Issuer = "test-issuer",
         TokenLifetimeInHours = 1
     };
+    protected readonly Fixture Fixture = new Fixture();
 
     protected BaseApplicationTest()
     {
@@ -33,8 +32,18 @@ public abstract class BaseApplicationTest : IDisposable
 
         DbContext = new ApplicationDbContext(options);
         DbContext.Database.EnsureCreated();
-        
-        Fixture.Customize(new FixtureCustomization());
+
+        Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+            .ForEach(b => Fixture.Behaviors.Remove(b));
+        Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+        Fixture.Customize(new EmployeeFixture());
+        Fixture.Customize(new EducationLevelFixture());
+        Fixture.Customize(new EmployeeEducationFixture());
+        Fixture.Customize(new SkillFixture());
+        Fixture.Customize(new EmployeeProjectFixture());
+        Fixture.Customize(new EmployerFixture());
+        Fixture.Customize(new DateOnlyFixture());
     }
 
     public void Dispose()
