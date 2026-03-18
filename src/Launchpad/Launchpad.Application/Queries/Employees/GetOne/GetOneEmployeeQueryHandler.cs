@@ -35,6 +35,16 @@ public class GetOneEmployeeQueryHandler(ApplicationDbContext applicationDbContex
                         Id = e.EducationLevel!.Id,
                         Title = e.EducationLevel.Title
                     }
+                }),
+                Projects = x.EmployeeProjects.Select(p => new GetOneEmployeeQueryResponseProject
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Specialization = p.Specialization,
+                    Link = p.Link,
+                    DateFrom = p.DateFrom,
+                    DateTo = p.DateTo
                 })
             })
             .FirstOrDefaultAsync(cancellationToken);

@@ -16,7 +16,7 @@ public class EmployeeEducationsController : ApiControllerBase
     /// <summary>
     ///     Create education
     /// </summary>
-    /// <returns>Education levels</returns>
+    /// <returns>New project id</returns>
     [HttpPost]
     [ProducesResponseType(typeof(CreateEmployeeEducationsCommandResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]

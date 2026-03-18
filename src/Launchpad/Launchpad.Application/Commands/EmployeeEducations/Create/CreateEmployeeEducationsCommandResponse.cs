@@ -2,4 +2,5 @@
 
 public class CreateEmployeeEducationsCommandResponse
 {
+    public long Id { get; set; }
 }

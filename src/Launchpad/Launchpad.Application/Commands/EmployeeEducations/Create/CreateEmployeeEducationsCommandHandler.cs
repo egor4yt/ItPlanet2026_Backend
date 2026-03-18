@@ -23,6 +23,8 @@ public class CreateEmployeeEducationsCommandHandler(ApplicationDbContext applica
         await applicationDbContext.EmployeeEducations.AddAsync(newEducation, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 
+        response.Id = newEducation.Id;
+        
         return response;
     }
 }
