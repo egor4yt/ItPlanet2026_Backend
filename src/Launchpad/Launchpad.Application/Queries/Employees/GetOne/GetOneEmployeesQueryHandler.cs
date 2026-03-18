@@ -5,19 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Queries.Employees.GetOne;
 
-public class GetOneEmployeeQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<GetOneEmployeeQueryRequest, GetOneEmployeeQueryResponse>
+public class GetOneEmployeesQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<GetOneEmployeesQueryRequest, GetOneEmployeesQueryResponse>
 {
-    public async Task<GetOneEmployeeQueryResponse> Handle(GetOneEmployeeQueryRequest request, CancellationToken cancellationToken)
+    public async Task<GetOneEmployeesQueryResponse> Handle(GetOneEmployeesQueryRequest request, CancellationToken cancellationToken)
     {
         var response = await applicationDbContext.Employees
             .AsNoTracking()
             .Where(x => x.Id == request.Id)
-            .Select(x => new GetOneEmployeeQueryResponse
+            .Select(x => new GetOneEmployeesQueryResponse
             {
                 Email = x.Email,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 MiddleName = x.MiddleName,
+                Biography = x.Biography,
                 Skills = x.Skills.Select(s => new GetOneEmployeeQueryResponseSkill
                 {
                     Id = s.Id,

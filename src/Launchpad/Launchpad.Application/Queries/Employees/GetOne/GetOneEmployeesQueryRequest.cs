@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Queries.Employees.GetOne;
 
-public class GetOneEmployeeQueryRequest : IRequest<GetOneEmployeeQueryResponse>
+public class GetOneEmployeesQueryRequest : IRequest<GetOneEmployeesQueryResponse>
 {
     public long Id { get; set; }
 }

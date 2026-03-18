@@ -2,6 +2,7 @@
 using Launchpad.Api.Contracts.Employees;
 using Launchpad.Application.Commands.Employees.Authorize;
 using Launchpad.Application.Commands.Employees.Create;
+using Launchpad.Application.Commands.Employees.UpdateBiography;
 using Launchpad.Application.Commands.Skills.AttachEmployee;
 using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employees.GetOne;
@@ -51,7 +52,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [Authorize(JwtDetailsRole.Employee)]
     [HttpGet("{employeeId:long}")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetOneEmployeesQueryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetById(long employeeId)
@@ -59,7 +60,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
         if (CurrentUserService.ProfileId != employeeId)
             throw new NotFoundException("NotFound");
 
-        var command = new GetOneEmployeeQueryRequest
+        var command = new GetOneEmployeesQueryRequest
         {
             Id = employeeId
         };
@@ -76,12 +77,12 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [Authorize(JwtDetailsRole.Employee)]
     [HttpGet]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(GetOneEmployeeQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetOneEmployeesQueryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Me()
     {
-        var command = new GetOneEmployeeQueryRequest
+        var command = new GetOneEmployeesQueryRequest
         {
             Id = CurrentUserService.ProfileId
         };
@@ -95,7 +96,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     ///     Update authorized employee skills
     /// </summary>
     [Authorize(JwtDetailsRole.Employee)]
-    [HttpPost("skills")]
+    [HttpPatch("skills")]
     [ProducesResponseType(typeof(AttachEmployeeSkillsCommandResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
@@ -109,6 +110,27 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
                 SkillId = x.SkillId,
                 Title = x.Title
             })
+        };
+
+        _ = await Mediator.Send(command);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    ///     Update authorized employee biography
+    /// </summary>
+    [Authorize(JwtDetailsRole.Employee)]
+    [HttpPatch("biography")]
+    [ProducesResponseType(typeof(UpdateBiographyEmployeesCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> UpdateBiography([FromBody] UpdateEmployeeBiographyBody body)
+    {
+        var command = new UpdateBiographyEmployeesCommandRequest
+        {
+            EmployeeId = CurrentUserService.ProfileId,
+            Biography = body.Biography
         };
 
         _ = await Mediator.Send(command);

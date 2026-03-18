@@ -2,9 +2,9 @@
 
 namespace Launchpad.Application.Queries.Employees.GetOne;
 
-public class GetOneEmployeeQueryValidator : AbstractValidator<GetOneEmployeeQueryRequest>
+public class GetOneEmployeesQueryValidator : AbstractValidator<GetOneEmployeesQueryRequest>
 {
-    public GetOneEmployeeQueryValidator()
+    public GetOneEmployeesQueryValidator()
     {
         RuleFor(x => x.Id)
             .GreaterThan(0);
