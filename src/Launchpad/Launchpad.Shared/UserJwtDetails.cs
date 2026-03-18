@@ -8,7 +8,7 @@ public class JwtDetails
         ContactEmail = employee.Email;
         ProfileRole = JwtDetailsRole.Employee;
     }
-    
+
     public JwtDetails(Domain.Entities.Employer employee)
     {
         ProfileId = employee.Id.ToString();

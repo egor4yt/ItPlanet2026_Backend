@@ -19,7 +19,7 @@ public class UpdateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
     {
         // Arrange
         var employee = Fixture.Create<Employee>();
-        
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();

@@ -27,5 +27,15 @@ public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
         builder
             .Property(x => x.PasswordHash)
             .HasColumnType("varchar(64)");
+
+        builder.HasData(new Employer
+        {
+            Id = -1,
+            Email = "kadet_2003@list.ru",
+            PasswordHash = "0D73C0A5D54B086B544B1A76A121CAE545B6A204F6D85E4CB68A0786991FEC67",
+            RegisteredOn = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+            CompanyName = "Трамплин",
+            Description = "Платформа «Трамплин» должна стать экосистемой, где студенты не просто ищут работу, а строят карьеру с нуля: находят менторов, участвуют в карьерных мероприятиях компаний и получают предложения о стажировках, основываясь на своих навыках и активности. Некоторые функциональные и нефункциональные требования описаны заказчиком напрямую, по другим же функциональным и нефункциональным требованиям вам необходимо выработать решения самостоятельно и аргументировать их перед заказчиком"
+        });
     }
 }

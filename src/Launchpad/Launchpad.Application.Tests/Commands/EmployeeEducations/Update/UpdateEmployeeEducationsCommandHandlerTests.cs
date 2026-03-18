@@ -21,7 +21,7 @@ public class UpdateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
         var employee = Fixture.Create<Employee>();
         var educationLevel = Fixture.Create<EducationLevel>();
         var otherEducationLevel = Fixture.Create<EducationLevel>();
-        
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.EducationLevels.AddAsync(educationLevel);
         await DbContext.EducationLevels.AddAsync(otherEducationLevel);

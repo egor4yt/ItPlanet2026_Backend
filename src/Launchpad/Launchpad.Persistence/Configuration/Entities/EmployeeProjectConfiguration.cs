@@ -30,5 +30,31 @@ public class EmployeeProjectConfiguration : IEntityTypeConfiguration<EmployeePro
             .WithMany(x => x.EmployeeProjects)
             .HasForeignKey(x => x.EmployeeId)
             .HasConstraintName("FK_Employee_EmployeeProjects");
+
+
+        builder.HasData(
+            new EmployeeProject
+            {
+                Id = -1,
+                Title = "Трамплин",
+                Description = "Карьерный аггрегатор для студентов",
+                Specialization = "React Frontend Developer",
+                Link = null,
+                DateFrom = new DateOnly(2026, 3, 15),
+                DateTo = new DateOnly(2026, 3, 30),
+                EmployeeId = -1
+            },
+            new EmployeeProject
+            {
+                Id = -2,
+                Title = "Finance Helper",
+                Description = "Инструмент учета финансов",
+                Specialization = "React Frontend Developer",
+                Link = null,
+                DateFrom = new DateOnly(2024, 6, 1),
+                DateTo = new DateOnly(2024, 9, 1),
+                EmployeeId = -1
+            }
+        );
     }
 }

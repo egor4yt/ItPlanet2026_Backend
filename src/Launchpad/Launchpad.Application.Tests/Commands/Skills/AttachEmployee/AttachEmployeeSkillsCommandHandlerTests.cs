@@ -36,8 +36,8 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
             EmployeeId = employee.Id,
             Skills = new List<AttachEmployeeSkillsCommandRequestItem>
             {
-                new() { SkillId = (int)existingSkill.Id, Title = existingSkill.Title }, // Existing
-                new() { SkillId = null, Title = "Unit Testing" }         // New
+                new AttachEmployeeSkillsCommandRequestItem { SkillId = existingSkill.Id, Title = existingSkill.Title }, // Existing
+                new AttachEmployeeSkillsCommandRequestItem { SkillId = null, Title = "Unit Testing" } // New
             }
         };
 
@@ -73,7 +73,7 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
             EmployeeId = employee.Id,
             Skills = new List<AttachEmployeeSkillsCommandRequestItem>
             {
-                new() { SkillId = null, Title = "New" }
+                new AttachEmployeeSkillsCommandRequestItem { SkillId = null, Title = "New" }
             }
         };
 

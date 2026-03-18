@@ -20,7 +20,7 @@ public class CreateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
         // Arrange
         var employee = Fixture.Create<Employee>();
         var educationLevel = Fixture.Create<EducationLevel>();
-            
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.EducationLevels.AddAsync(educationLevel);
         await DbContext.SaveChangesAsync();
@@ -41,7 +41,7 @@ public class CreateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
 
         // Assert
         response.Should().NotBeNull();
-        
+
         var educationInDb = await DbContext.EmployeeEducations.FirstOrDefaultAsync(x => x.EmployeeId == employee.Id);
         educationInDb.Should().NotBeNull();
         educationInDb!.Organization.Should().Be(request.Organization);

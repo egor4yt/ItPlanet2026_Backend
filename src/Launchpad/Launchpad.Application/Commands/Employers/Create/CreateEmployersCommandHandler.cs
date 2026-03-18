@@ -22,7 +22,7 @@ public class CreateEmployersCommandHandler(ApplicationDbContext applicationDbCon
             Description = string.Empty,
             CompanyName = request.CompanyName,
             RegisteredOn = DateTime.UtcNow,
-            PasswordHash =  request.PasswordHash
+            PasswordHash = request.PasswordHash
         };
 
         await applicationDbContext.Employers.AddAsync(newEmployer, cancellationToken);

@@ -19,7 +19,7 @@ public class CreateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
     {
         // Arrange
         var employee = Fixture.Create<Employee>();
-            
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.SaveChangesAsync();
 
@@ -32,7 +32,7 @@ public class CreateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
 
         // Assert
         response.Should().NotBeNull();
-        
+
         var databaseEntity = await DbContext.EmployeeProjects.FirstOrDefaultAsync(x => x.EmployeeId == employee.Id);
         databaseEntity.Should().NotBeNull();
         databaseEntity.Title.Should().Be(request.Title);

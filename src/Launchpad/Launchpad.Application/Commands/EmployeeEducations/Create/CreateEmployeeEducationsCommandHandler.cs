@@ -24,7 +24,7 @@ public class CreateEmployeeEducationsCommandHandler(ApplicationDbContext applica
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 
         response.Id = newEducation.Id;
-        
+
         return response;
     }
 }

@@ -18,14 +18,14 @@ public class CreateEmployeeProjectsCommandHandler(ApplicationDbContext applicati
             Link = request.Link,
             DateFrom = request.DateFrom,
             DateTo = request.DateTo,
-            EmployeeId = request.EmployeeId,
+            EmployeeId = request.EmployeeId
         };
 
         await applicationDbContext.EmployeeProjects.AddAsync(newProject, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 
         response.Id = newProject.Id;
-        
+
         return response;
     }
 }

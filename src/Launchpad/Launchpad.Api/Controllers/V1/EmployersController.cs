@@ -37,7 +37,7 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
 
         var response = await Mediator.Send(command);
 
-        return Created($"employers", response);
+        return Created("employers", response);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
 
         return Ok(response);
     }
-    
+
     /// <summary>
     ///     Authorized employer account details
     /// </summary>
