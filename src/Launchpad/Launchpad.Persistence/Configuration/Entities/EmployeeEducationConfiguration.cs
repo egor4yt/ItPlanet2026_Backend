@@ -27,3 +27,21 @@ public class EmployeeEducationConfiguration : IEntityTypeConfiguration<EmployeeE
             .HasConstraintName("FK_Employee_EmployeeEducations");
     }
 }
+
+public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
+{
+    public void Configure(EntityTypeBuilder<Employer> builder)
+    {
+        builder
+            .Property(x => x.Email)
+            .HasColumnType("varchar(64)");
+
+        builder
+            .Property(x => x.CompanyName)
+            .HasColumnType("varchar(64)");
+
+        builder
+            .Property(x => x.Description)
+            .HasColumnType("text");
+    }
+}

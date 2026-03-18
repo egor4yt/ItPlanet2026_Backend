@@ -10,6 +10,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<EducationLevel> EducationLevels { get; set; }
     public DbSet<EmployeeProject> EmployeeProjects { get; set; }
     public DbSet<Skill> Skills { get; set; }
+    public DbSet<Employer> Employers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

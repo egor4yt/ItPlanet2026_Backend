@@ -22,6 +22,10 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
             .IsRequired(false);
 
         builder
+            .Property(x => x.Biography)
+            .HasColumnType("text");
+
+        builder
             .Property(x => x.Email)
             .HasColumnType("varchar(64)");
 
