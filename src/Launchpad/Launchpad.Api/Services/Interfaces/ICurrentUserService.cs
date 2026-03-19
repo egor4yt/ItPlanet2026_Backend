@@ -8,7 +8,7 @@ public interface ICurrentUserService
     /// <summary>
     ///     Profile ID
     /// </summary>
-    public int ProfileId { get; }
+    public long ProfileId { get; }
 
     /// <summary>
     ///     Contact email

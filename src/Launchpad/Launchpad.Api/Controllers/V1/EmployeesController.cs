@@ -50,7 +50,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     ///     Employee account details
     /// </summary>
     /// <returns>Employee data</returns>
-    [Authorize(JwtDetailsRole.Employee)]
+    [Authorize(JwtDetailsRole.Curator)]
     [HttpGet("{employeeId:long}")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeesQueryResponse), StatusCodes.Status200OK)]
@@ -58,9 +58,6 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetById(long employeeId)
     {
-        if (CurrentUserService.ProfileId != employeeId)
-            throw new NotFoundException("NotFound");
-
         var command = new GetOneEmployeesQueryRequest
         {
             Id = employeeId

@@ -33,7 +33,7 @@ public class AuthorizeEmployeeCommandHandlerTests : BaseApplicationTest
 
         // Assert
         response.Should().NotBeNull();
-        response.EmployeeId.Should().Be(employee.Id);
+        response.ProfileId.Should().Be(employee.Id);
         response.BearerToken.Should().NotBeNullOrEmpty();
     }
 

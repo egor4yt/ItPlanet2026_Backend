@@ -14,6 +14,7 @@ public class CreateEmployersCommandHandler(ApplicationDbContext applicationDbCon
         var response = new CreateEmployersCommandResponse();
 
         var employerExists = await applicationDbContext.Employers.AnyAsync(x => x.Email == request.Email, cancellationToken);
+        employerExists = employerExists || await applicationDbContext.Curators.AnyAsync(x => x.Email == request.Email, cancellationToken);
         if (employerExists) throw new ConflictException("EmployerAlreadyExists");
 
         var newEmployer = new Employer

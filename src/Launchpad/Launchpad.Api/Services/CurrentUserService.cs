@@ -11,14 +11,14 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     private readonly ClaimsPrincipal? _user = httpContextAccessor.HttpContext?.User;
 
     /// <inheritdoc />
-    public int ProfileId
+    public long ProfileId
     {
         get
         {
             var stringUserId = _user?.FindFirstValue(UserJwtClaimNames.ProfileId);
             if (string.IsNullOrWhiteSpace(stringUserId)) throw new ForbiddenException("User id was null");
 
-            var longUserId = int.Parse(stringUserId);
+            var longUserId = long.Parse(stringUserId);
             return longUserId;
         }
     }

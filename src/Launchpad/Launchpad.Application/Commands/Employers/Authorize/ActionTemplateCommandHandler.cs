@@ -19,9 +19,25 @@ public class AuthorizeEmployersCommandHandler(ApplicationDbContext applicationDb
                 , cancellationToken);
 
         if (employer == null)
-            throw new ForbiddenException("Forbidden");
+        {
+            var curator = await applicationDbContext.Curators
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == request.Email
+                                          && x.PasswordHash == request.PasswordHash
+                    , cancellationToken);
 
-        response.EmployerId = employer.Id;
+            if (curator != null)
+            {
+                response.ProfileId = curator.Id;
+                response.BearerToken = SecurityHelper.GenerateJwtToken(request.JwtDescriptorDetails, new JwtDetails(curator));
+
+                return response;
+            }
+            
+            throw new ForbiddenException("Forbidden");
+        }
+
+        response.ProfileId = employer.Id;
         response.BearerToken = SecurityHelper.GenerateJwtToken(request.JwtDescriptorDetails, new JwtDetails(employer));
 
         return response;

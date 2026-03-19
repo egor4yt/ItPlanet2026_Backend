@@ -2,6 +2,6 @@
 
 public class AuthorizeEmployersCommandResponse
 {
-    public long EmployerId { get; set; }
+    public long ProfileId { get; set; }
     public string BearerToken { get; set; } = null!;
 }

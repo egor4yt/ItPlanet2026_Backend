@@ -13,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Employer> Employers { get; set; }
     public DbSet<ActivityFieldGroup> ActivityFieldGroups { get; set; }
     public DbSet<ActivityField> ActivityFields { get; set; }
+    public DbSet<Curator> Curators { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

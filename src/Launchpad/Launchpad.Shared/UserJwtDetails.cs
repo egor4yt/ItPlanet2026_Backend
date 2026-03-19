@@ -9,11 +9,18 @@ public class JwtDetails
         ProfileRole = JwtDetailsRole.Employee;
     }
 
-    public JwtDetails(Domain.Entities.Employer employee)
+    public JwtDetails(Domain.Entities.Employer employer)
     {
-        ProfileId = employee.Id.ToString();
-        ContactEmail = employee.Email;
+        ProfileId = employer.Id.ToString();
+        ContactEmail = employer.Email;
         ProfileRole = JwtDetailsRole.Employer;
+    }
+
+    public JwtDetails(Domain.Entities.Curator curator)
+    {
+        ProfileId = curator.Id.ToString();
+        ContactEmail = curator.Email;
+        ProfileRole = curator.IsAdmin ? JwtDetailsRole.Administrator : JwtDetailsRole.Curator;
     }
 
     public string ProfileId { get; }
