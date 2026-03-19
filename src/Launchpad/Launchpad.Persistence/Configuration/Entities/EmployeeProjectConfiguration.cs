@@ -31,7 +31,6 @@ public class EmployeeProjectConfiguration : IEntityTypeConfiguration<EmployeePro
             .HasForeignKey(x => x.EmployeeId)
             .HasConstraintName("FK_Employee_EmployeeProjects");
 
-
         builder.HasData(
             new EmployeeProject
             {

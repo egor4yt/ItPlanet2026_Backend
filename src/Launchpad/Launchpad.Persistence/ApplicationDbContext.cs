@@ -14,6 +14,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ActivityFieldGroup> ActivityFieldGroups { get; set; }
     public DbSet<ActivityField> ActivityFields { get; set; }
     public DbSet<Curator> Curators { get; set; }
+    public DbSet<EmployerVerificationStatus> EmployerVerificationStatuses { get; set; }
+    public DbSet<EmployerVerification> EmployerVerifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
