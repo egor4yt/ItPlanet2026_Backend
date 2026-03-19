@@ -28,6 +28,16 @@ public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
             .Property(x => x.PasswordHash)
             .HasColumnType("varchar(64)");
 
+        builder
+            .Property(x => x.Website)
+            .HasColumnType("varchar(256)")
+            .IsRequired(false);
+        
+        builder
+            .HasMany(x => x.ActivityFields)
+            .WithMany(x => x.Employers)
+            .UsingEntity(x => x.ToTable("ActivityField_Employer_Map"));
+
         builder.HasData(new Employer
         {
             Id = -1,

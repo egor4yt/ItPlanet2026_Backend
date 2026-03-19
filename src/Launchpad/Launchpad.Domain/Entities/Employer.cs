@@ -9,4 +9,7 @@ public class Employer
     public DateTime RegisteredOn { get; set; }
 
     public string? Description { get; set; }
+    public string? Website { get; set; }
+
+    public virtual ICollection<ActivityField> ActivityFields { get; set; }
 }

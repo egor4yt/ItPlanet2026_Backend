@@ -9,4 +9,9 @@ public class UpdateEmployerDescriptionBody
     ///     New employer description
     /// </summary>
     public string? Description { get; init; }
+
+    /// <summary>
+    ///     New employer activity fields
+    /// </summary>
+    public List<int>? ActivityFieldIds { get; init; }
 }

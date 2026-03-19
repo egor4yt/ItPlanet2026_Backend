@@ -7,4 +7,5 @@ public class ActivityField
     public int ActivityFieldGroupId { get; set; }
 
     public virtual ActivityFieldGroup ActivityFieldGroup { get; set; }
+    public virtual ICollection<Employer> Employers { get; set; }
 }

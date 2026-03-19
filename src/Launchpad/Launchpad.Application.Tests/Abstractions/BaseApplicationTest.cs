@@ -44,6 +44,8 @@ public abstract class BaseApplicationTest : IDisposable
         Fixture.Customize(new EmployeeProjectFixture());
         Fixture.Customize(new EmployerFixture());
         Fixture.Customize(new DateOnlyFixture());
+        Fixture.Customize(new ActivityFieldGroupFixture());
+        Fixture.Customize(new ActivityFieldFixture());
     }
 
     public void Dispose()
