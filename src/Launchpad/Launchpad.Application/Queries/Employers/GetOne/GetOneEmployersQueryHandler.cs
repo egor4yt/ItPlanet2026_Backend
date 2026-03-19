@@ -25,7 +25,7 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
             .Select(x => x.ActivityFieldGroup.Title)
             .Distinct()
             .Order();
-        response.ActivityFields = string.Join(", ", activityGroupTitles);
+        response.ActivityFields = employer.ActivityFields.Count > 0 ? string.Join(", ", activityGroupTitles) : null;
 
         return response;
     }
