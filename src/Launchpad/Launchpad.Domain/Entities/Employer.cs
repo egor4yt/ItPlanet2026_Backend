@@ -5,7 +5,8 @@ public class Employer
     public long Id { get; set; }
     public string Email { get; set; } = null!;
     public string CompanyName { get; set; } = null!;
-    public string Description { get; set; } = null!;
     public string PasswordHash { get; set; } = null!;
     public DateTime RegisteredOn { get; set; }
+    
+    public string? Description { get; set; }
 }

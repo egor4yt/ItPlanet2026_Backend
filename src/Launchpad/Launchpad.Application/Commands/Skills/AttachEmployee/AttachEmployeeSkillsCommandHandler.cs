@@ -6,12 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Commands.Skills.AttachEmployee;
 
-public class AttachEmployeeSkillsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<AttachEmployeeSkillsCommandRequest, AttachEmployeeSkillsCommandResponse>
+public class AttachEmployeeSkillsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<AttachEmployeeSkillsCommandRequest>
 {
-    public async Task<AttachEmployeeSkillsCommandResponse> Handle(AttachEmployeeSkillsCommandRequest request, CancellationToken cancellationToken)
+    public async Task Handle(AttachEmployeeSkillsCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new AttachEmployeeSkillsCommandResponse();
-
         var employee = await applicationDbContext.Employees
             .Include(x => x.Skills)
             .FirstOrDefaultAsync(x => x.Id == request.EmployeeId, cancellationToken);
@@ -42,7 +40,5 @@ public class AttachEmployeeSkillsCommandHandler(ApplicationDbContext application
         }
 
         await applicationDbContext.SaveChangesAsync(cancellationToken);
-
-        return response;
     }
 }

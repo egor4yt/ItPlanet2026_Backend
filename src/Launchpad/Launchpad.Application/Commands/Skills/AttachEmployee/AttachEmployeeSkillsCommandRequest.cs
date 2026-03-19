@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Commands.Skills.AttachEmployee;
 
-public class AttachEmployeeSkillsCommandRequest : IRequest<AttachEmployeeSkillsCommandResponse>
+public class AttachEmployeeSkillsCommandRequest : IRequest
 {
     public long EmployeeId { get; set; }
     public IEnumerable<AttachEmployeeSkillsCommandRequestItem> Skills { get; set; } = null!;

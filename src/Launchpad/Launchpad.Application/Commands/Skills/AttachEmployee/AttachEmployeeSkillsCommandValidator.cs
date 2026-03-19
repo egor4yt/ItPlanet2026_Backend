@@ -6,9 +6,6 @@ public class AttachEmployeeSkillsCommandValidator : AbstractValidator<AttachEmpl
 {
     public AttachEmployeeSkillsCommandValidator()
     {
-        RuleFor(x => x.EmployeeId)
-            .GreaterThan(0);
-
         RuleForEach(x => x.Skills)
             .ChildRules(c =>
             {

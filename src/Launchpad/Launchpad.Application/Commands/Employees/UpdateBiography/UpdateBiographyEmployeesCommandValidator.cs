@@ -6,9 +6,6 @@ public class UpdateBiographyEmployeesCommandValidator : AbstractValidator<Update
 {
     public UpdateBiographyEmployeesCommandValidator()
     {
-        RuleFor(x => x.EmployeeId)
-            .GreaterThan(0);
-
         RuleFor(x => x.Biography)
             .MaximumLength(4096);
     }

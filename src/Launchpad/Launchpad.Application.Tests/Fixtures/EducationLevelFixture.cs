@@ -10,7 +10,6 @@ public class EducationLevelFixture : ICustomization
     {
         fixture.Customize<EducationLevel>(composer => composer
             .With(x => x.Id, () => Interlocked.Increment(ref _id))
-            .Without(x => x.EmployeeEducations)
-            .With(x => x.Title, () => "Level " + Guid.NewGuid()));
+            .Without(x => x.EmployeeEducations));
     }
 }

@@ -17,8 +17,5 @@ public class CreateEmployeeProjectsCommandValidator : AbstractValidator<CreateEm
 
         RuleFor(x => x.Specialization)
             .Length(1, 64);
-
-        RuleFor(x => x.EmployeeId)
-            .GreaterThan(0);
     }
 }

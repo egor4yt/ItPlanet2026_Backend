@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Commands.Employees.Update;
 
-public class UpdateEmployeesCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeesCommandRequest, UpdateEmployeesCommandResponse>
+public class UpdateEmployeesCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeesCommandRequest>
 {
-    public async Task<UpdateEmployeesCommandResponse> Handle(UpdateEmployeesCommandRequest request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateEmployeesCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new UpdateEmployeesCommandResponse();
-
         await applicationDbContext.Employees
             .Where(x => x.Id == request.EmployeeId)
             .ExecuteUpdateAsync(x => x
@@ -19,7 +17,5 @@ public class UpdateEmployeesCommandHandler(ApplicationDbContext applicationDbCon
                     .SetProperty(p => p.MiddleName, request.MiddleName)
                     .SetProperty(p => p.BirthDate, request.BirthDate)
                 , cancellationToken);
-
-        return response;
     }
 }

@@ -2,6 +2,7 @@
 using Launchpad.Api.Contracts.Employers;
 using Launchpad.Application.Commands.Employers.Authorize;
 using Launchpad.Application.Commands.Employers.Create;
+using Launchpad.Application.Commands.Employers.UpdateDescription;
 using Launchpad.Application.Queries.Employers.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -82,5 +83,26 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
         var response = await Mediator.Send(command);
 
         return Ok(response);
+    }
+
+    /// <summary>
+    ///     Update authorized employer description
+    /// </summary>
+    [Authorize(JwtDetailsRole.Employer)]
+    [HttpPatch("description")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> UpdateBiography([FromBody] UpdateEmployerDescriptionBody body)
+    {
+        var command = new UpdateDescriptionEmployersCommandRequest
+        {
+            EmployerId = CurrentUserService.ProfileId,
+            Description = body.Description
+        };
+
+        await Mediator.Send(command);
+
+        return NoContent();
     }
 }

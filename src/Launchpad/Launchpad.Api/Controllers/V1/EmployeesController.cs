@@ -113,7 +113,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
             })
         };
 
-        _ = await Mediator.Send(command);
+        await Mediator.Send(command);
 
         return NoContent();
     }
@@ -134,7 +134,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
             Biography = body.Biography
         };
 
-        _ = await Mediator.Send(command);
+        await Mediator.Send(command);
 
         return NoContent();
     }
@@ -180,7 +180,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
             BirthDate = body.BirthDate
         };
 
-        _ = await Mediator.Send(command);
+        await Mediator.Send(command);
 
         return NoContent();
     }

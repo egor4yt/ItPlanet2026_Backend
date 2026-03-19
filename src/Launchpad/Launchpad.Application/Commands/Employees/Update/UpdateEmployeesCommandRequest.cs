@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Commands.Employees.Update;
 
-public class UpdateEmployeesCommandRequest : IRequest<UpdateEmployeesCommandResponse>
+public class UpdateEmployeesCommandRequest : IRequest
 {
     public long EmployeeId { get; set; }
     public string FirstName { get; set; } = null!;

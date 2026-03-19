@@ -28,12 +28,10 @@ public class UpdateEmployeesCommandHandlerTests : BaseApplicationTest
             .Create();
 
         // Act
-        var response = await _handler.Handle(request, CancellationToken.None);
+        await _handler.Handle(request, CancellationToken.None);
         DbContext.ChangeTracker.Clear();
 
         // Assert
-        response.Should().NotBeNull();
-
         var employeeInDb = await DbContext.Employees.FirstOrDefaultAsync(x => x.Id == employee.Id);
         employeeInDb.Should().NotBeNull();
         employeeInDb.FirstName.Should().Be(request.FirstName);
