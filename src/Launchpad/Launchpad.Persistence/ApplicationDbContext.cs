@@ -11,6 +11,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<EmployeeProject> EmployeeProjects { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Employer> Employers { get; set; }
+    public DbSet<ActivityFieldGroup> ActivityFieldGroups { get; set; }
+    public DbSet<ActivityField> ActivityFields { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
