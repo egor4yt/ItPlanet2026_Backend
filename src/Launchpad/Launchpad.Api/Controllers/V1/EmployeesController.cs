@@ -2,6 +2,7 @@
 using Launchpad.Api.Contracts.Employees;
 using Launchpad.Application.Commands.Employees.Authorize;
 using Launchpad.Application.Commands.Employees.Create;
+using Launchpad.Application.Commands.Employees.Update;
 using Launchpad.Application.Commands.Employees.UpdateBiography;
 using Launchpad.Application.Commands.Skills.AttachEmployee;
 using Launchpad.Application.Exceptions;
@@ -97,7 +98,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     /// </summary>
     [Authorize(JwtDetailsRole.Employee)]
     [HttpPatch("skills")]
-    [ProducesResponseType(typeof(AttachEmployeeSkillsCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> UpdateSkills([FromBody] UpdateEmployeeSkillsBody body)
@@ -122,7 +123,7 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     /// </summary>
     [Authorize(JwtDetailsRole.Employee)]
     [HttpPatch("biography")]
-    [ProducesResponseType(typeof(UpdateBiographyEmployeesCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> UpdateBiography([FromBody] UpdateEmployeeBiographyBody body)
@@ -158,5 +159,29 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
         var response = await Mediator.Send(command);
 
         return Ok(response);
+    }
+
+    /// <summary>
+    ///     Update employee details
+    /// </summary>
+    [AllowAnonymous]
+    [HttpPut]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateMe([FromBody] UpdateEmployeeBody body)
+    {
+        var command = new UpdateEmployeesCommandRequest
+        {
+            EmployeeId = CurrentUserService.ProfileId,
+            FirstName = body.FirstName,
+            LastName = body.LastName,
+            MiddleName = body.MiddleName,
+            IsMale = body.IsMale,
+            BirthDate = body.BirthDate
+        };
+
+        _ = await Mediator.Send(command);
+
+        return NoContent();
     }
 }

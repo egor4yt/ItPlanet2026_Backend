@@ -6,7 +6,7 @@ public class GetOneEmployeesQueryResponse
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
     public string? MiddleName { get; set; }
-    public string Biography { get; set; } = null!;
+    public string? Biography { get; set; } = null!;
     public IEnumerable<GetOneEmployeeQueryResponseSkill> Skills { get; set; } = null!;
     public IEnumerable<GetOneEmployeeQueryResponseEducation> Education { get; set; } = null!;
     public IEnumerable<GetOneEmployeeQueryResponseProject> Projects { get; set; } = null!;

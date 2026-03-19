@@ -10,9 +10,11 @@ public class UpdateBiographyEmployeesCommandHandler(ApplicationDbContext applica
     {
         var response = new UpdateBiographyEmployeesCommandResponse();
 
-        await applicationDbContext.Employees.ExecuteUpdateAsync(x =>
-                x.SetProperty(p => p.Biography, request.Biography)
-            , cancellationToken);
+        await applicationDbContext.Employees
+            .Where(x => x.Id == request.EmployeeId)
+            .ExecuteUpdateAsync(x =>
+                    x.SetProperty(p => p.Biography, request.Biography)
+                , cancellationToken);
 
         return response;
     }

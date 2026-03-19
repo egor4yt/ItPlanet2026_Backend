@@ -3,6 +3,7 @@ using System;
 using Launchpad.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Launchpad.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260319102236_AddedBirthDateEmployee")]
+    partial class AddedBirthDateEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,10 +105,11 @@ namespace Launchpad.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly?>("BirthDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -144,6 +148,7 @@ namespace Launchpad.Persistence.Migrations
                         {
                             Id = -1L,
                             Biography = "Специализируюсь на экосистеме React: TypeScript, Redux Toolkit, Next.js. За это время успел поработать как над крупными корпоративными проектами (CRM, панели администратора), так и над высоконагруженными публичными сервисами.\n\nОсновной фокус: построение компонентной архитектуры, рефакторинг легаси, внедрение SSR (Next.js) и настройка сборки (Webpack/Vite). Имею опыт наставничества джуниоров и проведения технических интервью. Ищу компанию с прозрачными процессами и современным технологическим стеком, где могу приносить пользу и развиваться дальше.",
+                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "kadet_2003@list.ru",
                             FirstName = "Артём",
                             LastName = "Терешков",
