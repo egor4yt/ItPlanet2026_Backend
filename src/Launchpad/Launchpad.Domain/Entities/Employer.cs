@@ -7,6 +7,6 @@ public class Employer
     public string CompanyName { get; set; } = null!;
     public string PasswordHash { get; set; } = null!;
     public DateTime RegisteredOn { get; set; }
-    
+
     public string? Description { get; set; }
 }
