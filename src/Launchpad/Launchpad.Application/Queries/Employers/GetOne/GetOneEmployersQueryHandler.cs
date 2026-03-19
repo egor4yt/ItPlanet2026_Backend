@@ -9,17 +9,24 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
 {
     public async Task<GetOneEmployersQueryResponse> Handle(GetOneEmployersQueryRequest request, CancellationToken cancellationToken)
     {
-        var response = await applicationDbContext.Employers
+        var employer = await applicationDbContext.Employers
             .AsNoTracking()
-            .Where(x => x.Id == request.Id)
-            .Select(x => new GetOneEmployersQueryResponse
-            {
-                CompanyName = x.CompanyName,
-                Description = x.Description,
-                Verified = false
-            })
-            .FirstOrDefaultAsync(cancellationToken);
+            .Include(x => x.ActivityFields)
+            .ThenInclude(x => x.ActivityFieldGroup)
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        if (employer == null) throw new NotFoundException("EmployerNotFound");
 
-        return response ?? throw new NotFoundException("NotFound");
+        var response = new GetOneEmployersQueryResponse();
+        response.CompanyName = employer.CompanyName;
+        response.Description = employer.Description;
+        response.Verified = false;
+
+        var activityGroupTitles = employer.ActivityFields
+            .Select(x => x.ActivityFieldGroup.Title)
+            .Distinct()
+            .Order();
+        response.ActivityFields = string.Join(", ", activityGroupTitles);
+
+        return response;
     }
 }
