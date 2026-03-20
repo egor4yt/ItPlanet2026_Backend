@@ -45,7 +45,7 @@ public class CreateEmployersCommandHandlerTests : BaseApplicationTest
         var existingEmail = "existing@example.com";
         var existingEmployer = Fixture.Create<Employer>();
         existingEmployer.Email = existingEmail;
-        
+
         await DbContext.Employers.AddAsync(existingEmployer);
         await DbContext.SaveChangesAsync();
 

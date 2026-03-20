@@ -75,12 +75,12 @@ public class EmployersController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Me()
     {
-        var command = new GetOneEmployersQueryRequest
+        var query = new GetOneEmployersQueryRequest
         {
             Id = CurrentUserService.ProfileId
         };
 
-        var response = await Mediator.Send(command);
+        var response = await Mediator.Send(query);
 
         return Ok(response);
     }

@@ -28,7 +28,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
 
         var employer = Fixture.Create<Employer>();
         employer.ActivityFields = [activityField];
-        
+
         await DbContext.Employers.AddAsync(employer);
 
         await DbContext.SaveChangesAsync();

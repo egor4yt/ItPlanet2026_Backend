@@ -57,12 +57,12 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetById(long employeeId)
     {
-        var command = new GetOneEmployeesQueryRequest
+        var query = new GetOneEmployeesQueryRequest
         {
             Id = employeeId
         };
 
-        var response = await Mediator.Send(command);
+        var response = await Mediator.Send(query);
 
         return Ok(response);
     }
@@ -79,12 +79,12 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Me()
     {
-        var command = new GetOneEmployeesQueryRequest
+        var query = new GetOneEmployeesQueryRequest
         {
             Id = CurrentUserService.ProfileId
         };
 
-        var response = await Mediator.Send(command);
+        var response = await Mediator.Send(query);
 
         return Ok(response);
     }

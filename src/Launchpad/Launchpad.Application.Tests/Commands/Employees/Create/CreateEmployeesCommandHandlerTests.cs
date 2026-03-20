@@ -45,7 +45,7 @@ public class CreateEmployeesCommandHandlerTests : BaseApplicationTest
     {
         // Arrange
         var existingEmployee = Fixture.Create<Employee>();
-        
+
         await DbContext.Employees.AddAsync(existingEmployee);
         await DbContext.SaveChangesAsync();
 

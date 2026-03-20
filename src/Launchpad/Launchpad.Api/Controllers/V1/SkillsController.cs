@@ -17,15 +17,15 @@ public class SkillsController : ApiControllerBase
     /// <returns>Skills</returns>
     [HttpGet]
     [ProducesResponseType(typeof(SearchSkillsQueryResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Search([FromQuery] string query = "", [FromQuery] int count = 10)
+    public async Task<IActionResult> Search([FromQuery(Name = "query")] string titleQuery = "", [FromQuery] int count = 10)
     {
-        var command = new SearchSkillsQueryRequest
+        var query = new SearchSkillsQueryRequest
         {
-            Title = query.ToLower(),
+            Title = titleQuery.ToLower().Trim(),
             Count = count
         };
 
-        var response = await Mediator.Send(command);
+        var response = await Mediator.Send(query);
 
         return Ok(response);
     }

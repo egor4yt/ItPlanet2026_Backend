@@ -20,6 +20,8 @@ public class CreateEmployerVerificationsCommandHandler(ApplicationDbContext appl
             RequestMessage = request.RequestMessage,
             ChangedOn = DateTime.UtcNow,
             EmployerId = request.EmployerId,
+            TaxpayerIndividualNumber = request.TaxpayerIndividualNumber,
+            SocialNetworkLink = request.SocialNetworkLink,
             StatusId = Domain.Metadata.EmployerVerificationStatusId.Pending,
             EmployerVerificationTypeId = request.VerificationTypeId
         };

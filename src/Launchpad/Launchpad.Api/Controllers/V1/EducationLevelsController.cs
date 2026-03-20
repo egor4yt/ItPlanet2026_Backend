@@ -19,9 +19,9 @@ public class EducationLevelsController : ApiControllerBase
     [ProducesResponseType(typeof(GetAllEducationLevelsQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GelAll()
     {
-        var command = new GetAllEducationLevelsQueryRequest();
+        var query = new GetAllEducationLevelsQueryRequest();
 
-        var response = await Mediator.Send(command);
+        var response = await Mediator.Send(query);
 
         return Ok(response);
     }
