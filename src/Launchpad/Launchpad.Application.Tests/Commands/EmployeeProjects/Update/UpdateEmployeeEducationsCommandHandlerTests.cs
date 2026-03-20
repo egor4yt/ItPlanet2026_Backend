@@ -24,9 +24,9 @@ public class UpdateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
 
-        var project = Fixture.Build<EmployeeProject>()
-            .With(x => x.EmployeeId, employee.Id)
-            .Create();
+        var project = Fixture.Create<EmployeeProject>();
+        project.EmployeeId = employee.Id;
+        
         await DbContext.EmployeeProjects.AddAsync(project);
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();

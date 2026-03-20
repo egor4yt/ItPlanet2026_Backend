@@ -44,16 +44,13 @@ public class CreateEmployeesCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldThrowConflictException_WhenEmailAlreadyExists()
     {
         // Arrange
-        var existingEmail = "existing@example.com";
-        var existingEmployee = Fixture.Build<Employee>()
-            .Without(x => x.Id)
-            .With(x => x.Email, existingEmail)
-            .Create();
+        var existingEmployee = Fixture.Create<Employee>();
+        
         await DbContext.Employees.AddAsync(existingEmployee);
         await DbContext.SaveChangesAsync();
 
         var request = Fixture.Build<CreateEmployeesCommandRequest>()
-            .With(x => x.Email, existingEmail)
+            .With(x => x.Email, existingEmployee.Email)
             .With(x => x.JwtDescriptorDetails, DefaultJwtDetails)
             .Create();
 

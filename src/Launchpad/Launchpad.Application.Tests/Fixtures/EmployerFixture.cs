@@ -9,6 +9,7 @@ public class EmployerFixture : ICustomization
         fixture.Customize<Employer>(composer => composer
             .Without(x => x.Id)
             .Without(x => x.ActivityFields)
+            .Without(x => x.Verification)
         );
     }
 }

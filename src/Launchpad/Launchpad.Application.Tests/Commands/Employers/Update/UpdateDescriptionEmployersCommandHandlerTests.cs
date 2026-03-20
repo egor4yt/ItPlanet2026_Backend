@@ -15,7 +15,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
     }
 
     [Fact]
-    public async Task Handle_ShouldUpdateEmployer_WhenRequestIsValid()
+    public async Task Handle_Admin_ShouldUpdateEmployer_WhenRequestIsValid()
     {
         // Arrange
         var activityFieldGroup = Fixture.Create<ActivityFieldGroup>();
@@ -26,10 +26,9 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
         await DbContext.ActivityFields.AddAsync(activityField);
         await DbContext.ActivityFields.AddAsync(otherActivityField);
 
-        var employer = Fixture
-            .Build<Employer>()
-            .With(x => x.ActivityFields, [activityField])
-            .Create();
+        var employer = Fixture.Create<Employer>();
+        employer.ActivityFields = [activityField];
+        
         await DbContext.Employers.AddAsync(employer);
 
         await DbContext.SaveChangesAsync();
@@ -38,6 +37,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
         var request = Fixture.Build<UpdateEmployersCommandRequest>()
             .With(x => x.EmployerId, employer.Id)
             .With(x => x.ActivityFieldIds, [otherActivityField.Id])
+            .Without(x => x.EmployerId)
             .Create();
 
         // Act
@@ -58,7 +58,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
     }
 
     [Fact]
-    public async Task Handle_ShouldUpdateEmployer_WhenDescriptionIsEmpty()
+    public async Task Handle_Admin_ShouldUpdateEmployer_WhenDescriptionIsEmpty()
     {
         // Arrange
         var employer = Fixture.Create<Employer>();
@@ -68,6 +68,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
         var request = Fixture.Build<UpdateEmployersCommandRequest>()
             .With(x => x.EmployerId, employer.Id)
             .With(x => x.Description, string.Empty)
+            .Without(x => x.EmployerId)
             .Create();
         DbContext.ChangeTracker.Clear();
 
@@ -84,7 +85,7 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
     }
 
     [Fact]
-    public async Task Handle_ShouldUpdateEmployer_WhenDescriptionIsNull()
+    public async Task Handle_Admin_ShouldUpdateEmployer_WhenDescriptionIsNull()
     {
         // Arrange
         var employer = Fixture.Create<Employer>();
@@ -94,8 +95,9 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
 
         var request = Fixture.Build<UpdateEmployersCommandRequest>()
             .With(x => x.EmployerId, employer.Id)
+            .Without(x => x.Description)
+            .Without(x => x.EmployerId)
             .Create();
-        request.Description = null;
 
         // Act
         await _handler.Handle(request, CancellationToken.None);

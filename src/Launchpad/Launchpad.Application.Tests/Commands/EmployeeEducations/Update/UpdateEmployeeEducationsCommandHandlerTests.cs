@@ -28,10 +28,10 @@ public class UpdateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
 
-        var education = Fixture.Build<EmployeeEducation>()
-            .With(x => x.EmployeeId, employee.Id)
-            .With(x => x.EducationLevelId, educationLevel.Id)
-            .Create();
+        var education = Fixture.Create<EmployeeEducation>();
+        education.EmployeeId = employee.Id;
+        education.EducationLevelId = educationLevel.Id;
+
         await DbContext.EmployeeEducations.AddAsync(education);
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();

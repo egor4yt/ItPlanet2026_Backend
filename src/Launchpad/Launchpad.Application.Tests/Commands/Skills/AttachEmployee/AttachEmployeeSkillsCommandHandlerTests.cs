@@ -19,17 +19,14 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldAttachNewAndExistingSkills_WhenRequestIsValid()
     {
         // Arrange
-        var employee = Fixture.Build<Employee>()
-            .Without(x => x.Id)
-            .Without(x => x.Skills)
-            .Create();
-        var existingSkill = Fixture.Build<Skill>()
-            .Without(x => x.Id)
-            .With(x => x.Title, "C#")
-            .Create();
+        var employee = Fixture.Create<Employee>();
+        var existingSkill = Fixture.Create<Skill>();
+        existingSkill.Title = "C#";
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.Skills.AddAsync(existingSkill);
         await DbContext.SaveChangesAsync();
+        DbContext.ChangeTracker.Clear();
 
         var request = new AttachEmployeeSkillsCommandRequest
         {
@@ -43,6 +40,7 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
 
         // Act
         await _handler.Handle(request, CancellationToken.None);
+        DbContext.ChangeTracker.Clear();
 
         // Assert
         var employeeWithSkills = await DbContext.Employees
@@ -58,13 +56,11 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldClearExistingSkills_WhenNewSkillsProvided()
     {
         // Arrange
-        var oldSkill = Fixture.Build<Skill>()
-            .Without(x => x.Id)
-            .Create();
-        var employee = Fixture.Build<Employee>()
-            .Without(x => x.Id)
-            .With(x => x.Skills, new List<Skill> { oldSkill })
-            .Create();
+
+        var oldSkill = Fixture.Create<Skill>();
+        var employee = Fixture.Create<Employee>();
+        employee.Skills = [oldSkill];
+
         await DbContext.Employees.AddAsync(employee);
         await DbContext.SaveChangesAsync();
 
@@ -96,7 +92,7 @@ public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
         // Arrange
         var request = new AttachEmployeeSkillsCommandRequest
         {
-            EmployeeId = 999,
+            EmployeeId = long.MinValue,
             Skills = new List<AttachEmployeeSkillsCommandRequestItem>()
         };
 
