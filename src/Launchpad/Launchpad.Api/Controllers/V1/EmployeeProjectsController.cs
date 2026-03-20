@@ -45,7 +45,7 @@ public class EmployeeProjectsController : ApiControllerBase
     ///     Update project
     /// </summary>
     [HttpPut("{projectId:long}")]
-    [ProducesResponseType(typeof(UpdateEmployeeProjectsCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Update([FromRoute] long projectId, [FromBody] UpdateEmployeeProjectBody body)
@@ -61,7 +61,10 @@ public class EmployeeProjectsController : ApiControllerBase
             DateTo = body.DateTo
         };
 
-        _ = await Mediator.Send(command);
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employee))
+            command.EmployerId = CurrentUserService.ProfileId;
+
+        await Mediator.Send(command);
 
         return NoContent();
     }
@@ -79,6 +82,9 @@ public class EmployeeProjectsController : ApiControllerBase
         {
             ProjectId = projectId
         };
+
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employee))
+            command.EmployerId = CurrentUserService.ProfileId;
 
         await Mediator.Send(command);
 

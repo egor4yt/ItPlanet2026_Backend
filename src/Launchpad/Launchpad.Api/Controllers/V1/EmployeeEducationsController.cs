@@ -59,6 +59,9 @@ public class EmployeeEducationsController : ApiControllerBase
             EducationId = educationId
         };
 
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employee))
+            command.EmployerId = CurrentUserService.ProfileId;
+
         await Mediator.Send(command);
 
         return NoContent();
@@ -77,6 +80,9 @@ public class EmployeeEducationsController : ApiControllerBase
         {
             EducationId = educationId
         };
+
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employee))
+            command.EmployerId = CurrentUserService.ProfileId;
 
         await Mediator.Send(command);
 

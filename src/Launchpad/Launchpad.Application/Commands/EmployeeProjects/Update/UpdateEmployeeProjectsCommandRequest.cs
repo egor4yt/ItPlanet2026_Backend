@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Commands.EmployeeProjects.Update;
 
-public class UpdateEmployeeProjectsCommandRequest : IRequest<UpdateEmployeeProjectsCommandResponse>
+public class UpdateEmployeeProjectsCommandRequest : IRequest
 {
     public long ProjectId { get; set; }
     public string Title { get; set; } = null!;
@@ -11,4 +11,5 @@ public class UpdateEmployeeProjectsCommandRequest : IRequest<UpdateEmployeeProje
     public string? Link { get; set; }
     public DateOnly DateFrom { get; set; }
     public DateOnly DateTo { get; set; }
+    public long? EmployerId { get; set; }
 }

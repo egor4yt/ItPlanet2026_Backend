@@ -8,8 +8,12 @@ public class DeleteEmployeeEducationsCommandHandler(ApplicationDbContext applica
 {
     public async Task Handle(DeleteEmployeeEducationsCommandRequest request, CancellationToken cancellationToken)
     {
-        await applicationDbContext.EmployeeEducations
-            .Where(x => x.Id == request.EducationId)
-            .ExecuteDeleteAsync(cancellationToken);
+        var query = applicationDbContext.EmployeeEducations
+            .Where(x => x.Id == request.EducationId);
+
+        if (request.EmployerId.HasValue)
+            query = query.Where(x => x.EmployeeId == request.EmployerId);
+
+        await query.ExecuteDeleteAsync(cancellationToken);
     }
 }

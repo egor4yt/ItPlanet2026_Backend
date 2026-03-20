@@ -25,4 +25,11 @@ public interface ICurrentUserService
     /// </summary>
     /// <returns><see langword="true" /> if the user was authenticated, otherwise <see langword="false" /></returns>
     public bool IsAuthenticated { get; }
+
+    /// <summary>
+    ///     Checks if the current user belongs to the specified role.
+    /// </summary>
+    /// <param name="role">The role to check against the current user's roles.</param>
+    /// <returns>True if the current user belongs to the specified role, otherwise false.</returns>
+    bool IsInRole(string role);
 }

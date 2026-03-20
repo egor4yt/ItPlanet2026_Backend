@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Commands.EmployeeProjects.Update;
 
-public class UpdateEmployeeProjectsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeeProjectsCommandRequest, UpdateEmployeeProjectsCommandResponse>
+public class UpdateEmployeeProjectsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeeProjectsCommandRequest>
 {
-    public async Task<UpdateEmployeeProjectsCommandResponse> Handle(UpdateEmployeeProjectsCommandRequest request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateEmployeeProjectsCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new UpdateEmployeeProjectsCommandResponse();
+        var query = applicationDbContext.EmployeeProjects
+            .Where(x => x.Id == request.ProjectId);
 
-        await applicationDbContext.EmployeeProjects
-            .Where(x => x.Id == request.ProjectId)
-            .ExecuteUpdateAsync(x => x
-                    .SetProperty(p => p.Title, request.Title)
-                    .SetProperty(p => p.Description, request.Description)
-                    .SetProperty(p => p.Specialization, request.Specialization)
-                    .SetProperty(p => p.Link, request.Link)
-                    .SetProperty(p => p.DateFrom, request.DateFrom)
-                    .SetProperty(p => p.DateTo, request.DateTo)
-                , cancellationToken);
+        if (request.EmployerId.HasValue)
+            query = query.Where(x => x.EmployeeId == request.EmployerId);
 
-        return response;
+        await query.ExecuteUpdateAsync(x => x
+                .SetProperty(p => p.Title, request.Title)
+                .SetProperty(p => p.Description, request.Description)
+                .SetProperty(p => p.Specialization, request.Specialization)
+                .SetProperty(p => p.Link, request.Link)
+                .SetProperty(p => p.DateFrom, request.DateFrom)
+                .SetProperty(p => p.DateTo, request.DateTo)
+            , cancellationToken);
     }
 }

@@ -5,4 +5,5 @@ namespace Launchpad.Application.Commands.EmployeeProjects.Delete;
 public class DeleteEmployeeProjectsCommandRequest : IRequest
 {
     public long ProjectId { get; set; }
+    public long? EmployerId { get; set; }
 }

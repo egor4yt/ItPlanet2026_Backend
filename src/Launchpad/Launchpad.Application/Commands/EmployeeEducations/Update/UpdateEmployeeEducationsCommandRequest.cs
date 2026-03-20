@@ -10,4 +10,5 @@ public class UpdateEmployeeEducationsCommandRequest : IRequest
     public int CompletionYear { get; set; }
     public int EducationLevelId { get; set; }
     public long EducationId { get; set; }
+    public long? EmployerId { get; set; }
 }
