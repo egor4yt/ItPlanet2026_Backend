@@ -32,7 +32,7 @@ public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
             .Property(x => x.Website)
             .HasColumnType("varchar(256)")
             .IsRequired(false);
-        
+
         builder
             .HasMany(x => x.ActivityFields)
             .WithMany(x => x.Employers)

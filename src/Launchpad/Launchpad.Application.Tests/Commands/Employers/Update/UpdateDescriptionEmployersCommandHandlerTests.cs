@@ -18,20 +18,20 @@ public class UpdateEmployersCommandHandlerTests : BaseApplicationTest
     public async Task Handle_ShouldUpdateEmployer_WhenRequestIsValid()
     {
         // Arrange
-       var activityFieldGroup = Fixture.Create<ActivityFieldGroup>();
+        var activityFieldGroup = Fixture.Create<ActivityFieldGroup>();
         await DbContext.ActivityFieldGroups.AddAsync(activityFieldGroup);
-        
+
         var activityField = Fixture.Create<ActivityField>();
         var otherActivityField = Fixture.Create<ActivityField>();
         await DbContext.ActivityFields.AddAsync(activityField);
         await DbContext.ActivityFields.AddAsync(otherActivityField);
-        
+
         var employer = Fixture
             .Build<Employer>()
             .With(x => x.ActivityFields, [activityField])
             .Create();
         await DbContext.Employers.AddAsync(employer);
-        
+
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
 

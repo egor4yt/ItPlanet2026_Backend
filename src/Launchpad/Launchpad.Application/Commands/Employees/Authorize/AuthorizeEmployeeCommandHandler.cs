@@ -33,7 +33,7 @@ public class AuthorizeEmployeeCommandHandler(ApplicationDbContext applicationDbC
 
                 return response;
             }
-            
+
             throw new ForbiddenException("Forbidden");
         }
 

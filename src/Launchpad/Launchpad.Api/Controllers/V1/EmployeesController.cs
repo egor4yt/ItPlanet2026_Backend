@@ -5,7 +5,6 @@ using Launchpad.Application.Commands.Employees.Create;
 using Launchpad.Application.Commands.Employees.Update;
 using Launchpad.Application.Commands.Employees.UpdateBiography;
 using Launchpad.Application.Commands.Skills.AttachEmployee;
-using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employees.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;

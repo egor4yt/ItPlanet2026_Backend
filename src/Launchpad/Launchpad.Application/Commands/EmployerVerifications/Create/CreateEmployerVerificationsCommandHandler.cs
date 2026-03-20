@@ -28,7 +28,7 @@ public class CreateEmployerVerificationsCommandHandler(ApplicationDbContext appl
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 
         response.VerificationId = newVerification.Id;
-        
+
         return response;
     }
 }

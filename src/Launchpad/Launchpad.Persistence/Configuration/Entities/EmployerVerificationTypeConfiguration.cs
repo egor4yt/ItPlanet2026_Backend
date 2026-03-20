@@ -21,7 +21,7 @@ public class EmployerVerificationTypeConfiguration : IEntityTypeConfiguration<Em
         builder
             .Property(x => x.HtmlDescription)
             .HasColumnType("text");
-        
+
         builder
             .HasMany(x => x.EmployerVerifications)
             .WithOne(x => x.Type)

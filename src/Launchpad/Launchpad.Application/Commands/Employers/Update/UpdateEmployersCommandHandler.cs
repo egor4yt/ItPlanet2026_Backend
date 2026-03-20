@@ -1,5 +1,4 @@
 ﻿using Launchpad.Application.Exceptions;
-using Launchpad.Domain.Entities;
 using Launchpad.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +11,13 @@ public class UpdateEmployersCommandHandler(ApplicationDbContext applicationDbCon
     {
         var employer = await applicationDbContext.Employers
             .Include(x => x.ActivityFields)
-            .FirstOrDefaultAsync(x => x.Id == request.EmployerId, cancellationToken); 
+            .FirstOrDefaultAsync(x => x.Id == request.EmployerId, cancellationToken);
         if (employer == null) throw new NotFoundException("EmployerNotExist.");
-        
+
         var activityFields = await applicationDbContext.ActivityFields
             .Where(x => request.ActivityFieldIds.Contains(x.Id))
             .ToListAsync(cancellationToken);
-        
+
         employer.Description = string.IsNullOrWhiteSpace(request.Description) ? null : request.Description;
         employer.ActivityFields = activityFields;
 
