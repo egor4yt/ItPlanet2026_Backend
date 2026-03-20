@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Contracts.EmployerVerifications;
 using Launchpad.Application.Commands.EmployerVerifications.Create;
+using Launchpad.Application.Commands.EmployerVerifications.Update;
 using Launchpad.Application.Queries.EmployerVerifications.Action;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -27,12 +28,39 @@ public class EmployerVerificationsController : ApiControllerBase
         {
             EmployerId = CurrentUserService.ProfileId,
             VerificationTypeId = body.VerificationTypeId,
-            RequestMessage = body.RequestMessage
+            RequestMessage = body.RequestMessage,
+            SocialNetworkLink = body.SocialNetworkLink?.Trim().ToLower(),
+            TaxpayerIndividualNumber = body.TaxpayerIndividualNumber
         };
 
         var response = await Mediator.Send(command);
 
         return Created($"employer-verifications/{response.VerificationId}", response);
+    }
+
+    /// <summary>
+    ///     Create employer verification
+    /// </summary>
+    /// <param name="body">Employer verification data</param>
+    /// <param name="verificationId">Verification ID</param>
+    [HttpPut("{verificationId:long}")]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Update([FromRoute] long verificationId, [FromBody] UpdateEmployerVerificationBody body)
+    {
+        var command = new UpdateEmployerVerificationsCommandRequest
+        {
+            EmployerId = CurrentUserService.ProfileId,
+            VerificationTypeId = body.VerificationTypeId,
+            RequestMessage = body.RequestMessage,
+            SocialNetworkLink = body.SocialNetworkLink?.Trim().ToLower(),
+            TaxpayerIndividualNumber = body.TaxpayerIndividualNumber,
+            VerificationId = verificationId
+        };
+
+        await Mediator.Send(command);
+
+        return NoContent();
     }
 
     /// <summary>

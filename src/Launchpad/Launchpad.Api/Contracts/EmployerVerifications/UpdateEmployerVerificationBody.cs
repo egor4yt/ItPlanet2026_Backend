@@ -1,9 +1,9 @@
 ﻿namespace Launchpad.Api.Contracts.EmployerVerifications;
 
 /// <summary>
-///     Create an employer's verification
+///     New employer's verification details
 /// </summary>
-public class CreateEmployerVerificationBody
+public class UpdateEmployerVerificationBody
 {
     /// <summary>
     ///     Verification type identifier

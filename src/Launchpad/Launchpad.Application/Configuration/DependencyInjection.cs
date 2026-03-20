@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using Launchpad.Application.Behaviours;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -14,9 +13,13 @@ public static class DependencyInjection
         var assembly = Assembly.GetExecutingAssembly();
 
         app.Services.AddValidatorsFromAssembly(assembly);
-        app.Services.AddMediatR(config => { config.RegisterServicesFromAssembly(assembly); });
-        app.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-        app.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        app.Services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(assembly);
+
+            config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
+            config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+        });
 
         return app;
     }
