@@ -19,6 +19,8 @@ public class GetOneEmployeesQueryHandler(ApplicationDbContext applicationDbConte
                 LastName = x.LastName,
                 MiddleName = x.MiddleName,
                 Biography = x.Biography,
+                IsMale = x.IsMale,
+                BirthDate = x.BirthDate,
                 Skills = x.Skills.Select(s => new GetOneEmployeeQueryResponseSkill
                 {
                     Id = s.Id,
