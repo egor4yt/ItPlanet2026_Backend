@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Contracts.EmployeeEducations;
 using Launchpad.Application.Commands.EmployeeEducations.Create;
+using Launchpad.Application.Commands.EmployeeEducations.Delete;
 using Launchpad.Application.Commands.EmployeeEducations.Update;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -43,7 +44,7 @@ public class EmployeeEducationsController : ApiControllerBase
     ///     Update education
     /// </summary>
     [HttpPut("{educationId:long}")]
-    [ProducesResponseType(typeof(UpdateEmployeeEducationsCommandResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Update([FromRoute] long educationId, [FromBody] UpdateEmployeeEducationBody body)
@@ -58,7 +59,26 @@ public class EmployeeEducationsController : ApiControllerBase
             EducationId = educationId
         };
 
-        _ = await Mediator.Send(command);
+        await Mediator.Send(command);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    ///     Delete education
+    /// </summary>
+    [HttpDelete("{educationId:long}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Delete([FromRoute] long educationId)
+    {
+        var command = new DeleteEmployeeEducationsCommandRequest
+        {
+            EducationId = educationId
+        };
+
+        await Mediator.Send(command);
 
         return NoContent();
     }

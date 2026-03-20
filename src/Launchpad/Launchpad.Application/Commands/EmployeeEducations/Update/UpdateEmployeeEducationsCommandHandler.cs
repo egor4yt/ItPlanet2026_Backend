@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Commands.EmployeeEducations.Update;
 
-public class UpdateEmployeeEducationsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeeEducationsCommandRequest, UpdateEmployeeEducationsCommandResponse>
+public class UpdateEmployeeEducationsCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<UpdateEmployeeEducationsCommandRequest>
 {
-    public async Task<UpdateEmployeeEducationsCommandResponse> Handle(UpdateEmployeeEducationsCommandRequest request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateEmployeeEducationsCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new UpdateEmployeeEducationsCommandResponse();
-
         await applicationDbContext.EmployeeEducations
             .Where(x => x.Id == request.EducationId)
             .ExecuteUpdateAsync(x => x
@@ -19,7 +17,5 @@ public class UpdateEmployeeEducationsCommandHandler(ApplicationDbContext applica
                     .SetProperty(p => p.CompletionYear, request.CompletionYear)
                     .SetProperty(p => p.EducationLevelId, request.EducationLevelId)
                 , cancellationToken);
-
-        return response;
     }
 }

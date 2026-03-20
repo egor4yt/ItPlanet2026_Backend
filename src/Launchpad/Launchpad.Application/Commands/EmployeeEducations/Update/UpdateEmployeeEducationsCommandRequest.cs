@@ -2,7 +2,7 @@
 
 namespace Launchpad.Application.Commands.EmployeeEducations.Update;
 
-public class UpdateEmployeeEducationsCommandRequest : IRequest<UpdateEmployeeEducationsCommandResponse>
+public class UpdateEmployeeEducationsCommandRequest : IRequest
 {
     public string Organization { get; set; } = null!;
     public string Faculty { get; set; } = null!;
