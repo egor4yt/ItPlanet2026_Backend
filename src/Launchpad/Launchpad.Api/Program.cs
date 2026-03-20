@@ -16,7 +16,7 @@ try
 
     app.UseRequestLogging();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => { c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None); });
 
     var appUrls = builder.Configuration["applicationUrl"]?.Split(';')
                   ?? builder.Configuration.GetValue<string>("urls")?.Split(';')

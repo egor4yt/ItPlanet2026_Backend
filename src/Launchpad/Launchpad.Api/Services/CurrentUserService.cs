@@ -31,7 +31,10 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
 
     /// <inheritdoc />
     public bool IsAuthenticated => httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false;
-    
+
     /// <inheritdoc />
-    public bool IsInRole (string role) => _user?.IsInRole(role) ?? false;
+    public bool IsInRole(string role)
+    {
+        return _user?.IsInRole(role) ?? false;
+    }
 }

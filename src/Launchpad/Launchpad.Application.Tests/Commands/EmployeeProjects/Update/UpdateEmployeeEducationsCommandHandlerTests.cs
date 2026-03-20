@@ -33,6 +33,7 @@ public class UpdateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
 
         var request = Fixture.Build<UpdateEmployeeProjectsCommandRequest>()
             .With(x => x.ProjectId, project.Id)
+            .Without(x => x.EmployerId)
             .Create();
 
         // Act

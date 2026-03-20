@@ -21,11 +21,13 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
         var response = new GetOneEmployersQueryResponse();
         response.CompanyName = employer.CompanyName;
         response.Description = employer.Description;
-        response.Verification = new GetOneEmployersQueryResponseVerification
-        {
-            Id = employer.Verification.Id,
-            Title = employer.Verification.Status.Title
-        };
+
+        if (employer.Verification != null)
+            response.Verification = new GetOneEmployersQueryResponseVerification
+            {
+                Id = employer.Verification.Id,
+                Title = employer.Verification.Status.Title
+            };
 
         var activityGroupTitles = employer.ActivityFields
             .Select(x => x.ActivityFieldGroup.Title)

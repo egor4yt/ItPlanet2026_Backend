@@ -25,8 +25,7 @@ public class EmployerVerificationsController : ApiControllerBase
         {
             EmployerId = CurrentUserService.ProfileId,
             VerificationTypeId = body.VerificationTypeId,
-            RequestMessage = body.RequestMessage,
-            ResponseMessage = body.ResponseMessage
+            RequestMessage = body.RequestMessage
         };
 
         var response = await Mediator.Send(command);

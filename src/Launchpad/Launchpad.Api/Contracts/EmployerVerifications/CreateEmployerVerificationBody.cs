@@ -14,9 +14,4 @@ public class CreateEmployerVerificationBody
     ///     Request message
     /// </summary>
     public string RequestMessage { get; set; } = null!;
-
-    /// <summary>
-    ///     Response message
-    /// </summary>
-    public string ResponseMessage { get; set; } = null!;
 }

@@ -39,6 +39,7 @@ public class UpdateEmployeeEducationsCommandHandlerTests : BaseApplicationTest
         var request = Fixture.Build<UpdateEmployeeEducationsCommandRequest>()
             .With(x => x.EducationId, education.Id)
             .With(x => x.EducationLevelId, otherEducationLevel.Id)
+            .Without(x => x.EmployerId)
             .Create();
 
         // Act

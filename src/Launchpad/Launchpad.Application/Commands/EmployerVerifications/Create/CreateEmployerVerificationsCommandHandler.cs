@@ -18,7 +18,6 @@ public class CreateEmployerVerificationsCommandHandler(ApplicationDbContext appl
         var newVerification = new EmployerVerification
         {
             RequestMessage = request.RequestMessage,
-            ResponseMessage = request.ResponseMessage,
             ChangedOn = DateTime.UtcNow,
             EmployerId = request.EmployerId,
             StatusId = Domain.Metadata.EmployerVerificationStatusId.Pending,

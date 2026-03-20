@@ -12,5 +12,5 @@ public class Employer
     public string? Website { get; set; }
 
     public virtual ICollection<ActivityField> ActivityFields { get; set; }
-    public virtual EmployerVerification Verification { get; set; }
+    public virtual EmployerVerification? Verification { get; set; }
 }
