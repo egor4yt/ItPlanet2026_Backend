@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Contracts.EmployeeProjects;
 using Launchpad.Application.Commands.EmployeeProjects.Create;
+using Launchpad.Application.Commands.EmployeeProjects.Delete;
 using Launchpad.Application.Commands.EmployeeProjects.Update;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -61,6 +62,25 @@ public class EmployeeProjectsController : ApiControllerBase
         };
 
         _ = await Mediator.Send(command);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    ///     Delete a project
+    /// </summary>
+    [HttpDelete("{projectId:long}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Delete([FromRoute] long projectId)
+    {
+        var command = new DeleteEmployeeProjectsCommandRequest
+        {
+            ProjectId = projectId
+        };
+
+        await Mediator.Send(command);
 
         return NoContent();
     }
