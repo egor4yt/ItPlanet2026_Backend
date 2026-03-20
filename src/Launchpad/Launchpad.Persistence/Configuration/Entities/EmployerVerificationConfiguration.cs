@@ -17,6 +17,14 @@ public class EmployerVerificationConfiguration : IEntityTypeConfiguration<Employ
             .HasColumnType("text");
 
         builder
+            .Property(x => x.SocialNetworkLink)
+            .HasColumnType("varchar(256)");
+
+        builder
+            .Property(x => x.TaxpayerIndividualNumber)
+            .HasColumnType("varchar(12)");
+
+        builder
             .Property(x => x.ChangedOn)
             .HasColumnType("timestamp with time zone");
 
@@ -27,7 +35,7 @@ public class EmployerVerificationConfiguration : IEntityTypeConfiguration<Employ
             .HasConstraintName("FK_Employer_Verification");
 
         builder
-            .HasOne(x => x.EmployerVerificationStatus)
+            .HasOne(x => x.Status)
             .WithMany(x => x.EmployerVerifications)
             .HasForeignKey(x => x.StatusId)
             .HasConstraintName("FK_EmployerVerificationStatus_EmployerVerifications");

@@ -3,6 +3,7 @@ using System;
 using Launchpad.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Launchpad.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260320183940_AddedEmployerVerificationType")]
+    partial class AddedEmployerVerificationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("ActivityFieldGroupId");
 
-                    b.ToTable("ActivityFields", (string)null);
+                    b.ToTable("ActivityFields");
 
                     b.HasData(
                         new
@@ -864,7 +867,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityFieldGroups", (string)null);
+                    b.ToTable("ActivityFieldGroups");
 
                     b.HasData(
                         new
@@ -999,7 +1002,7 @@ namespace Launchpad.Persistence.Migrations
                     b.HasIndex(new[] { "Email" }, "UX_Curator_Email")
                         .IsUnique();
 
-                    b.ToTable("Curators", (string)null);
+                    b.ToTable("Curators");
 
                     b.HasData(
                         new
@@ -1025,7 +1028,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationLevels", (string)null);
+                    b.ToTable("EducationLevels");
 
                     b.HasData(
                         new
@@ -1114,7 +1117,7 @@ namespace Launchpad.Persistence.Migrations
                     b.HasIndex(new[] { "Email" }, "UX_Users_Email")
                         .IsUnique();
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
@@ -1165,7 +1168,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeEducations", (string)null);
+                    b.ToTable("EmployeeEducations");
 
                     b.HasData(
                         new
@@ -1216,7 +1219,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeProjects", (string)null);
+                    b.ToTable("EmployeeProjects");
 
                     b.HasData(
                         new
@@ -1272,7 +1275,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employers", (string)null);
+                    b.ToTable("Employers");
 
                     b.HasData(
                         new
@@ -1329,7 +1332,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("EmployerVerifications", (string)null);
+                    b.ToTable("EmployerVerifications");
                 });
 
             modelBuilder.Entity("Launchpad.Domain.Entities.EmployerVerificationStatus", b =>
@@ -1343,7 +1346,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployerVerificationStatuses", (string)null);
+                    b.ToTable("EmployerVerificationStatuses");
 
                     b.HasData(
                         new
@@ -1383,7 +1386,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployerVerificationTypes", (string)null);
+                    b.ToTable("EmployerVerificationTypes");
 
                     b.HasData(
                         new
@@ -1441,7 +1444,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skills", (string)null);
+                    b.ToTable("Skills");
 
                     b.HasData(
                         new

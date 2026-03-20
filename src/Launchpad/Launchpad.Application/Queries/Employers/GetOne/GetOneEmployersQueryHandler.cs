@@ -13,13 +13,19 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
             .AsNoTracking()
             .Include(x => x.ActivityFields)
             .ThenInclude(x => x.ActivityFieldGroup)
+            .Include(x => x.Verification)
+            .ThenInclude(x => x.Status)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (employer == null) throw new NotFoundException("EmployerNotFound");
 
         var response = new GetOneEmployersQueryResponse();
         response.CompanyName = employer.CompanyName;
         response.Description = employer.Description;
-        response.Verified = false;
+        response.Verification = new  GetOneEmployersQueryResponseVerification
+        {
+            Id = employer.Verification.Id,
+            Title = employer.Verification.Status.Title
+        };
 
         var activityGroupTitles = employer.ActivityFields
             .Select(x => x.ActivityFieldGroup.Title)

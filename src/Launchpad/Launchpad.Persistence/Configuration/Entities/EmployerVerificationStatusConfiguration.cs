@@ -33,6 +33,11 @@ public class EmployerVerificationStatusConfiguration : IEntityTypeConfiguration<
             {
                 Id = 3,
                 Title = "Требуются уточнения"
+            },
+            new EmployerVerificationStatus
+            {
+                Id = 4,
+                Title = "Подтверждено"
             }
         );
     }

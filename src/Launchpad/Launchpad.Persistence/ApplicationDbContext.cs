@@ -16,6 +16,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Curator> Curators { get; set; }
     public DbSet<EmployerVerificationStatus> EmployerVerificationStatuses { get; set; }
     public DbSet<EmployerVerification> EmployerVerifications { get; set; }
+    public DbSet<EmployerVerificationType> EmployerVerificationTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
