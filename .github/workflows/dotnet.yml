@@ -25,9 +25,32 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore src/Launchpad --configuration Release --no-restore
+        
+  unit-test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
 
       - name: Unit test
         run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.Application.UnitTests
 
       - name: Unit test
+        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.Application.IntegrationTests
+        
+  integration-test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Integration test
         run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.Application.IntegrationTests
