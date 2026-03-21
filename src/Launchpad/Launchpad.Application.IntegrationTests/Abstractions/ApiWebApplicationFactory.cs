@@ -31,7 +31,8 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 
         await using (var context = new ApplicationDbContext(optionsBuilder.Options))
         {
-            await context.Database.MigrateAsync();
+            var hasMigrations = (await context.Database.GetPendingMigrationsAsync()).ToList();
+            if (hasMigrations.Count > 0) await context.Database.MigrateAsync();
         }
 
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
