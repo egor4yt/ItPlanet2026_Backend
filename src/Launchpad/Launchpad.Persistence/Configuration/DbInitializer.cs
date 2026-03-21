@@ -26,7 +26,7 @@ public static class DbInitializer
                 Log.Information("Applying migrations");
 
                 // only call this method when there are pending migrations
-                dbContext.Database.MigrateAsync();
+                dbContext.Database.Migrate();
 
                 Log.Warning("Applied {Count} migrations", pendingMigrations.Count);
             }
