@@ -3,6 +3,7 @@ using Launchpad.Api.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
 /// <summary>

@@ -6,20 +6,17 @@ using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Education levels controller
-/// </summary>
-[Authorize(JwtDetailsRole.Employee)]
-[Route("employee-educations")]
-public class EmployeeEducationsController : ApiControllerBase
+public partial class EmployeeEducationsController
 {
     /// <summary>
     ///     Create education
     /// </summary>
     /// <returns>New project id</returns>
     [HttpPost]
+    [Authorize(JwtDetailsRole.Employee)]
     [ProducesResponseType(typeof(CreateEmployeeEducationsCommandResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
@@ -44,6 +41,7 @@ public class EmployeeEducationsController : ApiControllerBase
     ///     Update education
     /// </summary>
     [HttpPut("{educationId:long}")]
+    [Authorize(JwtDetailsRole.Employee)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
@@ -71,6 +69,7 @@ public class EmployeeEducationsController : ApiControllerBase
     ///     Delete education
     /// </summary>
     [HttpDelete("{educationId:long}")]
+    [Authorize(JwtDetailsRole.Employee)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]

@@ -1,15 +1,10 @@
 ﻿using Launchpad.Application.Queries.EducationLevels.GetAll;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Education levels controller
-/// </summary>
-[AllowAnonymous]
-[Route("education-levels")]
-public class EducationLevelsController : ApiControllerBase
+public partial class EducationLevelsController
 {
     /// <summary>
     ///     Get all education levels

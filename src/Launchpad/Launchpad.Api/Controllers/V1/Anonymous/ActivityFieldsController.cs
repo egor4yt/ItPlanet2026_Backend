@@ -2,20 +2,17 @@ using Launchpad.Application.Queries.ActivityFields.GetAll;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Activity fields controller
-/// </summary>
-[AllowAnonymous]
-[Route("activity-fields")]
-public class ActivityFieldsController : ApiControllerBase
+public partial class ActivityFieldsController
 {
     /// <summary>
     ///     Get all activity fields
     /// </summary>
     /// <returns>Activity fields</returns>
     [HttpGet]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(GetAllActivityFieldsQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GelAll()
     {

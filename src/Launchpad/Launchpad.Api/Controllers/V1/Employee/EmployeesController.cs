@@ -1,7 +1,4 @@
-﻿using Launchpad.Api.Configuration.Options;
-using Launchpad.Api.Contracts.Employees;
-using Launchpad.Application.Commands.Employees.Authorize;
-using Launchpad.Application.Commands.Employees.Create;
+﻿using Launchpad.Api.Contracts.Employees;
 using Launchpad.Application.Commands.Employees.Update;
 using Launchpad.Application.Commands.Employees.UpdateBiography;
 using Launchpad.Application.Commands.Skills.AttachEmployee;
@@ -9,64 +6,12 @@ using Launchpad.Application.Queries.Employees.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Employees controller
-/// </summary>
-[Route("employees")]
-public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControllerBase
+public partial class EmployeesController
 {
-    /// <summary>
-    ///     Employee registration
-    /// </summary>
-    /// <param name="body">Registration employee data</param>
-    /// <returns>Registered employee data and a JSON web token</returns>
-    [HttpPost]
-    [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(CreateEmployeesCommandResponse), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Create([FromBody] CreateEmployeeBody body)
-    {
-        var command = new CreateEmployeesCommandRequest
-        {
-            Email = body.Email.Trim().ToLower(),
-            PasswordHash = SecurityHelper.ComputeSha256Hash(body.Password.Trim()),
-            JwtDescriptorDetails = jwtOptions.Value.ToJwtDescriptorDetails(),
-            FirstName = body.FirstName,
-            LastName = body.LastName,
-            MiddleName = body.MiddleName
-        };
-
-        var response = await Mediator.Send(command);
-
-        return Created($"employees/{response.EmployeeId}", response);
-    }
-
-    /// <summary>
-    ///     Employee account details
-    /// </summary>
-    /// <returns>Employee data</returns>
-    [Authorize(JwtDetailsRole.Curator)]
-    [HttpGet("{employeeId:long}")]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(GetOneEmployeesQueryResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> GetById(long employeeId)
-    {
-        var query = new GetOneEmployeesQueryRequest
-        {
-            Id = employeeId
-        };
-
-        var response = await Mediator.Send(query);
-
-        return Ok(response);
-    }
-
     /// <summary>
     ///     Authorized employee account details
     /// </summary>
@@ -136,31 +81,9 @@ public class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControlle
     }
 
     /// <summary>
-    ///     Employee authorization
-    /// </summary>
-    /// <returns>Employee data</returns>
-    [AllowAnonymous]
-    [HttpPost("authorization")]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(AuthorizeEmployeeCommandResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Authorize([FromBody] AuthorizeEmployeeBody body)
-    {
-        var command = new AuthorizeEmployeeCommandRequest
-        {
-            Email = body.Email.Trim().ToLower(),
-            PasswordHash = SecurityHelper.ComputeSha256Hash(body.Password.Trim()),
-            JwtDescriptorDetails = jwtOptions.Value.ToJwtDescriptorDetails()
-        };
-
-        var response = await Mediator.Send(command);
-
-        return Ok(response);
-    }
-
-    /// <summary>
     ///     Update employee details
     /// </summary>
-    [AllowAnonymous]
+    [Authorize(JwtDetailsRole.Employee)]
     [HttpPut]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

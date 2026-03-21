@@ -6,20 +6,17 @@ using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Employer verifications controller
-/// </summary>
-[Route("employer-verification")]
-[Authorize(JwtDetailsRole.Employer)]
-public class EmployerVerificationsController : ApiControllerBase
+public partial class EmployerVerificationsController
 {
     /// <summary>
     ///     Create employer verification
     /// </summary>
     /// <param name="body">Employer verification data</param>
     [HttpPost]
+    [Authorize(JwtDetailsRole.Employer)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(CreateEmployerVerificationsCommandResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateEmployerVerificationBody body)
@@ -44,6 +41,7 @@ public class EmployerVerificationsController : ApiControllerBase
     /// <param name="body">Employer verification data</param>
     /// <param name="verificationId">Verification ID</param>
     [HttpPut("{verificationId:long}")]
+    [Authorize(JwtDetailsRole.Employer)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Update([FromRoute] long verificationId, [FromBody] UpdateEmployerVerificationBody body)
@@ -68,6 +66,7 @@ public class EmployerVerificationsController : ApiControllerBase
     /// </summary>
     /// <param name="verificationId">Verification ID</param>
     [HttpGet("{verificationId:long}")]
+    [Authorize(JwtDetailsRole.Employer)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(GetOneEmployerVerificationsQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetOne([FromRoute] long verificationId)

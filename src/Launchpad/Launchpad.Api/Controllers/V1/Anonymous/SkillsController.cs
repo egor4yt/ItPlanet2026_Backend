@@ -2,20 +2,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+// ReSharper disable once CheckNamespace
 namespace Launchpad.Api.Controllers.V1;
 
-/// <summary>
-///     Skills controller
-/// </summary>
-[AllowAnonymous]
-[Route("skills")]
-public class SkillsController : ApiControllerBase
+public partial class SkillsController
 {
     /// <summary>
     ///     Search skills
     /// </summary>
     /// <returns>Skills</returns>
     [HttpGet]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(SearchSkillsQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Search([FromQuery(Name = "query")] string titleQuery = "", [FromQuery] int count = 10)
     {
