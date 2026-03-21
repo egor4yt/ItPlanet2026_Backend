@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "test" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "test" ]
 
 jobs:
   build-api:
@@ -26,5 +26,8 @@ jobs:
       - name: Build
         run: dotnet build --no-restore src/Launchpad --configuration Release --no-restore
 
-      - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad
+      - name: Unit test
+        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.Application.UnitTests
+
+      - name: Unit test
+        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.Application.IntegrationTests

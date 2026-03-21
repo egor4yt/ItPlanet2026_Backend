@@ -1,0 +1,39 @@
+﻿using AutoFixture;
+using Launchpad.Persistence;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Launchpad.Application.IntegrationTests.Abstractions;
+
+[Collection("ApiCollection")]
+public abstract class IntegrationTestBase : IAsyncLifetime
+{
+    private readonly Func<Task> _resetDb;
+    private readonly IServiceScope _scope;
+    protected readonly ApplicationDbContext ApplicationDbContext;
+    protected readonly IFixture Fixture = new Fixture();
+    protected readonly HttpClient HttpClient;
+
+    protected IntegrationTestBase(ApiWebApplicationFactory factory)
+    {
+        _scope = factory.Services.CreateScope();
+        ApplicationDbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        HttpClient = factory.CreateClient();
+
+        Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+            .ForEach(b => Fixture.Behaviors.Remove(b));
+        Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+        _resetDb = factory.ResetDatabaseAsync;
+    }
+
+    public virtual Task InitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public virtual async Task DisposeAsync()
+    {
+        _scope.Dispose();
+        await _resetDb();
+    }
+}

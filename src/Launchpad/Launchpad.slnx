@@ -3,6 +3,7 @@
         <File Path="compose.yaml" />
     </Folder>
     <Project Path="Launchpad.Api/Launchpad.Api.csproj" />
+    <Project Path="Launchpad.Application.IntegrationTests/Launchpad.Application.IntegrationTests.csproj" />
     <Project Path="Launchpad.Application.UnitTests/Launchpad.Application.UnitTests.csproj" />
     <Project Path="Launchpad.Application/Launchpad.Application.csproj" />
     <Project Path="Launchpad.Domain/Launchpad.Domain.csproj" />
