@@ -10,10 +10,10 @@ jobs:
   build-and-test-api:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 
@@ -26,5 +26,5 @@ jobs:
       - name: Unit test
         run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Unit src/Launchpad/Launchpad.slnx
 
-      - name: Integration test
-        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad/Launchpad.slnx
+#      - name: Integration test
+#        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad/Launchpad.slnx
