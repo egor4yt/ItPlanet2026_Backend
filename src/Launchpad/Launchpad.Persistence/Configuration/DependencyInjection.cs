@@ -18,7 +18,6 @@ public static class DependencyInjection
         if (string.IsNullOrWhiteSpace(connectionString.Value)) throw new InvalidOperationException("The connection string is missing in the configuration file.");
 
         var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
-        Log.Warning("env: {Env}", environment.Value);
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
 
         if (environment.Value == Shared.Environments.Development)

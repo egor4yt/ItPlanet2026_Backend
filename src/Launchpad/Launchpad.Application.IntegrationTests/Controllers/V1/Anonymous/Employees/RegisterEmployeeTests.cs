@@ -45,6 +45,7 @@ public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : BaseInteg
 
         var request = Fixture.Build<CreateEmployeeBody>()
             .With(x => x.Email, existsEmployee.Email)
+            .With(x => x.FirstName, "abc")
             .Create();
 
         // Act

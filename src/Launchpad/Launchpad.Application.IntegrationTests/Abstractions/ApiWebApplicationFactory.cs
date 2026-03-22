@@ -20,7 +20,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
     {
         await _dbContainer.StartAsync();
 
-        _ = Services;
+        _ = Services; // trigger Services for start migrations
 
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
 
