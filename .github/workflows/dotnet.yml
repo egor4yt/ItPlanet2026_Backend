@@ -34,7 +34,7 @@ jobs:
           retention-days: 1
         
   unit-test-api:
-    needs: build
+    needs: build-api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
