@@ -32,14 +32,8 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureAppConfiguration((context, config) =>
-        {
-            config.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                [ConfigurationKeys.SqlDatabaseConnectionString] = _dbContainer.GetConnectionString(),
-                [ConfigurationKeys.Environment] = Environments.IntegrationTests
-            });
-        });
+        builder.UseSetting(ConfigurationKeys.SqlDatabaseConnectionString, _dbContainer.GetConnectionString());
+        builder.UseSetting(ConfigurationKeys.Environment, Environments.IntegrationTests);
     }
 
     public async Task ResetDatabaseAsync()
