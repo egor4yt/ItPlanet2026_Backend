@@ -1,5 +1,6 @@
 ﻿using Launchpad.Api.Contracts.Employers;
 using Launchpad.Application.Commands.Employers.Update;
+using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employers.GetOne;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -11,20 +12,23 @@ namespace Launchpad.Api.Controllers.V1;
 public partial class EmployersController
 {
     /// <summary>
-    ///     Authorized employer account details
+    ///     Get employer details
     /// </summary>
     /// <returns>Employer data</returns>
     [Authorize(JwtDetailsRole.Employer)]
-    [HttpGet]
+    [HttpGet("{employerId:long}")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployersQueryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Me()
+    public async Task<IActionResult> GetOne([FromRoute] long employerId)
     {
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employer) && employerId != CurrentUserService.ProfileId)
+            throw new NotFoundException("EmployerNotFound");
+
         var query = new GetOneEmployersQueryRequest
         {
-            Id = CurrentUserService.ProfileId
+            Id = employerId
         };
 
         var response = await Mediator.Send(query);
@@ -33,18 +37,21 @@ public partial class EmployersController
     }
 
     /// <summary>
-    ///     Update authorized employer
+    ///     Update employer details
     /// </summary>
     [Authorize(JwtDetailsRole.Employer)]
-    [HttpPut]
+    [HttpPut("{employerId:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> UpdateAuthorized([FromBody] UpdateEmployerDescriptionBody body)
+    public async Task<IActionResult> Update([FromRoute] long employerId, [FromBody] UpdateEmployerDescriptionBody body)
     {
+        if (CurrentUserService.IsInRole(JwtDetailsRole.Employer) && employerId != CurrentUserService.ProfileId)
+            throw new NotFoundException("EmployerNotFound");
+
         var command = new UpdateEmployersCommandRequest
         {
-            EmployerId = CurrentUserService.ProfileId,
+            EmployerId = employerId,
             Description = body.Description,
             ActivityFieldIds = body.ActivityFieldIds ?? []
         };
