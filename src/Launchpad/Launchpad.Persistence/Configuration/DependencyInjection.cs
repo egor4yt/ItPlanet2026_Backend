@@ -12,25 +12,31 @@ public static class DependencyInjection
 {
     public static IHostApplicationBuilder ConfigurePersistence(this IHostApplicationBuilder app)
     {
-        Console.WriteLine("11111");
-
-        Log.Warning("22222");
+        Log.Warning("1");
 
         app.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>("Database");
+        Log.Warning("2");
 
         var connectionString = app.Configuration.GetSection(ConfigurationKeys.SqlDatabaseConnectionString);
+        Log.Warning("3");
         if (string.IsNullOrWhiteSpace(connectionString.Value)) throw new InvalidOperationException("The connection string is missing in the configuration file.");
+        Log.Warning("4");
 
         var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
+        Log.Warning("5");
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
+        Log.Warning("6");
 
         if (environment.Value == Shared.Environments.Development)
+        {
+            Log.Warning("7");
             app.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString.Value)
                     .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
                     .EnableSensitiveDataLogging()
                     .EnableDetailedErrors()
             );
+        }
         else if (environment.Value == Shared.Environments.IntegrationTests)
         {
             Console.WriteLine("Enabled ignoring PendingModelChangesWarning");
@@ -52,10 +58,14 @@ public static class DependencyInjection
             );
         }
         else
+        {
+            Log.Warning("8");
+            
             app.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString.Value)
                     .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
             );
+        }
 
         return app;
     }
