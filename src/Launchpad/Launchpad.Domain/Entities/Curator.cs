@@ -2,11 +2,11 @@ namespace Launchpad.Domain.Entities;
 
 public sealed class Curator
 {
-    public long Id { get; set; }
-    public required string Email { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public required string MiddleName { get; set; }
+    public long Id { get; init; }
+    public required string Email { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public required string MiddleName { get; init; }
     public required string PasswordHash { get; set; }
-    public bool IsAdmin { get; set; }
+    public bool IsAdmin { get; init; }
 }

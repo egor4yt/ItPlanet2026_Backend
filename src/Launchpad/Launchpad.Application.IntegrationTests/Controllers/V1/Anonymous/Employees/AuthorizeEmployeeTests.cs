@@ -38,12 +38,19 @@ public class AuthorizeEmployeeTests(ApiWebApplicationFactory factory) : BaseInte
     }
 
     [Fact]
-    public async Task AuthorizeEmployeeTests_Should_AuthorizeSeededCurator()
+    public async Task AuthorizeEmployeeTests_Should_AuthorizeCurator()
     {
         // Arrange
+        var password = Fixture.Create<string>();
+        var curator = Fixture.Create<Curator>();
+        curator.PasswordHash = SecurityHelper.ComputeSha256Hash(password);
+
+        ApplicationDbContext.Curators.Add(curator);
+        await ApplicationDbContext.SaveChangesAsync();
+
         var request = Fixture.Build<AuthorizeEmployeeBody>()
-            .With(x => x.Email, "admin@launchpad.ru")
-            .With(x => x.Password, "admin")
+            .With(x => x.Email, curator.Email)
+            .With(x => x.Password, password)
             .Create();
 
         // Act
@@ -53,6 +60,6 @@ public class AuthorizeEmployeeTests(ApiWebApplicationFactory factory) : BaseInte
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         responseDetails.Should().NotBeNull();
-        responseDetails.ProfileId.Should().Be(-1);
+        responseDetails.ProfileId.Should().Be(curator.Id);
     }
 }

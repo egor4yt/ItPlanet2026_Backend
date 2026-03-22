@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using Launchpad.Persistence;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -30,7 +31,15 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
         {
             DbAdapter = DbAdapter.Postgres,
             SchemasToInclude = ["public"],
-            TablesToIgnore = ["__EFMigrationsHistory"]
+            TablesToIgnore =
+            [
+                "__EFMigrationsHistory",
+                nameof(ApplicationDbContext.EducationLevels),
+                nameof(ApplicationDbContext.EmployerVerificationStatuses),
+                nameof(ApplicationDbContext.ActivityFields),
+                nameof(ApplicationDbContext.ActivityFieldGroups),
+                nameof(ApplicationDbContext.EmployerVerificationTypes)
+            ]
         });
     }
 

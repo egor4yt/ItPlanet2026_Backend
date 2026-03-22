@@ -15,5 +15,6 @@ public static class FixtureExtensions
         fixture.Customize(new DateOnlyFixture());
         fixture.Customize(new ActivityFieldGroupFixture());
         fixture.Customize(new ActivityFieldFixture());
+        fixture.Customize(new CuratorFixture());
     }
 }
