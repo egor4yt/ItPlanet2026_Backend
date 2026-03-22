@@ -9,16 +9,10 @@ using Testcontainers.PostgreSql;
 
 namespace Launchpad.Application.IntegrationTests.Abstractions;
 
-[CollectionDefinition("ApiCollection")]
-public class ApiCollection : ICollectionFixture<ApiWebApplicationFactory>
-{
-}
-
 public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder("postgres:15-alpine").Build();
 
-    // public Respawner Respawner { get; private set; } = null!;
     public DbConnection DbConnection { get; private set; } = null!;
 
     public async Task InitializeAsync()
@@ -28,13 +22,6 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
 
         await DbConnection.OpenAsync();
-        
-        // Respawner = await Respawner.CreateAsync(DbConnection, new RespawnerOptions
-        // {
-        //     DbAdapter = DbAdapter.Postgres,
-        //     SchemasToInclude = ["public"],
-        //     TablesToIgnore = ["__EFMigrationsHistory"]
-        // });
     }
 
 
@@ -59,6 +46,5 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 
     public async Task ResetDatabaseAsync()
     {
-        // await Respawner.ResetAsync(DbConnection);
     }
 }
