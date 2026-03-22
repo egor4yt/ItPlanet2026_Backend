@@ -2,6 +2,8 @@
 using Launchpad.Persistence;
 using Launchpad.Tests.Base.Fixtures;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Launchpad.Application.IntegrationTests.Abstractions;
@@ -25,6 +27,20 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
 
         var migrations = ApplicationDbContext.Database.GetPendingMigrations().ToList();
         Console.WriteLine(string.Join(Environment.NewLine, migrations));
+        Console.WriteLine("==========----------");
+
+        var debugView = ApplicationDbContext.Model.ToDebugString();
+        Console.WriteLine(debugView);
+        var diff = ApplicationDbContext.GetService<IMigrationsModelDiffer>()
+            .GetDifferences(
+                ApplicationDbContext.GetService<IMigrationsAssembly>().ModelSnapshot?.Model.GetRelationalModel(),
+                ApplicationDbContext.Model.GetRelationalModel());
+
+        foreach (var operation in diff)
+        {
+            Console.WriteLine($"Found difference: {operation.GetType().Name}");
+        }
+
         // if (migrations.Count != 0) ApplicationDbContext.Database.Migrate();
 
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
