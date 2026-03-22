@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using Launchpad.Persistence;
 using Launchpad.Tests.Base.Fixtures;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Launchpad.Application.IntegrationTests.Abstractions;
@@ -20,6 +21,11 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
         _scope = factory.Services.CreateScope();
         ApplicationDbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         HttpClient = factory.CreateClient();
+
+
+        var migrations = ApplicationDbContext.Database.GetPendingMigrations().ToList();
+        Console.WriteLine(string.Join(Environment.NewLine, migrations));
+        if (migrations.Count != 0) ApplicationDbContext.Database.Migrate();
 
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));

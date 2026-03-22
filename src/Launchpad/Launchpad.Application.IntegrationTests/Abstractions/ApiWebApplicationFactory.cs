@@ -28,7 +28,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
 
         await DbConnection.OpenAsync();
-
+        
         // Respawner = await Respawner.CreateAsync(DbConnection, new RespawnerOptions
         // {
         //     DbAdapter = DbAdapter.Postgres,
@@ -41,6 +41,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
     public new async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
+        DbConnection.Dispose();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
