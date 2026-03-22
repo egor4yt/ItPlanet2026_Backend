@@ -28,6 +28,9 @@ public static class DependencyInjection
                     .EnableDetailedErrors()
             );
         else if (environment.Value == Shared.Environments.IntegrationTests)
+        {
+            Console.WriteLine("Enabled ignoring PendingModelChangesWarning");
+            
             app.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString.Value)
                     .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
@@ -37,6 +40,7 @@ public static class DependencyInjection
                         warnings.Ignore(RelationalEventId.PendingModelChangesWarning)
                     )
             );
+        }
         else
             app.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString.Value)
