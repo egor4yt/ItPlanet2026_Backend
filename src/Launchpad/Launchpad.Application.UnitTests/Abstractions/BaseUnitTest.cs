@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Abstractions;
 
-public abstract class BaseApplicationTest : IDisposable
+[Trait("Category", "Unit")]
+public abstract class BaseUnitTest : IDisposable
 {
     private readonly SqliteConnection _connection;
     protected readonly ApplicationDbContext DbContext;
@@ -20,7 +21,7 @@ public abstract class BaseApplicationTest : IDisposable
     };
     protected readonly Fixture Fixture = new Fixture();
 
-    protected BaseApplicationTest()
+    protected BaseUnitTest()
     {
         _connection = new SqliteConnection("DataSource=:memory:;Foreign Keys=False");
         _connection.Open();

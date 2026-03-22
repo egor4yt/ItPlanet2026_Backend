@@ -5,7 +5,7 @@ using Launchpad.Domain.Entities;
 
 namespace Launchpad.Application.Tests.Commands.Employers.Authorize;
 
-public class AuthorizeEmployerCommandHandlerTests : BaseApplicationTest
+public class AuthorizeEmployerCommandHandlerTests : BaseUnitTest
 {
     private readonly AuthorizeEmployersCommandHandler _handler;
 

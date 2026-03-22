@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.IntegrationTests.Controllers.V1.Anonymous.Employees;
 
-public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : IntegrationTestBase(factory)
+public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : BaseIntegrationTest(factory)
 {
     [Fact]
     public async Task RegisterEmployee_Should_Register_And_SaveToDatabase()

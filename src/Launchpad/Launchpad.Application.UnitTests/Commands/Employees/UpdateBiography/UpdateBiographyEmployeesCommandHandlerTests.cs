@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Commands.Employees.UpdateBiography;
 
-public class UpdateBiographyEmployeesCommandHandlerTests : BaseApplicationTest
+public class UpdateBiographyEmployeesCommandHandlerTests : BaseUnitTest
 {
     private readonly UpdateBiographyEmployeesCommandHandler _handler;
 

@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Launchpad.Application.IntegrationTests.Abstractions;
 
 [Collection("ApiCollection")]
-public abstract class IntegrationTestBase : IAsyncLifetime
+[Trait("Category", "Integration")]
+public abstract class BaseIntegrationTest : IAsyncLifetime
 {
     private readonly Func<Task> _resetDb;
     private readonly IServiceScope _scope;
@@ -13,7 +14,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     protected readonly IFixture Fixture = new Fixture();
     protected readonly HttpClient HttpClient;
 
-    protected IntegrationTestBase(ApiWebApplicationFactory factory)
+    protected BaseIntegrationTest(ApiWebApplicationFactory factory)
     {
         _scope = factory.Services.CreateScope();
         ApplicationDbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

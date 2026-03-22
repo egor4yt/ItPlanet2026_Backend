@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Commands.EmployeeProjects.Create;
 
-public class CreateEmployeeProjectsCommandHandlerTests : BaseApplicationTest
+public class CreateEmployeeProjectsCommandHandlerTests : BaseUnitTest
 {
     private readonly CreateEmployeeProjectsCommandHandler _handler;
 

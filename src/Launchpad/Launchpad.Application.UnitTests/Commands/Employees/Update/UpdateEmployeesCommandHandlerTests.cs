@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Commands.Employees.Update;
 
-public class UpdateEmployeesCommandHandlerTests : BaseApplicationTest
+public class UpdateEmployeesCommandHandlerTests : BaseUnitTest
 {
     private readonly UpdateEmployeesCommandHandler _handler;
 

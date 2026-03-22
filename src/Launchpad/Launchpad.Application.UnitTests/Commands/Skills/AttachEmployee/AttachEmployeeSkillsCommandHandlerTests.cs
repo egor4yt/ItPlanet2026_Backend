@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Application.Tests.Commands.Skills.AttachEmployee;
 
-public class AttachEmployeeSkillsCommandHandlerTests : BaseApplicationTest
+public class AttachEmployeeSkillsCommandHandlerTests : BaseUnitTest
 {
     private readonly AttachEmployeeSkillsCommandHandler _handler;
 
