@@ -24,8 +24,10 @@ public static class DependencyInjection
 
         var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
         Log.Warning("5");
+        Log.Warning("env: {Env}", environment.Value);
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
         Log.Warning("6");
+        Log.Warning("env: {Env}", environment.Value);
 
         if (environment.Value == Shared.Environments.Development)
         {
