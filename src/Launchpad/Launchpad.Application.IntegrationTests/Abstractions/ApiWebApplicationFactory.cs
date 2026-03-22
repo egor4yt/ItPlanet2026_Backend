@@ -20,6 +20,8 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
     {
         await _dbContainer.StartAsync();
 
+        _ = Services;
+
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
 
         await DbConnection.OpenAsync();
