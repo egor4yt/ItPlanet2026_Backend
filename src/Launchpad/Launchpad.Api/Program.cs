@@ -2,6 +2,7 @@ using Launchpad.Api.Configuration;
 using Launchpad.Api.Services;
 using Launchpad.Application.Configuration;
 using Launchpad.Persistence.Configuration;
+using Launchpad.Shared;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
@@ -29,7 +30,11 @@ try
                   ?? builder.Configuration.GetValue<string>("urls")?.Split(';')
                   ?? [];
 
+    var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
+    if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Launchpad.Shared.Environments.Production;
+
 #pragma warning disable CA1873
+    app.Logger.LogInformation("Application started with environment {Environment}", environment.Value);
     app.Logger.LogInformation("Application listening on {Addresses}", appUrls.Select(object? (x) => $"{x}/health"));
     app.Logger.LogInformation("Swagger documentation listening on {SwaggerAddresses}", appUrls.Select(object? (x) => $"{x}/swagger/index.html"));
 #pragma warning restore CA1873
