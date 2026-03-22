@@ -1,6 +1,7 @@
+using AutoFixture;
 using Launchpad.Domain.Entities;
 
-namespace Launchpad.Application.Tests.Fixtures;
+namespace Launchpad.Tests.Base.Fixtures;
 
 public class SkillFixture : ICustomization
 {

@@ -1,6 +1,6 @@
-using Launchpad.Application.Tests.Fixtures;
 using Launchpad.Persistence;
 using Launchpad.Shared;
+using Launchpad.Tests.Base.Fixtures;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,16 +37,7 @@ public abstract class BaseUnitTest : IDisposable
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));
         Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-        Fixture.Customize(new EmployeeFixture());
-        Fixture.Customize(new EducationLevelFixture());
-        Fixture.Customize(new EmployeeEducationFixture());
-        Fixture.Customize(new SkillFixture());
-        Fixture.Customize(new EmployeeProjectFixture());
-        Fixture.Customize(new EmployerFixture());
-        Fixture.Customize(new DateOnlyFixture());
-        Fixture.Customize(new ActivityFieldGroupFixture());
-        Fixture.Customize(new ActivityFieldFixture());
+        Fixture.RegisterAllFixtureCustomizations();
     }
 
     public void Dispose()

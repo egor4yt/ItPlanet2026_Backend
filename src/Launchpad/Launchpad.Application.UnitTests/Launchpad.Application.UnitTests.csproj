@@ -27,6 +27,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Launchpad.Application\Launchpad.Application.csproj"/>
         <ProjectReference Include="..\Launchpad.Persistence\Launchpad.Persistence.csproj"/>
+        <ProjectReference Include="..\Launchpad.Tests.Base\Launchpad.Tests.Base.csproj"/>
     </ItemGroup>
 
 </Project>

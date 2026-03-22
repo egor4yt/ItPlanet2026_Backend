@@ -9,4 +9,5 @@
     <Project Path="Launchpad.Domain/Launchpad.Domain.csproj"/>
     <Project Path="Launchpad.Persistence/Launchpad.Persistence.csproj"/>
     <Project Path="Launchpad.Shared/Launchpad.Shared.csproj"/>
+    <Project Path="Launchpad.Tests.Base/Launchpad.Tests.Base.csproj"/>
 </Solution>

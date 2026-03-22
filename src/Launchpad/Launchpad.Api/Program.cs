@@ -8,6 +8,13 @@ using Serilog;
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+
+    builder.Configuration
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true, true)
+        .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
+        .AddEnvironmentVariables();
+
     builder.ConfigureApi();
     builder.ConfigurePersistence();
     builder.ConfigureApplication();

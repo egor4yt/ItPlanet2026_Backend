@@ -1,4 +1,6 @@
-namespace Launchpad.Application.Tests.Fixtures;
+using AutoFixture;
+
+namespace Launchpad.Tests.Base.Fixtures;
 
 public class DateOnlyFixture : ICustomization
 {

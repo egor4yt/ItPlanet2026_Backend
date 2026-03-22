@@ -28,6 +28,7 @@
         <ProjectReference Include="..\Launchpad.Api\Launchpad.Api.csproj"/>
         <ProjectReference Include="..\Launchpad.Persistence\Launchpad.Persistence.csproj"/>
         <ProjectReference Include="..\Launchpad.Shared\Launchpad.Shared.csproj"/>
+        <ProjectReference Include="..\Launchpad.Tests.Base\Launchpad.Tests.Base.csproj"/>
     </ItemGroup>
 
 </Project>

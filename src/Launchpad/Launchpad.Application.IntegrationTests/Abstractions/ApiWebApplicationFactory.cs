@@ -1,9 +1,7 @@
 ﻿using System.Data.Common;
-using Launchpad.Persistence;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Respawn;
@@ -26,14 +24,6 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseNpgsql(_dbContainer.GetConnectionString());
-
-        await using (var context = new ApplicationDbContext(optionsBuilder.Options))
-        {
-            var hasMigrations = (await context.Database.GetPendingMigrationsAsync()).ToList();
-            if (hasMigrations.Count > 0) await context.Database.MigrateAsync();
-        }
 
         DbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
 

@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using Launchpad.Persistence;
+using Launchpad.Tests.Base.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Launchpad.Application.IntegrationTests.Abstractions;
@@ -23,6 +24,7 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));
         Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        Fixture.RegisterAllFixtureCustomizations();
 
         _resetDb = factory.ResetDatabaseAsync;
     }
