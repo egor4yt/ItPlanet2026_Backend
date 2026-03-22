@@ -52,7 +52,7 @@ jobs:
           name: build-output
 
       - name: Unit test
-        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Unit src/Launchpad/Launchpad.slnx
+        run: dotnet test --configuration Release --no-build --verbosity normal src/Launchpad/Launchpad.slnx
 
   integration-test-api:
     needs: build-api
