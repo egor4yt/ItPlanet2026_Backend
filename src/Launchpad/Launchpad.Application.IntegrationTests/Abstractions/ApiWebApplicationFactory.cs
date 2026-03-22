@@ -18,7 +18,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder("postgres:15-alpine").Build();
 
-    public Respawner Respawner { get; private set; } = null!;
+    // public Respawner Respawner { get; private set; } = null!;
     public DbConnection DbConnection { get; private set; } = null!;
 
     public async Task InitializeAsync()
@@ -29,12 +29,12 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 
         await DbConnection.OpenAsync();
 
-        Respawner = await Respawner.CreateAsync(DbConnection, new RespawnerOptions
-        {
-            DbAdapter = DbAdapter.Postgres,
-            SchemasToInclude = ["public"],
-            TablesToIgnore = ["__EFMigrationsHistory"]
-        });
+        // Respawner = await Respawner.CreateAsync(DbConnection, new RespawnerOptions
+        // {
+        //     DbAdapter = DbAdapter.Postgres,
+        //     SchemasToInclude = ["public"],
+        //     TablesToIgnore = ["__EFMigrationsHistory"]
+        // });
     }
 
 
@@ -58,6 +58,6 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
 
     public async Task ResetDatabaseAsync()
     {
-        await Respawner.ResetAsync(DbConnection);
+        // await Respawner.ResetAsync(DbConnection);
     }
 }
