@@ -1,14 +1,14 @@
 namespace Launchpad.Domain.Entities;
 
-public class EmployeeProject
+public sealed class EmployeeProject
 {
-    public long Id { get; set; }
-    public string Title { get; set; } = null!;
-    public string Description { get; set; } = null!;
-    public string Specialization { get; set; } = null!;
-    public string? Link { get; set; }
-    public DateOnly DateFrom { get; set; }
-    public DateOnly DateTo { get; set; }
+    public long Id { get; init; }
+    public required string Title { get; init; }
+    public required string Description { get; init; }
+    public required string Specialization { get; init; }
+    public string? Link { get; init; }
+    public DateOnly DateFrom { get; init; }
+    public DateOnly DateTo { get; init; }
     public long EmployeeId { get; set; }
-    public virtual Employee? Employee { get; set; }
+    public Employee? Employee { get; init; }
 }

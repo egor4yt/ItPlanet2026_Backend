@@ -1,11 +1,11 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class ActivityField
+public sealed class ActivityField
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public int ActivityFieldGroupId { get; set; }
+    public int Id { get; init; }
+    public required string Title { get; init; }
+    public int ActivityFieldGroupId { get; init; }
 
-    public virtual ActivityFieldGroup ActivityFieldGroup { get; set; }
-    public virtual ICollection<Employer> Employers { get; set; }
+    public ActivityFieldGroup? ActivityFieldGroup { get; init; }
+    public ICollection<Employer> Employers { get; init; } = [];
 }

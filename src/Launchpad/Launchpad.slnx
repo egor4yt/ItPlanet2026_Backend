@@ -1,12 +1,12 @@
 <Solution>
     <Folder Name="/Solution Items/">
-        <File Path="compose.yaml" />
+        <File Path="compose.yaml"/>
     </Folder>
-    <Project Path="Launchpad.Api/Launchpad.Api.csproj" />
-    <Project Path="Launchpad.Application.IntegrationTests/Launchpad.Application.IntegrationTests.csproj" />
-    <Project Path="Launchpad.Application.UnitTests/Launchpad.Application.UnitTests.csproj" />
-    <Project Path="Launchpad.Application/Launchpad.Application.csproj" />
-    <Project Path="Launchpad.Domain/Launchpad.Domain.csproj" />
-    <Project Path="Launchpad.Persistence/Launchpad.Persistence.csproj" />
-    <Project Path="Launchpad.Shared/Launchpad.Shared.csproj" />
+    <Project Path="Launchpad.Api/Launchpad.Api.csproj"/>
+    <Project Path="Launchpad.Application.IntegrationTests/Launchpad.Application.IntegrationTests.csproj"/>
+    <Project Path="Launchpad.Application.UnitTests/Launchpad.Application.UnitTests.csproj"/>
+    <Project Path="Launchpad.Application/Launchpad.Application.csproj"/>
+    <Project Path="Launchpad.Domain/Launchpad.Domain.csproj"/>
+    <Project Path="Launchpad.Persistence/Launchpad.Persistence.csproj"/>
+    <Project Path="Launchpad.Shared/Launchpad.Shared.csproj"/>
 </Solution>

@@ -1,10 +1,10 @@
 namespace Launchpad.Domain.Entities;
 
-public class EmployerVerificationType
+public sealed class EmployerVerificationType
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string HtmlDescription { get; set; }
+    public int Id { get; init; }
+    public required string Title { get; init; }
+    public required string HtmlDescription { get; init; }
 
-    public virtual ICollection<EmployerVerification> EmployerVerifications { get; set; }
+    public ICollection<EmployerVerification> EmployerVerifications { get; init; } = [];
 }

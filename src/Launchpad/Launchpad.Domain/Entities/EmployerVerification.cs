@@ -1,19 +1,19 @@
 namespace Launchpad.Domain.Entities;
 
-public class EmployerVerification
+public sealed class EmployerVerification
 {
-    public long Id { get; set; }
-    public string RequestMessage { get; set; } = null!;
-    public string? ResponseMessage { get; set; } = null!;
-    public string? TaxpayerIndividualNumber { get; set; }
-    public string? SocialNetworkLink { get; set; }
-    public DateTime ChangedOn { get; set; }
+    public long Id { get; init; }
+    public required string RequestMessage { get; init; }
+    public string? ResponseMessage { get; init; }
+    public string? TaxpayerIndividualNumber { get; init; }
+    public string? SocialNetworkLink { get; init; }
+    public DateTime ChangedOn { get; init; }
 
-    public long EmployerId { get; set; }
-    public int StatusId { get; set; }
-    public int EmployerVerificationTypeId { get; set; }
+    public long EmployerId { get; init; }
+    public int StatusId { get; init; }
+    public int EmployerVerificationTypeId { get; init; }
 
-    public virtual Employer Employer { get; set; }
-    public virtual EmployerVerificationStatus Status { get; set; }
-    public virtual EmployerVerificationType Type { get; set; }
+    public Employer? Employer { get; init; }
+    public EmployerVerificationStatus? Status { get; init; }
+    public EmployerVerificationType? Type { get; init; }
 }

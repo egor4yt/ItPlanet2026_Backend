@@ -1,10 +1,10 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class Skill
+public sealed class Skill
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = null!;
-    public bool IsSystemTag { get; set; }
+    public int Id { get; init; }
+    public required string Title { get; set; }
+    public bool IsSystemTag { get; init; }
 
-    public virtual ICollection<Employee> Employees { get; set; } = null!;
+    public ICollection<Employee> Employees { get; init; } = [];
 }

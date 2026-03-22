@@ -1,20 +1,20 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class Employee
+public sealed class Employee
 {
-    public long Id { get; set; }
-    public string Email { get; set; } = null!;
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string PasswordHash { get; set; } = null!;
-    public DateTime RegisteredOn { get; set; }
+    public long Id { get; init; }
+    public required string Email { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public required string PasswordHash { get; init; }
+    public DateTime RegisteredOn { get; init; }
 
-    public string? MiddleName { get; set; }
-    public bool? IsMale { get; set; }
-    public string? Biography { get; set; }
-    public DateOnly? BirthDate { get; set; }
+    public string? MiddleName { get; init; }
+    public bool? IsMale { get; init; }
+    public string? Biography { get; init; }
+    public DateOnly? BirthDate { get; init; }
 
-    public virtual ICollection<EmployeeEducation> EmployeeEducations { get; set; } = null!;
-    public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; } = null!;
-    public virtual ICollection<Skill> Skills { get; set; } = null!;
+    public ICollection<EmployeeEducation> EmployeeEducations { get; init; } = [];
+    public ICollection<EmployeeProject> EmployeeProjects { get; init; } = [];
+    public ICollection<Skill> Skills { get; set; } = [];
 }

@@ -16,7 +16,7 @@ public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : BaseInteg
     {
         // Arrange
         var request = Fixture.Build<CreateEmployeeBody>()
-            .With(x => x.Email, "qqqq@qqqq.qqq")
+            .With(x => x.Email, $"{Guid.NewGuid()}@mail.ru")
             .Create();
 
         // Act

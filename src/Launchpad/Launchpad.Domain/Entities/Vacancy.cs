@@ -1,11 +1,11 @@
 namespace Launchpad.Domain.Entities;
 
-public class Vacancy
+public sealed class Vacancy
 {
     public long Id { get; set; }
     public long EmployerId { get; set; }
-    public string Title { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public required string Title { get; set; }
+    public required string Description { get; set; }
 
-    public virtual ICollection<Employee> Employers { get; set; } = null!;
+    public ICollection<Employee> Employers { get; set; } = [];
 }

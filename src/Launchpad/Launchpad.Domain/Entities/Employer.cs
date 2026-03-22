@@ -1,16 +1,16 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class Employer
+public sealed class Employer
 {
-    public long Id { get; set; }
-    public string Email { get; set; } = null!;
-    public string CompanyName { get; set; } = null!;
-    public string PasswordHash { get; set; } = null!;
-    public DateTime RegisteredOn { get; set; }
+    public long Id { get; init; }
+    public required string Email { get; set; }
+    public required string CompanyName { get; init; }
+    public required string PasswordHash { get; init; }
+    public DateTime RegisteredOn { get; init; }
 
     public string? Description { get; set; }
-    public string? Website { get; set; }
+    public string? Website { get; init; }
 
-    public virtual ICollection<ActivityField> ActivityFields { get; set; }
-    public virtual EmployerVerification? Verification { get; set; }
+    public ICollection<ActivityField> ActivityFields { get; set; } = [];
+    public EmployerVerification? Verification { get; init; }
 }

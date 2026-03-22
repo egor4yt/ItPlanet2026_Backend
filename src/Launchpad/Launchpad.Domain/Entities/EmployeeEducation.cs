@@ -1,16 +1,16 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class EmployeeEducation
+public sealed class EmployeeEducation
 {
-    public long Id { get; set; }
-    public string Organization { get; set; } = null!;
-    public string Faculty { get; set; } = null!;
-    public string Specialization { get; set; } = null!;
-    public int CompletionYear { get; set; }
+    public long Id { get; init; }
+    public required string Organization { get; init; }
+    public required string Faculty { get; init; }
+    public required string Specialization { get; init; }
+    public int CompletionYear { get; init; }
 
     public int EducationLevelId { get; set; }
     public long EmployeeId { get; set; }
 
-    public virtual EducationLevel? EducationLevel { get; set; }
-    public virtual Employee? Employee { get; set; }
+    public EducationLevel? EducationLevel { get; init; }
+    public Employee? Employee { get; init; }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class EducationLevel
+public sealed class EducationLevel
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = null!;
+    public int Id { get; init; }
+    public required string Title { get; init; }
 
-    public virtual ICollection<EmployeeEducation> EmployeeEducations { get; set; } = null!;
+    public ICollection<EmployeeEducation> EmployeeEducations { get; init; } = [];
 }

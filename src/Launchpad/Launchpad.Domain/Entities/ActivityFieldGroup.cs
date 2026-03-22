@@ -1,9 +1,9 @@
 ﻿namespace Launchpad.Domain.Entities;
 
-public class ActivityFieldGroup
+public sealed class ActivityFieldGroup
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
+    public int Id { get; init; }
+    public required string Title { get; init; }
 
-    public virtual ICollection<ActivityField> ActivityFields { get; set; }
+    public ICollection<ActivityField> ActivityFields { get; init; } = [];
 }
