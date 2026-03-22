@@ -26,5 +26,5 @@ jobs:
       - name: Unit test
         run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Unit src/Launchpad/Launchpad.slnx
 
-#      - name: Integration test
-#        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad/Launchpad.slnx
+      - name: Integration test
+        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad/Launchpad.slnx
