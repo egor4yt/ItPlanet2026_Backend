@@ -25,7 +25,7 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
 
         var migrations = ApplicationDbContext.Database.GetPendingMigrations().ToList();
         Console.WriteLine(string.Join(Environment.NewLine, migrations));
-        if (migrations.Count != 0) ApplicationDbContext.Database.Migrate();
+        // if (migrations.Count != 0) ApplicationDbContext.Database.Migrate();
 
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));

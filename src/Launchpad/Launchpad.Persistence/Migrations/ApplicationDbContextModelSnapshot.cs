@@ -68,7 +68,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("ActivityFieldGroupId");
 
-                    b.ToTable("ActivityFields");
+                    b.ToTable("ActivityFields", (string)null);
 
                     b.HasData(
                         new
@@ -864,7 +864,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityFieldGroups");
+                    b.ToTable("ActivityFieldGroups", (string)null);
 
                     b.HasData(
                         new
@@ -999,7 +999,7 @@ namespace Launchpad.Persistence.Migrations
                     b.HasIndex(new[] { "Email" }, "UX_Curator_Email")
                         .IsUnique();
 
-                    b.ToTable("Curators");
+                    b.ToTable("Curators", (string)null);
 
                     b.HasData(
                         new
@@ -1025,7 +1025,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationLevels");
+                    b.ToTable("EducationLevels", (string)null);
 
                     b.HasData(
                         new
@@ -1114,7 +1114,7 @@ namespace Launchpad.Persistence.Migrations
                     b.HasIndex(new[] { "Email" }, "UX_Users_Email")
                         .IsUnique();
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
 
                     b.HasData(
                         new
@@ -1165,7 +1165,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeEducations");
+                    b.ToTable("EmployeeEducations", (string)null);
 
                     b.HasData(
                         new
@@ -1216,7 +1216,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeProjects");
+                    b.ToTable("EmployeeProjects", (string)null);
 
                     b.HasData(
                         new
@@ -1272,7 +1272,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employers");
+                    b.ToTable("Employers", (string)null);
 
                     b.HasData(
                         new
@@ -1328,7 +1328,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("EmployerVerifications");
+                    b.ToTable("EmployerVerifications", (string)null);
                 });
 
             modelBuilder.Entity("Launchpad.Domain.Entities.EmployerVerificationStatus", b =>
@@ -1342,7 +1342,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployerVerificationStatuses");
+                    b.ToTable("EmployerVerificationStatuses", (string)null);
 
                     b.HasData(
                         new
@@ -1382,7 +1382,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployerVerificationTypes");
+                    b.ToTable("EmployerVerificationTypes", (string)null);
 
                     b.HasData(
                         new
@@ -1440,7 +1440,7 @@ namespace Launchpad.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
 
                     b.HasData(
                         new
