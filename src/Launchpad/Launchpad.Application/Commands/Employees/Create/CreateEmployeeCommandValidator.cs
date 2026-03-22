@@ -15,7 +15,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeesC
 
         RuleFor(x => x.FirstName)
             .NotEmpty()
-            .Length(2, 3);
+            .Length(2, 64);
 
         RuleFor(x => x.LastName)
             .NotEmpty()
