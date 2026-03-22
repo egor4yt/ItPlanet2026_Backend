@@ -12,6 +12,10 @@ public static class DependencyInjection
 {
     public static IHostApplicationBuilder ConfigurePersistence(this IHostApplicationBuilder app)
     {
+        Console.WriteLine("11111");
+
+        Log.Warning("22222");
+
         app.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>("Database");
 
         var connectionString = app.Configuration.GetSection(ConfigurationKeys.SqlDatabaseConnectionString);
@@ -30,7 +34,13 @@ public static class DependencyInjection
         else if (environment.Value == Shared.Environments.IntegrationTests)
         {
             Console.WriteLine("Enabled ignoring PendingModelChangesWarning");
-            
+            Log.Warning("Enabled ignoring PendingModelChangesWarning");
+
+            // https://learn.microsoft.com/en-us/ef/core/what-is-new/ef-core-9.0/breaking-changes#mitigations
+            // There are several common situations when this exception can be thrown:
+            // The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
+            // Mitigation: The warning is a false positive in this case and should be suppressed
+
             app.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString.Value)
                     .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
