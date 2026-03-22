@@ -25,8 +25,16 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore src/Launchpad --configuration Release --no-restore
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./**/bin/Release/
+          retention-days: 1
         
   unit-test-api:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +48,7 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Unit src/Launchpad
 
   integration-test-api:
+    needs: unit-test-api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,4 +59,4 @@ jobs:
           dotnet-version: 10.0.x
 
       - name: Integration test
-        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad/Launchpad.Application.IntegrationTests
+        run: dotnet test --configuration Release --no-build --verbosity normal --filter Category=Integration src/Launchpad
