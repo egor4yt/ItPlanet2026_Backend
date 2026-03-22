@@ -6,7 +6,7 @@ public sealed class Employee
     public required string Email { get; init; }
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
-    public required string PasswordHash { get; init; }
+    public required string PasswordHash { get; set; }
     public DateTime RegisteredOn { get; init; }
 
     public string? MiddleName { get; init; }
