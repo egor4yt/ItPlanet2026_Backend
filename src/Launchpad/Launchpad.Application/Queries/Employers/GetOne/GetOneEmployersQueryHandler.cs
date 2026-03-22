@@ -14,7 +14,7 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
             .Include(x => x.ActivityFields)
             .ThenInclude(x => x.ActivityFieldGroup)
             .Include(x => x.Verification)
-            .ThenInclude(x => x.Status)
+            .ThenInclude(x => x!.Status)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (employer == null) throw new NotFoundException("EmployerNotFound");
 
@@ -26,11 +26,11 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
             response.Verification = new GetOneEmployersQueryResponseVerification
             {
                 Id = employer.Verification.Id,
-                Title = employer.Verification.Status.Title
+                Title = employer.Verification.Status!.Title
             };
 
         var activityGroupTitles = employer.ActivityFields
-            .Select(x => x.ActivityFieldGroup.Title)
+            .Select(x => x.ActivityFieldGroup!.Title)
             .Distinct()
             .Order();
         response.ActivityFields = employer.ActivityFields.Count > 0 ? string.Join(", ", activityGroupTitles) : null;

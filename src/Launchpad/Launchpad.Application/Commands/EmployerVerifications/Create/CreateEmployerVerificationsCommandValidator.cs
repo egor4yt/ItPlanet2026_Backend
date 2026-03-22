@@ -10,7 +10,7 @@ public class CreateEmployerVerificationsCommandValidator : AbstractValidator<Cre
             .Length(2, 1024);
 
         RuleFor(x => x.TaxpayerIndividualNumber)
-            .Must(x => x.Length is 10 or 12)
+            .Must(x => x is { Length: 10 or 12 })
             .WithMessage("Length must be 10 or 12 characters");
     }
 }
