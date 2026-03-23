@@ -1,7 +1,12 @@
-﻿using AutoFixture;
+﻿using System.Net.Http.Headers;
+using AutoFixture;
+using Launchpad.Api.Configuration.Options;
+using Launchpad.Domain.Entities;
 using Launchpad.Persistence;
+using Launchpad.Shared;
 using Launchpad.Tests.Base.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Launchpad.Application.IntegrationTests.Abstractions;
 
@@ -38,5 +43,20 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
     {
         _scope.Dispose();
         await _resetDb();
+    }
+
+    protected void Authenticate(Employee employee)
+    {
+        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
+        var jwtDetails = new JwtDetails(employee);
+        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+    protected void Authenticate(Employer employer)
+    {
+        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
+        var jwtDetails = new JwtDetails(employer);
+        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 }

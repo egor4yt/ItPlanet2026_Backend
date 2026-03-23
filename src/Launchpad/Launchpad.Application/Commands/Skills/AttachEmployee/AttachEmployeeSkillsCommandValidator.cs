@@ -11,7 +11,7 @@ public class AttachEmployeeSkillsCommandValidator : AbstractValidator<AttachEmpl
             {
                 c.RuleFor(x => x.Title)
                     .NotEmpty()
-                    .Length(2, 64);
+                    .Length(1, 64);
             });
     }
 }

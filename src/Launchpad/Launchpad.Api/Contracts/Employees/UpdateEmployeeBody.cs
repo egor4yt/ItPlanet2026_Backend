@@ -21,7 +21,7 @@ public class UpdateEmployeeBody
     public string? MiddleName { get; init; } = null;
 
     /// <summary>
-    ///     Employee's birth date
+    ///     Employee's birthdate
     /// </summary>
     public DateOnly? BirthDate { get; init; }
 
