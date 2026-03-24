@@ -36,7 +36,7 @@ public partial class EmployerVerificationsController
     }
 
     /// <summary>
-    ///     Create employer verification
+    ///     Update employer verification
     /// </summary>
     /// <param name="body">Employer verification data</param>
     /// <param name="verificationId">Verification ID</param>

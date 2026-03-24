@@ -1,4 +1,3 @@
-using System;
 using AutoFixture;
 using Launchpad.Domain.Entities;
 

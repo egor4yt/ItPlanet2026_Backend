@@ -10,7 +10,7 @@ public sealed class EmployerVerification
     public DateTime ChangedOn { get; init; }
 
     public long EmployerId { get; init; }
-    public int StatusId { get; init; }
+    public int StatusId { get; set; }
     public int EmployerVerificationTypeId { get; init; }
 
     public Employer? Employer { get; init; }

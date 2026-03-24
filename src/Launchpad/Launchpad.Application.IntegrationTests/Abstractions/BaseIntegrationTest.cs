@@ -34,15 +34,15 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
         _resetDb = factory.ResetDatabaseAsync;
     }
 
-    public virtual Task InitializeAsync()
+    public virtual async Task InitializeAsync()
     {
-        return Task.CompletedTask;
+        await _resetDb();
     }
 
-    public virtual async Task DisposeAsync()
+    public virtual Task DisposeAsync()
     {
         _scope.Dispose();
-        await _resetDb();
+        return Task.CompletedTask;
     }
 
     protected void Authenticate(Employee employee)
@@ -52,10 +52,19 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
         var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
+
     protected void Authenticate(Employer employer)
     {
         var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
         var jwtDetails = new JwtDetails(employer);
+        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+
+    protected void Authenticate(Curator curator)
+    {
+        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
+        var jwtDetails = new JwtDetails(curator);
         var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }

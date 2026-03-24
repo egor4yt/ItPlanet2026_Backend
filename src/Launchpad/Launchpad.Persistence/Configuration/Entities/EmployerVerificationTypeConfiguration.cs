@@ -82,7 +82,7 @@ public class EmployerVerificationTypeConfiguration : IEntityTypeConfiguration<Em
             new EmployerVerificationType
             {
                 Id = 6,
-                Title = "Кадровое агентство",
+                Title = "Частный рекрутер",
                 HtmlDescription = """
                                   <p>Отправьте один из документов:</p>
                                   <ul>
