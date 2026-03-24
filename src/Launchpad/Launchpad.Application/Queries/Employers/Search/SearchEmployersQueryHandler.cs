@@ -20,7 +20,9 @@ public class SearchEmployersQueryHandler(ApplicationDbContext applicationDbConte
             .Select(x => new SearchEmployersQueryResponse
             {
                 Id = x.Id,
-                Name = x.CompanyName
+                Name = x.CompanyName,
+                IsVerified = x.Verification != null && x.Verification.StatusId == Domain.Metadata.EmployerVerificationStatusId.Approved,
+                VerificationId = x.Verification != null ? x.Verification.Id : null
             })
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize)
