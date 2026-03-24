@@ -26,7 +26,7 @@ public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : BaseInteg
         // Assert
         var employeeInDb = await ApplicationDbContext.Employees.FirstOrDefaultAsync(x => x.Email == request.Email);
 
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.StatusCode.Should().Be(HttpStatusCode.Created, await response.Content.ReadAsStringAsync());
 
         employeeInDb.Should().NotBeNull();
         employeeInDb.FirstName.Should().Be(request.FirstName);
@@ -51,6 +51,6 @@ public class RegisterEmployeeTests(ApiWebApplicationFactory factory) : BaseInteg
         var response = await HttpClient.PostAsJsonAsync("/employees", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        response.StatusCode.Should().Be(HttpStatusCode.Conflict, await response.Content.ReadAsStringAsync());
     }
 }

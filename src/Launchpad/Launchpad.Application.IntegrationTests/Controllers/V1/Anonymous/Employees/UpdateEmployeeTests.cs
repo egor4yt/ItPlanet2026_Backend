@@ -28,7 +28,7 @@ public class UpdateEmployeeTests(ApiWebApplicationFactory factory) : BaseIntegra
         var response = await HttpClient.PutAsJsonAsync("employees", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent, await response.Content.ReadAsStringAsync());
 
         // Сбрасываем кэш EF, чтобы получить данные напрямую из БД
         var employeeInDb = await ApplicationDbContext.Employees
@@ -54,6 +54,6 @@ public class UpdateEmployeeTests(ApiWebApplicationFactory factory) : BaseIntegra
         var response = await HttpClient.PutAsJsonAsync("employees", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized, await response.Content.ReadAsStringAsync());
     }
 }

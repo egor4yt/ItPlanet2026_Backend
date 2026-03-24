@@ -57,7 +57,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync(url);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
 
         var result = await response.Content.ReadFromJsonAsync<PagedResult<SearchEmployersQueryResponse>>();
 
@@ -87,8 +87,9 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync(url);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
         var result = await response.Content.ReadFromJsonAsync<PagedResult<SearchEmployersQueryResponse>>();
+        result.Should().NotBeNull();
         result.Items.Should().BeEmpty();
         result.TotalItems.Should().Be(0);
     }
@@ -104,7 +105,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync("/employers?pageNumber=1&pageSize=10");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -118,7 +119,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync("/employers?pageNumber=1&pageSize=10");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -130,7 +131,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync("/employers?pageNumber=1&pageSize=10");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized, await response.Content.ReadAsStringAsync());
     }
 
     [Theory]
@@ -149,7 +150,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync(url);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest, await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -173,7 +174,7 @@ public class SearchEmployersTests(ApiWebApplicationFactory factory) : BaseIntegr
         var response = await HttpClient.GetAsync(url);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
         var result = await response.Content.ReadFromJsonAsync<PagedResult<SearchEmployersQueryResponse>>();
 
         var totalCount = employersBeforeTest + 15;

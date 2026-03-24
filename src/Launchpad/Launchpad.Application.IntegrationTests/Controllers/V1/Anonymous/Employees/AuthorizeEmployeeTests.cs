@@ -32,7 +32,7 @@ public class AuthorizeEmployeeTests(ApiWebApplicationFactory factory) : BaseInte
         var responseDetails = await response.Content.ReadFromJsonAsync<AuthorizeEmployeeCommandResponse>();
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
         responseDetails.Should().NotBeNull();
         responseDetails.ProfileId.Should().Be(employee.Id);
     }
@@ -58,7 +58,7 @@ public class AuthorizeEmployeeTests(ApiWebApplicationFactory factory) : BaseInte
         var responseDetails = await response.Content.ReadFromJsonAsync<AuthorizeEmployeeCommandResponse>();
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
         responseDetails.Should().NotBeNull();
         responseDetails.ProfileId.Should().Be(curator.Id);
     }

@@ -48,7 +48,7 @@ public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrati
 
         // Assert
         var content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent, await response.Content.ReadAsStringAsync());
 
         var employeeInDb = await ApplicationDbContext.Employees
             .Include(x => x.Skills)
@@ -73,7 +73,7 @@ public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrati
         var response = await HttpClient.PatchAsJsonAsync("employees/skills", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized, await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrati
         var response = await HttpClient.PatchAsJsonAsync("/employees/skills", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
@@ -110,6 +110,6 @@ public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrati
         var response = await HttpClient.PatchAsJsonAsync("employees/skills", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
     }
 }
