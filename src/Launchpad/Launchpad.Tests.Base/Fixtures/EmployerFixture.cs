@@ -13,6 +13,7 @@ public class EmployerFixture : ICustomization
             .Without(x => x.Id)
             .Without(x => x.ActivityFields)
             .Without(x => x.Verification)
+            .Without(x => x.Vacancies)
         );
     }
 }

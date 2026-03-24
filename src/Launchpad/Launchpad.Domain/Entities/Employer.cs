@@ -12,5 +12,6 @@ public sealed class Employer
     public string? Website { get; init; }
 
     public ICollection<ActivityField> ActivityFields { get; set; } = [];
+    public ICollection<Vacancy> Vacancies { get; set; } = [];
     public EmployerVerification? Verification { get; set; }
 }

@@ -12,7 +12,7 @@ namespace Launchpad.Application.IntegrationTests.Abstractions;
 
 public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder("postgres:15-alpine").Build();
+    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder("postgis/postgis:15-3.5-alpine").Build();
 
     public Respawner Respawner { get; private set; } = null!;
     public DbConnection DbConnection { get; private set; } = null!;

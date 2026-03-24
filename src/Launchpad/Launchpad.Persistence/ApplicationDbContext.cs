@@ -17,10 +17,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<EmployerVerificationStatus> EmployerVerificationStatuses { get; set; }
     public DbSet<EmployerVerification> EmployerVerifications { get; set; }
     public DbSet<EmployerVerificationType> EmployerVerificationTypes { get; set; }
+    public DbSet<Vacancy> Vacancies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.HasPostgresExtension("postgis");
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
         base.OnModelCreating(builder);
     }
 }

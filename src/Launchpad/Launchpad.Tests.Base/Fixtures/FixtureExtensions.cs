@@ -17,5 +17,6 @@ public static class FixtureExtensions
         fixture.Customize(new ActivityFieldFixture());
         fixture.Customize(new CuratorFixture());
         fixture.Customize(new EmployerVerificationFixture());
+        fixture.Customize(new VacancyFixture());
     }
 }

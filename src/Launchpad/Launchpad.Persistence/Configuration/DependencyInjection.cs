@@ -20,44 +20,36 @@ public static class DependencyInjection
         var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
 
-        if (environment.Value == Shared.Environments.Development)
-            app.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString.Value)
-                    .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-            );
-        else if (environment.Value == Shared.Environments.IntegrationTests)
+        app.Services.AddDbContext<ApplicationDbContext>(options =>
         {
-            Log.Warning("Warning PendingModelChangesWarning will be ignored");
+            options.UseNpgsql(connectionString.Value, x => x.UseNetTopologySuite());
+            options.LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category);
 
-            // https://learn.microsoft.com/en-us/ef/core/what-is-new/ef-core-9.0/breaking-changes#mitigations
-            // There are several common situations when this exception can be thrown:
-            // The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
-            // Mitigation: The warning is a false positive in this case and should be suppressed
+            if (environment.Value == Shared.Environments.Development)
+            {
+                options.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
+            }
+            else if (environment.Value == Shared.Environments.IntegrationTests)
+            {
+                Log.Warning("Warning PendingModelChangesWarning will be ignored");
 
-            app.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString.Value)
-                    .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-                    .ConfigureWarnings(warnings =>
-                        warnings.Ignore(RelationalEventId.PendingModelChangesWarning)
-                    )
-            );
-        }
-        else if (environment.Value == Shared.Environments.Production)
-            app.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString.Value)
-                    .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
-            );
-        else
-            app.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString.Value)
-                    .LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-            );
+                options.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
+
+                // https://learn.microsoft.com/en-us/ef/core/what-is-new/ef-core-9.0/breaking-changes#mitigations
+                // There are several common situations when this exception can be thrown:
+                // The migrations are generated, modified or chosen dynamically by replacing some of the EF services.
+                // Mitigation: The warning is a false positive in this case and should be suppressed
+                options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+            }
+            else if (environment.Value == Shared.Environments.Docker)
+            {
+                options.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
+            }
+        });
+
 
         return app;
     }
