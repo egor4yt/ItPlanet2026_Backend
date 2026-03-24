@@ -24,11 +24,19 @@ public class GetOneEmployerVerificationsQueryHandler(ApplicationDbContext applic
 
         response.RequestMessage = verification.RequestMessage;
         response.ChangedOn = verification.ChangedOn;
-        response.EmployerVerificationTypeId = verification.EmployerVerificationTypeId;
         response.ResponseMessage = verification.ResponseMessage;
         response.SocialNetworkLink = verification.SocialNetworkLink;
         response.TaxpayerIndividualNumber = verification.TaxpayerIndividualNumber;
-        response.StatusId = verification.StatusId;
+        response.Type = new GetOneEmployerVerificationsQueryResponseType
+        {
+            Id = verification.EmployerVerificationTypeId,
+            Title = verification.Type!.Title
+        };
+        response.Status = new GetOneEmployerVerificationsQueryResponseStatus
+        {
+            Id = verification.StatusId,
+            Title = verification.Status!.Title
+        };
 
         return response;
     }
