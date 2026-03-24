@@ -1,5 +1,4 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using Launchpad.Domain.Entities;
 
 namespace Launchpad.Tests.Base.Fixtures;

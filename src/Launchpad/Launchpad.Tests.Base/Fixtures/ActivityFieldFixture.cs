@@ -1,4 +1,3 @@
-using System.Threading;
 using AutoFixture;
 using Launchpad.Domain.Entities;
 

@@ -3,6 +3,7 @@ using Launchpad.Application.Queries.Employers.Search;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 // ReSharper disable once CheckNamespace
 
 namespace Launchpad.Api.Controllers.V1;

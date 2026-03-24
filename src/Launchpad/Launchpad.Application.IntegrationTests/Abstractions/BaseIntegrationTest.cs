@@ -14,29 +14,30 @@ namespace Launchpad.Application.IntegrationTests.Abstractions;
 [Trait("Category", "Integration")]
 public abstract class BaseIntegrationTest : IAsyncLifetime
 {
-    private readonly Func<Task> _resetDb;
-    private readonly IServiceScope _scope;
-    protected readonly ApplicationDbContext ApplicationDbContext;
+    private readonly ApiWebApplicationFactory _factory;
     protected readonly IFixture Fixture = new Fixture();
-    protected readonly HttpClient HttpClient;
+    private IServiceScope _scope = null!;
 
     protected BaseIntegrationTest(ApiWebApplicationFactory factory)
     {
-        _scope = factory.Services.CreateScope();
-        ApplicationDbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        HttpClient = factory.CreateClient();
+        _factory = factory;
 
         Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
             .ForEach(b => Fixture.Behaviors.Remove(b));
         Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         Fixture.RegisterAllFixtureCustomizations();
-
-        _resetDb = factory.ResetDatabaseAsync;
     }
+
+    protected ApplicationDbContext ApplicationDbContext { get; private set; } = null!;
+
+    protected HttpClient HttpClient { get; private set; } = null!;
 
     public virtual async Task InitializeAsync()
     {
-        await _resetDb();
+        _scope = _factory.Services.CreateScope();
+        ApplicationDbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        HttpClient = _factory.CreateClient();
+        await _factory.ResetDatabaseAsync();
     }
 
     public virtual Task DisposeAsync()
