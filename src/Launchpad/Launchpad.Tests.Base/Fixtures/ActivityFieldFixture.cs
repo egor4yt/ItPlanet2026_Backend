@@ -13,6 +13,7 @@ public class ActivityFieldFixture : ICustomization
             .With(x => x.Id, () => Interlocked.Increment(ref _id))
             .Without(x => x.ActivityFieldGroup)
             .Without(x => x.ActivityFieldGroupId)
+            .Without(x => x.Employers)
         );
     }
 }

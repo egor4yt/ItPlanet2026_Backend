@@ -9,7 +9,7 @@ public class AuthorizeEmployerCommandHandlerTests : BaseUnitTest
 {
     private readonly AuthorizeEmployersCommandHandler _handler;
 
-    public AuthorizeEmployerCommandHandlerTests()
+    public AuthorizeEmployerCommandHandlerTests(PostgisFixture postgis) : base(postgis)
     {
         _handler = new AuthorizeEmployersCommandHandler(DbContext);
     }

@@ -9,7 +9,7 @@ public class UpdateEmployersCommandHandlerTests : BaseUnitTest
 {
     private readonly UpdateEmployersCommandHandler _handler;
 
-    public UpdateEmployersCommandHandlerTests()
+    public UpdateEmployersCommandHandlerTests(PostgisFixture postgis) : base(postgis)
     {
         _handler = new UpdateEmployersCommandHandler(DbContext);
     }
@@ -22,8 +22,11 @@ public class UpdateEmployersCommandHandlerTests : BaseUnitTest
         await DbContext.ActivityFieldGroups.AddAsync(activityFieldGroup);
 
         var activityField = Fixture.Create<ActivityField>();
-        var otherActivityField = Fixture.Create<ActivityField>();
+        activityField.ActivityFieldGroup = activityFieldGroup;
         await DbContext.ActivityFields.AddAsync(activityField);
+
+        var otherActivityField = Fixture.Create<ActivityField>();
+        otherActivityField.ActivityFieldGroup = activityFieldGroup;
         await DbContext.ActivityFields.AddAsync(otherActivityField);
 
         var employer = Fixture.Create<Employer>();

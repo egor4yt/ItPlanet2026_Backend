@@ -9,7 +9,7 @@ public class UpdateEmployeeProjectsCommandHandlerTests : BaseUnitTest
 {
     private readonly UpdateEmployeeProjectsCommandHandler _handler;
 
-    public UpdateEmployeeProjectsCommandHandlerTests()
+    public UpdateEmployeeProjectsCommandHandlerTests(PostgisFixture postgis) : base(postgis)
     {
         _handler = new UpdateEmployeeProjectsCommandHandler(DbContext);
     }

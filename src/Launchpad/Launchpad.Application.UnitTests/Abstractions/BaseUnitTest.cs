@@ -1,15 +1,15 @@
 using Launchpad.Persistence;
 using Launchpad.Shared;
 using Launchpad.Tests.Base.Fixtures;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Launchpad.Application.Tests.Abstractions;
 
 [Trait("Category", "Unit")]
+[Collection("PostgisCollection")]
 public abstract class BaseUnitTest : IDisposable
 {
-    private readonly SqliteConnection _connection;
     protected readonly ApplicationDbContext DbContext;
 
     protected readonly JwtDescriptorDetails DefaultJwtDetails = new JwtDescriptorDetails
@@ -21,14 +21,13 @@ public abstract class BaseUnitTest : IDisposable
     };
     protected readonly Fixture Fixture = new Fixture();
 
-    protected BaseUnitTest()
+    protected BaseUnitTest(PostgisFixture postgis)
     {
-        _connection = new SqliteConnection("DataSource=:memory:;Foreign Keys=False");
-        _connection.Open();
-
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseSqlite(_connection)
+            .UseNpgsql(postgis.ConnectionString + ";Include Error Detail=true", x => x.UseNetTopologySuite())
             .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()
+            .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
             .Options;
 
         DbContext = new ApplicationDbContext(options);
@@ -43,7 +42,5 @@ public abstract class BaseUnitTest : IDisposable
     public void Dispose()
     {
         DbContext.Dispose();
-        _connection.Close();
-        _connection.Dispose();
     }
 }

@@ -9,7 +9,11 @@ public class EmployeeFixture : ICustomization
     {
         fixture.Customize<Employee>(composer => composer
             .With(x => x.Email, () => $"{Guid.NewGuid()}@test.com")
-            .With(x => x.RegisteredOn, () => DateTime.UtcNow)
+            .With(x => x.RegisteredOn, () =>
+            {
+                var now = DateTime.UtcNow;
+                return new DateTime(now.Ticks - now.Ticks % 10, now.Kind);
+            })
             .Without(x => x.Id)
             .Without(x => x.EmployeeEducations)
             .Without(x => x.EmployeeProjects)

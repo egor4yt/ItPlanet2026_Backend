@@ -6,6 +6,6 @@ public sealed class ActivityField
     public required string Title { get; init; }
     public int ActivityFieldGroupId { get; init; }
 
-    public ActivityFieldGroup? ActivityFieldGroup { get; init; }
+    public ActivityFieldGroup? ActivityFieldGroup { get; set; }
     public ICollection<Employer> Employers { get; init; } = [];
 }
