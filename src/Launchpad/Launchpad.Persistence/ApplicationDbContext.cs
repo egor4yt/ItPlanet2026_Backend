@@ -19,6 +19,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<EmployerVerificationType> EmployerVerificationTypes { get; set; }
     public DbSet<Vacancy> Vacancies { get; set; }
     public DbSet<VacancyType> VacancyTypes { get; set; }
+    public DbSet<WorkFormat> WorkFormats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

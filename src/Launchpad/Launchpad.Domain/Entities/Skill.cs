@@ -7,4 +7,5 @@ public sealed class Skill
     public bool IsSystemTag { get; init; }
 
     public ICollection<Employee> Employees { get; init; } = [];
+    public ICollection<Vacancy> Vacancies { get; init; } = [];
 }

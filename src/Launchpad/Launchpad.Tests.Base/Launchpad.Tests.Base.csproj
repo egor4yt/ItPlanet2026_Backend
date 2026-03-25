@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Launchpad.Domain\Launchpad.Domain.csproj"/>
+        <ProjectReference Include="..\Launchpad.Shared\Launchpad.Shared.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ using Launchpad.Application.IntegrationTests.Abstractions;
 using Launchpad.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Launchpad.Application.IntegrationTests.Controllers.V1.Anonymous.Employees;
+namespace Launchpad.Application.IntegrationTests.Controllers.V1.Employees.Employees;
 
 public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrationTest(factory)
 {

@@ -30,10 +30,18 @@ public partial class VacanciesController
         {
             EmployerId = employerId,
             Title = body.Title,
+            StartDate = body.StartDate,
+            EndDate = body.EndDate,
             Description = body.Description,
             Longitude = body.Longitude,
             Latitude = body.Latitude,
-            TypeId = body.TypeId
+            WorkFormatIds = body.WorkFormatIds,
+            TypeId = body.TypeId,
+            Skills = body.Skills.Select(x => new CreateVacanciesCommandRequestSkill
+            {
+                Id = x.Id,
+                Title = x.Title
+            })
         };
 
         var response = await Mediator.Send(query);

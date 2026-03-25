@@ -9,6 +9,8 @@ public class SkillFixture : ICustomization
     {
         fixture.Customize<Skill>(composer => composer
             .Without(x => x.Id)
-            .Without(x => x.Employees));
+            .Without(x => x.Employees)
+            .Without(x => x.Vacancies)
+        );
     }
 }

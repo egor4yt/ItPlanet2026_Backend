@@ -9,9 +9,7 @@ public class DateOnlyFixture : ICustomization
     public void Customize(IFixture fixture)
     {
         fixture.Customize<DateOnly>(composer => composer
-            .FromFactory<DateTime>(x =>
-                DateOnly.FromDateTime(x.AddDays(-_random.Next(365 * 16, 365 * 40)))
-            )
+            .FromFactory<DateTime>(DateOnly.FromDateTime)
         );
     }
 }

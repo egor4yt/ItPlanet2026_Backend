@@ -25,6 +25,14 @@ public class VacancyConfiguration : IEntityTypeConfiguration<Vacancy>
             .HasColumnType("timestamp with time zone");
 
         builder
+            .Property(x => x.StartDate)
+            .HasColumnType("timestamp with time zone");
+
+        builder
+            .Property(x => x.EndDate)
+            .HasColumnType("timestamp with time zone");
+
+        builder
             .HasOne(x => x.Employer)
             .WithMany(x => x.Vacancies)
             .HasForeignKey(y => y.EmployerId)

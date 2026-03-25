@@ -20,20 +20,16 @@ public class VacancyFixture : ICustomization
     public void Customize(IFixture fixture)
     {
         fixture.Customize<Vacancy>(composer => composer
-            .With(x => x.Location, () =>
-            {
-                var longitude = _random.NextDouble() * 360 - 180;
-                var latitude = _random.NextDouble() * 180 - 90;
-
-                return _geometryFactory.CreatePoint(new Coordinate(longitude, latitude));
-            })
             .With(x => x.CreatedAt, () => DateTime.UtcNow)
+            .With(x => x.StartDate, () => DateTime.UtcNow)
+            .With(x => x.EndDate, () => DateTime.UtcNow)
             .With(x => x.TypeId, _vacancyTypeIds[_random.Next(0, _vacancyTypeIds.Length)])
             .Without(x => x.Id)
             .Without(x => x.Employer)
             .Without(x => x.EmployerId)
-            .Without(x => x.TypeId)
             .Without(x => x.Type)
+            .Without(x => x.WorkFormats)
+            .Without(x => x.Skills)
         );
     }
 }

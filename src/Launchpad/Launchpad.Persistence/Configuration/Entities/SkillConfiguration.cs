@@ -17,6 +17,11 @@ public class SkillConfiguration : IEntityTypeConfiguration<Skill>
             .WithMany(x => x.Skills)
             .UsingEntity(x => x.ToTable("EmployeeSkillMap"));
 
+        builder
+            .HasMany(x => x.Vacancies)
+            .WithMany(x => x.Skills)
+            .UsingEntity(x => x.ToTable("VacancySkillMap"));
+
         builder.HasData(new Skill
         {
             Id = -1,

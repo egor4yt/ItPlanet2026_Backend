@@ -7,7 +7,17 @@ public class CreateVacanciesCommandRequest : IRequest<CreateVacanciesCommandResp
     public required long EmployerId { get; init; }
     public required int TypeId { get; init; }
     public required string Title { get; init; }
+    public required DateTime? StartDate { get; init; }
+    public required DateTime? EndDate { get; init; }
     public required string Description { get; init; }
     public required double Longitude { get; init; }
     public required double Latitude { get; init; }
+    public required List<int> WorkFormatIds { get; init; }
+    public IEnumerable<CreateVacanciesCommandRequestSkill> Skills { get; set; } = null!;
+}
+
+public class CreateVacanciesCommandRequestSkill
+{
+    public int? Id { get; set; }
+    public string Title { get; set; } = null!;
 }
