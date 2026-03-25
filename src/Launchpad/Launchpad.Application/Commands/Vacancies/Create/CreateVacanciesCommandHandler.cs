@@ -17,7 +17,8 @@ public class CreateVacanciesCommandHandler(ApplicationDbContext applicationDbCon
             Description = request.Description,
             Location = GeometryHelper.CreatePoint(request.Longitude, request.Latitude),
             CreatedAt = DateTime.UtcNow,
-            EmployerId = request.EmployerId
+            EmployerId = request.EmployerId,
+            TypeId = request.TypeId
         };
         await applicationDbContext.Vacancies.AddAsync(newVacancy, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);

@@ -32,7 +32,8 @@ public partial class VacanciesController
             Title = body.Title,
             Description = body.Description,
             Longitude = body.Longitude,
-            Latitude = body.Latitude
+            Latitude = body.Latitude,
+            TypeId = body.TypeId
         };
 
         var response = await Mediator.Send(query);

@@ -24,4 +24,9 @@ public class CreateVacnacyBody
     ///     Latitude
     /// </summary>
     public double Latitude { get; set; }
+
+    /// <summary>
+    ///     Type
+    /// </summary>
+    public int TypeId { get; set; }
 }
