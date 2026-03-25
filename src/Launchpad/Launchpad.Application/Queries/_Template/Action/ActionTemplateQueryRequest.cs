@@ -2,6 +2,6 @@
 
 namespace Launchpad.Application.Queries._Template.Action;
 
-public class ActionTemplateQueryRequest : IRequest<ActionTemplateQueryResponse>
+public class Action_TemplateQueryRequest : IRequest<Action_TemplateQueryResponse>
 {
 }

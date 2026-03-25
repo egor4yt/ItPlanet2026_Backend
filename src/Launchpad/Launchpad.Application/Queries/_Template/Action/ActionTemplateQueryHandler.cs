@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Launchpad.Application.Queries._Template.Action;
 
-public class ActionTemplateQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<ActionTemplateQueryRequest, ActionTemplateQueryResponse>
+public class Action_TemplateQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<Action_TemplateQueryRequest, Action_TemplateQueryResponse>
 {
-    public async Task<ActionTemplateQueryResponse> Handle(ActionTemplateQueryRequest request, CancellationToken cancellationToken)
+    public async Task<Action_TemplateQueryResponse> Handle(Action_TemplateQueryRequest request, CancellationToken cancellationToken)
     {
-        var response = new ActionTemplateQueryResponse();
+        var response = new Action_TemplateQueryResponse();
 
 
         return response;
