@@ -23,7 +23,7 @@ public class GetOneEmployeesQueryHandler(ApplicationDbContext applicationDbConte
                 BirthDate = x.BirthDate,
                 Skills = x.Skills.Select(s => new GetOneEmployeeQueryResponseSkill
                 {
-                    Id = s.Id,
+                    SkillId = s.Id,
                     Title = s.Title
                 }),
                 Education = x.EmployeeEducations.Select(e => new GetOneEmployeeQueryResponseEducation

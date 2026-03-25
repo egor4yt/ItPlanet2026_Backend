@@ -21,9 +21,9 @@ public class CreateVacanciesCommandHandler(ApplicationDbContext applicationDbCon
         };
         await applicationDbContext.Vacancies.AddAsync(newVacancy, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);
-        
+
         response.VacancyId = newVacancy.Id;
-        
+
         return response;
     }
 }
