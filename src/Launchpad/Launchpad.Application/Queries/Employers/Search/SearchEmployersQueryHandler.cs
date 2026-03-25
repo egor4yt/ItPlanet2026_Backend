@@ -11,7 +11,7 @@ public class SearchEmployersQueryHandler(ApplicationDbContext applicationDbConte
     {
         var query = applicationDbContext.Employers.AsNoTracking();
 
-        if (request.VerificationStatusId.HasValue) query = query.Where(x => x.Verification!.StatusId == request.VerificationStatusId);
+        if (request.VerificationStatusId.Count > 0) query = query.Where(x => request.VerificationStatusId.Contains(x.Verification!.StatusId));
         if (!string.IsNullOrWhiteSpace(request.Name)) query = query.Where(x => EF.Functions.ILike(x.CompanyName, $"%{request.Name}%"));
 
         var totalCount = await query.CountAsync(cancellationToken);

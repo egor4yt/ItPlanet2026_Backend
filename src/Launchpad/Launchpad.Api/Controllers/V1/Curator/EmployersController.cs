@@ -20,7 +20,7 @@ public partial class EmployersController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(PagedResult<SearchEmployersQueryResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Search([FromQuery] string? companyName, [FromQuery] int? verificationStatusId, [FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public async Task<IActionResult> Search([FromQuery] string? companyName, [FromQuery] List<int> verificationStatusId, [FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
         var query = new SearchEmployersQueryRequest
         {
