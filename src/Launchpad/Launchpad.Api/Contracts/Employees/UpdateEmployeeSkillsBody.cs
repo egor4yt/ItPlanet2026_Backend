@@ -19,7 +19,7 @@ public class UpdateEmployeeSkillsBodyItem
     /// <summary>
     ///     Skill id
     /// </summary>
-    public required int? SkillId { get; init; }
+    public required int? Id { get; init; }
 
     /// <summary>
     ///     Skill title

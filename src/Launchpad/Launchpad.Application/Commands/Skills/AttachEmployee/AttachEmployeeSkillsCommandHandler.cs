@@ -17,7 +17,7 @@ public class AttachEmployeeSkillsCommandHandler(ApplicationDbContext application
 
         employee.Skills.Clear();
 
-        foreach (var skill in request.Skills.Where(x => !x.SkillId.HasValue))
+        foreach (var skill in request.Skills.Where(x => !x.Id.HasValue))
         {
             employee.Skills.Add(new Skill
             {
@@ -27,8 +27,8 @@ public class AttachEmployeeSkillsCommandHandler(ApplicationDbContext application
         }
 
         var existsSkillsIds = request.Skills
-            .Where(s => s.SkillId.HasValue)
-            .Select(s => s.SkillId);
+            .Where(s => s.Id.HasValue)
+            .Select(s => s.Id);
 
         var existsSkills = await applicationDbContext.Skills
             .Where(x => existsSkillsIds.Contains(x.Id))

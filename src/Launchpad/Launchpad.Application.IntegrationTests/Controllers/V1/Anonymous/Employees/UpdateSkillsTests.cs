@@ -32,12 +32,12 @@ public class UpdateSkillsTests(ApiWebApplicationFactory factory) : BaseIntegrati
             .With(x => x.Skills, [
                 new UpdateEmployeeSkillsBodyItem
                 {
-                    SkillId = null,
+                    Id = null,
                     Title = newSkillName
                 },
                 new UpdateEmployeeSkillsBodyItem
                 {
-                    SkillId = existingSystemSkill.Id,
+                    Id = existingSystemSkill.Id,
                     Title = Guid.NewGuid().ToString() // will be ignored
                 }
             ])

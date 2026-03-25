@@ -49,7 +49,7 @@ public partial class EmployeesController
             EmployeeId = CurrentUserService.ProfileId,
             Skills = body.Skills.Select(x => new AttachEmployeeSkillsCommandRequestItem
             {
-                SkillId = x.SkillId,
+                Id = x.Id,
                 Title = x.Title
             })
         };
