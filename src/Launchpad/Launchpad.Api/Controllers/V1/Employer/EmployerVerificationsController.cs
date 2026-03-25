@@ -18,6 +18,8 @@ public partial class EmployerVerificationsController
     [HttpPost]
     [Authorize(JwtDetailsRole.Employer)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(CreateEmployerVerificationsCommandResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateEmployerVerificationBody body)
     {
@@ -42,7 +44,8 @@ public partial class EmployerVerificationsController
     /// <param name="verificationId">Verification ID</param>
     [HttpPut("{verificationId:long}")]
     [Authorize(JwtDetailsRole.Employer)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Update([FromRoute] long verificationId, [FromBody] UpdateEmployerVerificationBody body)
     {
@@ -67,7 +70,8 @@ public partial class EmployerVerificationsController
     /// <param name="verificationId">Verification ID</param>
     [HttpGet("{verificationId:long}")]
     [Authorize(JwtDetailsRole.Employer)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(GetOneEmployerVerificationsQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetOne([FromRoute] long verificationId)
     {
