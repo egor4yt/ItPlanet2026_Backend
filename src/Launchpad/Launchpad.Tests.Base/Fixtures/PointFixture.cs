@@ -17,8 +17,6 @@ public class PointFixture : ICustomization
             var longitude = _random.NextDouble() * 360 - 180;
             var latitude = _random.NextDouble() * 180 - 90;
 
-            var p = GeographyHelper.CreatePoint(longitude, latitude);
-
             return GeographyHelper.CreatePoint(longitude, latitude);
         });
     }

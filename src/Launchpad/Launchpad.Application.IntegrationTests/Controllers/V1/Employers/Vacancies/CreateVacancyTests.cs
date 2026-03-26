@@ -2,13 +2,11 @@
 using System.Net.Http.Json;
 using AutoFixture;
 using FluentAssertions;
-using Launchpad.Api.Contracts.Shared;
 using Launchpad.Api.Contracts.Vacancies;
 using Launchpad.Application.Commands.Vacancies.Create;
 using Launchpad.Application.IntegrationTests.Abstractions;
 using Launchpad.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 
 namespace Launchpad.Application.IntegrationTests.Controllers.V1.Employers.Vacancies;
 
@@ -33,15 +31,10 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         Authenticate(employer);
 
         var newSkillName = Fixture.Create<string>();
-        var randomPoint = Fixture.Create<Point>();
         var dates = Fixture.CreateMany<DateTime>(2).Order().ToList();
+
         var request = Fixture
             .Build<CreateVacancyBody>()
-            .With(x => x.Location, new GeolocationPoint
-            {
-                Longitude = randomPoint.X,
-                Latitude = randomPoint.Y
-            })
             .With(x => x.TypeId, Domain.Metadata.VacancyTypeId.Intership)
             .With(x => x.Skills, [
                 new CreateVacnacyBodySkill

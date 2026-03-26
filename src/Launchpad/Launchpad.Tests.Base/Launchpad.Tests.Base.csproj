@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Launchpad.Api\Launchpad.Api.csproj"/>
         <ProjectReference Include="..\Launchpad.Domain\Launchpad.Domain.csproj"/>
         <ProjectReference Include="..\Launchpad.Shared\Launchpad.Shared.csproj"/>
     </ItemGroup>

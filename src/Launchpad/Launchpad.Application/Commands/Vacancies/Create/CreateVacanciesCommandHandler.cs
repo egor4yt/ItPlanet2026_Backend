@@ -1,7 +1,6 @@
 ﻿using Launchpad.Application.Exceptions;
 using Launchpad.Domain.Entities;
 using Launchpad.Persistence;
-using Launchpad.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

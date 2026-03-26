@@ -20,5 +20,6 @@ public static class FixtureExtensions
         fixture.Customize(new EmployerVerificationFixture());
         fixture.Customize(new VacancyFixture());
         fixture.Customize(new PointFixture());
+        fixture.Customize(new GeolocationPointFixture());
     }
 }
