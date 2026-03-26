@@ -2,6 +2,6 @@
 
 namespace Launchpad.Application.Commands._Template.Action;
 
-public class ActionTemplateCommandValidator : AbstractValidator<ActionTemplateCommandRequest>
+public class Action_TemplateCommandValidator : AbstractValidator<Action_TemplateCommandRequest>
 {
 }

@@ -21,6 +21,11 @@ public class EmployeeRespondConfiguration : IEntityTypeConfiguration<EmployeeRes
             .HasColumnType("text");
 
         builder
+            .HasIndex(x => new { x.EmployeeId, x.VacancyId })
+            .IsUnique()
+            .HasDatabaseName("UX_EmployeeRespond_EmployeeVacancy");
+
+        builder
             .HasOne(x => x.Status)
             .WithMany(x => x.EmployeeResponds)
             .HasForeignKey(x => x.StatusId)

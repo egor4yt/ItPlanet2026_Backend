@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Launchpad.Application.Commands._Template.Action;
 
-public class ActionTemplateCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<ActionTemplateCommandRequest, ActionTemplateCommandResponse>
+public class Action_TemplateCommandHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<Action_TemplateCommandRequest, Action_TemplateCommandResponse>
 {
-    public async Task<ActionTemplateCommandResponse> Handle(ActionTemplateCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Action_TemplateCommandResponse> Handle(Action_TemplateCommandRequest request, CancellationToken cancellationToken)
     {
-        var response = new ActionTemplateCommandResponse();
+        var response = new Action_TemplateCommandResponse();
 
         return response;
     }

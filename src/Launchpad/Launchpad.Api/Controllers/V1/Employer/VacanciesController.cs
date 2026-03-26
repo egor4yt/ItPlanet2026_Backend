@@ -26,7 +26,7 @@ public partial class VacanciesController
         if (CurrentUserService.ProfileId != employerId && CurrentUserService.IsInRole(JwtDetailsRole.Employer))
             throw new ForbiddenException("UseYourProfileId");
 
-        var query = new CreateVacanciesCommandRequest
+        var command = new CreateVacanciesCommandRequest
         {
             EmployerId = employerId,
             Title = body.Title,
@@ -45,7 +45,7 @@ public partial class VacanciesController
             })
         };
 
-        var response = await Mediator.Send(query);
+        var response = await Mediator.Send(command);
 
         return Created($"vacancy/{response.VacancyId}", response);
     }

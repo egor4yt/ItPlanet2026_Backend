@@ -1,5 +1,5 @@
 ﻿namespace Launchpad.Application.Commands._Template.Action;
 
-public class ActionTemplateCommandResponse
+public class Action_TemplateCommandResponse
 {
 }

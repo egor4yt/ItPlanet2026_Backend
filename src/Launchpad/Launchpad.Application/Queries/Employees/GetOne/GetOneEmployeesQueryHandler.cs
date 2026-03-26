@@ -14,6 +14,7 @@ public class GetOneEmployeesQueryHandler(ApplicationDbContext applicationDbConte
             .Where(x => x.Id == request.Id)
             .Select(x => new GetOneEmployeesQueryResponse
             {
+                Id = x.Id,
                 Email = x.Email,
                 FirstName = x.FirstName,
                 LastName = x.LastName,

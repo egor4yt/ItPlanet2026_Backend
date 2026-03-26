@@ -2,6 +2,6 @@
 
 namespace Launchpad.Application.Commands._Template.Action;
 
-public class ActionTemplateCommandRequest : IRequest<ActionTemplateCommandResponse>
+public class Action_TemplateCommandRequest : IRequest<Action_TemplateCommandResponse>
 {
 }
