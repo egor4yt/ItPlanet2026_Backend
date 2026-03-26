@@ -1,8 +1,11 @@
 ﻿using Launchpad.Api.Contracts.Employees;
+using Launchpad.Application.Abstractions;
 using Launchpad.Application.Commands.Employees.Update;
 using Launchpad.Application.Commands.Employees.UpdateBiography;
 using Launchpad.Application.Commands.Skills.AttachEmployee;
+using Launchpad.Application.Exceptions;
 using Launchpad.Application.Queries.Employees.GetOne;
+using Launchpad.Application.Queries.Employees.GetResponds;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -102,5 +105,31 @@ public partial class EmployeesController
         await Mediator.Send(command);
 
         return NoContent();
+    }
+
+    /// <summary>
+    ///     Search responds to vacancy
+    /// </summary>
+    [HttpGet("{employeeId:long}/responds")]
+    [Authorize(JwtDetailsRole.Employee)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(PagedResult<GetRespondsEmployeesQueryResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> SearchByEmployee([FromRoute] long employeeId, [FromQuery] int pageNumber, [FromQuery] int pageSize)
+    {
+        if (CurrentUserService.ProfileId != employeeId && CurrentUserService.IsInRole(JwtDetailsRole.Employee))
+            throw new ForbiddenException("UseYourProfileId");
+
+        var query = new GetRespondsEmployeesQueryRequest
+        {
+            EmployeeId = employeeId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var response = await Mediator.Send(query);
+
+        return Ok(response);
     }
 }

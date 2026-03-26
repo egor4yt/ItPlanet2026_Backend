@@ -63,7 +63,7 @@ public static class DependencyInjection
         services.AddAuthorizationBuilder()
             .AddPolicy(JwtDetailsRole.Administrator, policy => policy.RequireRole(JwtDetailsRole.Administrator))
             .AddPolicy(JwtDetailsRole.Curator, policy => policy.RequireRole(JwtDetailsRole.Curator, JwtDetailsRole.Administrator))
-            .AddPolicy(JwtDetailsRole.Employee, policy => policy.RequireRole(JwtDetailsRole.Employee, JwtDetailsRole.Curator, JwtDetailsRole.Administrator))
+            .AddPolicy(JwtDetailsRole.Employee, policy => { policy.RequireRole(JwtDetailsRole.Employee, JwtDetailsRole.Curator, JwtDetailsRole.Administrator); })
             .AddPolicy(JwtDetailsRole.Employer, policy => policy.RequireRole(JwtDetailsRole.Employer, JwtDetailsRole.Curator, JwtDetailsRole.Administrator));
 
         services

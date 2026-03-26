@@ -7,7 +7,7 @@ public sealed class EmployeeRespondStatus
     public required string Description { get; init; }
 
     public int ColorId { get; set; }
-    
+
     public Color? Color { get; init; }
     public ICollection<EmployeeRespond> EmployeeResponds { get; init; } = [];
 }

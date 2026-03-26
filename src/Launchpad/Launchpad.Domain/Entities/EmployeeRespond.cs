@@ -6,7 +6,7 @@ public sealed class EmployeeRespond
     public DateTime CreatedAt { get; init; }
     public string? CoverMessage { get; init; }
     public string? CompanyAnswer { get; init; }
-    
+
     public int StatusId { get; init; }
     public long EmployeeId { get; init; }
     public long VacancyId { get; init; }

@@ -39,7 +39,7 @@ public class VacancyConfiguration : IEntityTypeConfiguration<Vacancy>
         builder
             .Property(x => x.EndDate)
             .HasColumnType("timestamp with time zone");
-        
+
         builder
             .HasIndex(x => x.CreatedAt)
             .HasDatabaseName("IX_Vacancy_createdAt");
