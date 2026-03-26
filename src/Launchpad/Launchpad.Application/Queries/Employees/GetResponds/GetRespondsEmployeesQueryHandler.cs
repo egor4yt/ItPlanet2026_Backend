@@ -11,7 +11,8 @@ public class GetRespondsEmployeesQueryHandler(ApplicationDbContext applicationDb
     {
         var query = applicationDbContext.EmployeeResponds
             .OrderByDescending(x => x.CreatedAt)
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(x => x.EmployeeId == request.EmployeeId);
 
         var count = await query.CountAsync(cancellationToken);
 
@@ -28,12 +29,12 @@ public class GetRespondsEmployeesQueryHandler(ApplicationDbContext applicationDb
                 Vacancy = new GetRespondsEmployeesQueryResponseVacancy
                 {
                     Id = x.VacancyId,
-                    Title = x.Vacancy.Title,
-                    Status = new GetRespondsEmployeesQueryResponseVacancyStatus
-                    {
-                        Title = x.Status!.Description,
-                        Color = x.Status.Color!.Code
-                    }
+                    Title = x.Vacancy.Title
+                },
+                Status = new GetRespondsEmployeesQueryResponseStatus
+                {
+                    Title = x.Status!.Description,
+                    Color = x.Status.Color!.Code
                 }
             })
             .Paging(request)

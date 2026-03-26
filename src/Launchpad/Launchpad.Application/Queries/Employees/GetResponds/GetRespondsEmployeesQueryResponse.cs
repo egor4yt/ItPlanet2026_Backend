@@ -6,6 +6,7 @@ public class GetRespondsEmployeesQueryResponse
     public DateTime CreatedAt { get; set; }
     public required GetRespondsEmployeesQueryResponseVacancy Vacancy { get; set; }
     public required GetRespondsEmployeesQueryResponseCompany Company { get; set; }
+    public required GetRespondsEmployeesQueryResponseStatus Status { get; set; }
 }
 
 public class GetRespondsEmployeesQueryResponseCompany
@@ -18,10 +19,9 @@ public class GetRespondsEmployeesQueryResponseVacancy
 {
     public long Id { get; set; }
     public required string Title { get; set; }
-    public required GetRespondsEmployeesQueryResponseVacancyStatus Status { get; set; }
 }
 
-public class GetRespondsEmployeesQueryResponseVacancyStatus
+public class GetRespondsEmployeesQueryResponseStatus
 {
     public required string Title { get; set; }
     public required string Color { get; set; }
