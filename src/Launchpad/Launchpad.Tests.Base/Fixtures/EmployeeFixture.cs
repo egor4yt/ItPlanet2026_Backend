@@ -18,6 +18,7 @@ public class EmployeeFixture : ICustomization
             .Without(x => x.EmployeeEducations)
             .Without(x => x.EmployeeProjects)
             .Without(x => x.Skills)
+            .Without(x => x.EmployeeResponds)
         );
     }
 }

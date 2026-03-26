@@ -30,6 +30,7 @@ public class VacancyFixture : ICustomization
             .Without(x => x.Type)
             .Without(x => x.WorkFormats)
             .Without(x => x.Skills)
+            .Without(x => x.EmployeeResponds)
         );
     }
 }

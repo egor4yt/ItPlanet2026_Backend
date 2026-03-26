@@ -17,4 +17,5 @@ public sealed class Employee
     public ICollection<EmployeeEducation> EmployeeEducations { get; init; } = [];
     public ICollection<EmployeeProject> EmployeeProjects { get; init; } = [];
     public ICollection<Skill> Skills { get; set; } = [];
+    public ICollection<EmployeeRespond> EmployeeResponds { get; init; } = [];
 }

@@ -20,4 +20,5 @@ public sealed class Vacancy
     public VacancyType? Type { get; init; }
     public ICollection<WorkFormat> WorkFormats { get; init; } = [];
     public ICollection<Skill> Skills { get; init; } = [];
+    public ICollection<EmployeeRespond> EmployeeResponds { get; init; } = [];
 }

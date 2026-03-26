@@ -20,6 +20,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Vacancy> Vacancies { get; set; }
     public DbSet<VacancyType> VacancyTypes { get; set; }
     public DbSet<WorkFormat> WorkFormats { get; set; }
+    public DbSet<Color> Colors { get; set; }
+    public DbSet<EmployeeRespondStatus> EmployeeRespondStatuses { get; set; }
+    public DbSet<EmployeeRespond> EmployeeResponds { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
