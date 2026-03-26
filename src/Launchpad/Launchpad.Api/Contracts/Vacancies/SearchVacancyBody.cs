@@ -12,6 +12,11 @@ public class SearchVacancyBody
     /// </summary>
     public string? Title { get; set; }
 
+    /// <summary>
+    ///     A collection of unique identifiers for vacancies that should be explicitly included in the search results.
+    /// </summary>
+    public required List<long>? IncludeIds { get; init; }
+
     /// <inheritdoc cref="GeolocationRadiusQuery" />
     public GeolocationRadiusQuery? RadiusSearch { get; set; }
 

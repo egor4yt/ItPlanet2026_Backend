@@ -24,6 +24,7 @@ public partial class VacanciesController
         var query = new SearchVacanciesQueryRequest
         {
             Title = body.Title?.Trim(),
+            IncludeIds = body.IncludeIds,
             RadiusSearch = body.RadiusSearch?.ToApplicationModel(),
             BoxSearch = body.BoxSearch?.ToApplicationModel(),
             PageNumber = pageNumber,

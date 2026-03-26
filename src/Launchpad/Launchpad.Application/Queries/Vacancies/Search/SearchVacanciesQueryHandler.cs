@@ -16,9 +16,10 @@ public class SearchVacanciesQueryHandler(ApplicationDbContext applicationDbConte
         var count = await query.CountAsync(cancellationToken);
 
         if (!string.IsNullOrWhiteSpace(request.Title))
-            query = query
-                .Where(x => EF.Functions.ILike(x.Title, $"%{request.Title}%"))
-                .OrderBy(x => x.CreatedAt);
+            query = query.Where(x => EF.Functions.ILike(x.Title, $"%{request.Title}%"));
+
+        if (request.IncludeIds?.Count > 0)
+            query = query.Where(x => request.IncludeIds.Contains(x.Id));
 
         if (request.RadiusSearch != null)
         {
@@ -31,13 +32,10 @@ public class SearchVacanciesQueryHandler(ApplicationDbContext applicationDbConte
         if (request.BoxSearch != null)
         {
             var geometry = request.BoxSearch.ToNetTopologyGeometry();
-
-            query = query
-                .Where(x => x.Location.Intersects(geometry))
-                .OrderBy(x => x.CreatedAt);
+            query = query.Where(x => x.Location.Intersects(geometry));
         }
 
-        if (string.IsNullOrWhiteSpace(request.Title) && request.RadiusSearch == null && request.BoxSearch == null)
+        if (request.RadiusSearch == null)
             query = query.OrderBy(x => x.CreatedAt);
 
         var results = await query

@@ -6,9 +6,10 @@ namespace Launchpad.Application.Queries.Vacancies.Search;
 
 public class SearchVacanciesQueryRequest : IRequest<PagedResult<SearchVacanciesQueryResponse>>, IPagingRequest
 {
-    public string? Title { get; set; }
-    public GeolocationRadiusQuery? RadiusSearch { get; set; }
-    public GeolocationBoxQuery? BoxSearch { get; set; }
+    public required string? Title { get; init; }
+    public required List<long>? IncludeIds { get; init; }
+    public required GeolocationRadiusQuery? RadiusSearch { get; init; }
+    public required GeolocationBoxQuery? BoxSearch { get; init; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
