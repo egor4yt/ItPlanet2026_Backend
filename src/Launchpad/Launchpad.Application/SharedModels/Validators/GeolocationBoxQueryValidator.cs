@@ -8,7 +8,7 @@ public class GeolocationBoxQueryValidator : AbstractValidator<GeolocationBoxQuer
     {
         RuleFor(x => x.From)
             .SetValidator(new GeolocationPointValidator());
-        
+
         RuleFor(x => x.To)
             .SetValidator(new GeolocationPointValidator());
     }

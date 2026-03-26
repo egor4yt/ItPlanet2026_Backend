@@ -1,4 +1,6 @@
-﻿namespace Launchpad.Api.Contracts.Vacancies;
+﻿using Launchpad.Api.Contracts.Shared;
+
+namespace Launchpad.Api.Contracts.Vacancies;
 
 /// <summary>
 ///     Create vacancy
@@ -26,14 +28,9 @@ public class CreateVacancyBody
     public string FullAddress { get; set; } = null!;
 
     /// <summary>
-    ///     Longitude
+    ///     Vacancy work location
     /// </summary>
-    public double Longitude { get; set; }
-
-    /// <summary>
-    ///     Latitude
-    /// </summary>
-    public double Latitude { get; set; }
+    public GeolocationPoint Location { get; set; } = null!;
 
     /// <summary>
     ///     Type

@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using AutoFixture;
 using FluentAssertions;
+using Launchpad.Api.Contracts.Shared;
 using Launchpad.Api.Contracts.Vacancies;
 using Launchpad.Application.Commands.Vacancies.Create;
 using Launchpad.Application.IntegrationTests.Abstractions;
@@ -35,8 +36,11 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         var randomPoint = Fixture.Create<Point>();
         var request = Fixture
             .Build<CreateVacancyBody>()
-            .With(x => x.Longitude, randomPoint.X)
-            .With(x => x.Latitude, randomPoint.Y)
+            .With(x => x.Location, new GeolocationPoint
+            {
+                Longitude = randomPoint.X,
+                Latitude = randomPoint.Y
+            })
             .With(x => x.TypeId, Domain.Metadata.VacancyTypeId.Intership)
             .With(x => x.Skills, [
                 new CreateVacnacyBodySkill
@@ -72,8 +76,8 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         dbVacancy.EmployerId.Should().Be(employer.Id);
         dbVacancy.Title.Should().Be(request.Title);
         dbVacancy.Description.Should().Be(request.Description);
-        dbVacancy.Location.X.Should().Be(request.Longitude);
-        dbVacancy.Location.Y.Should().Be(request.Latitude);
+        dbVacancy.Location.X.Should().Be(request.Location.Longitude);
+        dbVacancy.Location.Y.Should().Be(request.Location.Latitude);
         dbVacancy.StartDate.Should().Be(request.StartDate);
         dbVacancy.EndDate.Should().Be(request.EndDate);
         dbVacancy.TypeId.Should().Be(Domain.Metadata.VacancyTypeId.Intership);

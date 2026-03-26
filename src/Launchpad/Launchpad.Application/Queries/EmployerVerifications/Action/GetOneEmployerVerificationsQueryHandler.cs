@@ -23,7 +23,7 @@ public class GetOneEmployerVerificationsQueryHandler(ApplicationDbContext applic
         var verification = await query.FirstOrDefaultAsync(cancellationToken);
         if (verification == null) throw new NotFoundException("VerificationNotFound");
 
-        response.CompanyName= verification.Employer!.CompanyName;
+        response.CompanyName = verification.Employer!.CompanyName;
         response.RequestMessage = verification.RequestMessage;
         response.ChangedOn = verification.ChangedOn;
         response.ResponseMessage = verification.ResponseMessage;

@@ -11,11 +11,11 @@ public class VacancyConfiguration : IEntityTypeConfiguration<Vacancy>
         builder
             .Property(x => x.Title)
             .HasColumnType("varchar(128)");
-        
+
         builder
             .Property(x => x.City)
             .HasColumnType("varchar(128)");
-        
+
         builder
             .Property(x => x.FullAddress)
             .HasColumnType("varchar(1024)");

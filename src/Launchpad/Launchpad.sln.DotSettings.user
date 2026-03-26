@@ -30,8 +30,4 @@
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=db961ee2_002Df2cc_002D433e_002Db6b3_002D9d4fcf62414d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Handle_ShouldUpdateBiography_WhenRequestIsValid" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F0C399C0-0163-0777-9375-AC136146FE0D::net10.0::Launchpad.Application.Tests.Commands.Employees.UpdateBiography.UpdateBiographyEmployeesCommandHandlerTests.Handle_ShouldUpdateBiography_WhenRequestIsValid&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	</wpf:ResourceDictionary>

@@ -12,7 +12,7 @@ namespace Launchpad.Api.Controllers.V1;
 public partial class VacanciesController
 {
     /// <summary>
-    ///     Employer verification
+    ///     Create vacancy
     /// </summary>
     /// <param name="employerId">Employer ID</param>
     /// <param name="body">Body</param>
@@ -35,8 +35,7 @@ public partial class VacanciesController
             Description = body.Description,
             City = body.City,
             FullAddress = body.FullAddress,
-            Longitude = body.Longitude,
-            Latitude = body.Latitude,
+            Location = body.Location.ToApplicationModel(),
             WorkFormatIds = body.WorkFormatIds,
             TypeId = body.TypeId,
             Skills = body.Skills.Select(x => new CreateVacanciesCommandRequestSkill

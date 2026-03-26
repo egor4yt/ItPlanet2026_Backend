@@ -40,7 +40,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
                 nameof(ApplicationDbContext.ActivityFieldGroups),
                 nameof(ApplicationDbContext.EmployerVerificationTypes),
                 nameof(ApplicationDbContext.VacancyTypes),
-                nameof(ApplicationDbContext.WorkFormats),
+                nameof(ApplicationDbContext.WorkFormats)
             ]
         });
     }

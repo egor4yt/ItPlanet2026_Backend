@@ -17,7 +17,7 @@ public class GetAllVerificationStatusesQueryHandler(ApplicationDbContext applica
                 Title = x.Title
             })
             .ToListAsync(cancellationToken);
-        
+
         return response;
     }
 }

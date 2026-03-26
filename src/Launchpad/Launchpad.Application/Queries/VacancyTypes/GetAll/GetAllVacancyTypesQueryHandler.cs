@@ -17,7 +17,7 @@ public class GetAllVacancyTypesQueryHandler(ApplicationDbContext applicationDbCo
                 Title = x.Title
             })
             .ToListAsync(cancellationToken);
-        
+
         return response;
     }
 }

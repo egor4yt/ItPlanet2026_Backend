@@ -25,7 +25,7 @@ public class CreateVacanciesCommandHandler(ApplicationDbContext applicationDbCon
         {
             Title = request.Title,
             Description = request.Description,
-            Location = GeographyHelper.CreatePoint(request.Longitude, request.Latitude),
+            Location = request.Location.ToNetTopologyPoint(),
             CreatedAt = DateTime.UtcNow,
             EmployerId = request.EmployerId,
             TypeId = request.TypeId,

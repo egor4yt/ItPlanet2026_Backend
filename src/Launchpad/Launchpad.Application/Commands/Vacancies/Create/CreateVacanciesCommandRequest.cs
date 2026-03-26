@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Launchpad.Application.SharedModels;
+using MediatR;
 
 namespace Launchpad.Application.Commands.Vacancies.Create;
 
@@ -12,8 +13,7 @@ public class CreateVacanciesCommandRequest : IRequest<CreateVacanciesCommandResp
     public required string Description { get; init; }
     public required string City { get; init; }
     public required string FullAddress { get; init; }
-    public required double Longitude { get; init; }
-    public required double Latitude { get; init; }
+    public required GeolocationPoint Location { get; init; }
     public required List<int> WorkFormatIds { get; init; }
     public IEnumerable<CreateVacanciesCommandRequestSkill> Skills { get; set; } = null!;
 }
