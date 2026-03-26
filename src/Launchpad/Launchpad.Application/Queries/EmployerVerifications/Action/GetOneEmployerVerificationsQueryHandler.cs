@@ -14,6 +14,7 @@ public class GetOneEmployerVerificationsQueryHandler(ApplicationDbContext applic
         var query = applicationDbContext.EmployerVerifications
             .Include(x => x.Status)
             .Include(x => x.Type)
+            .Include(x => x.Employer)
             .Where(x => x.Id == request.VerificationId);
 
         if (request.EmployerId.HasValue)
@@ -22,6 +23,7 @@ public class GetOneEmployerVerificationsQueryHandler(ApplicationDbContext applic
         var verification = await query.FirstOrDefaultAsync(cancellationToken);
         if (verification == null) throw new NotFoundException("VerificationNotFound");
 
+        response.CompanyName= verification.Employer!.CompanyName;
         response.RequestMessage = verification.RequestMessage;
         response.ChangedOn = verification.ChangedOn;
         response.ResponseMessage = verification.ResponseMessage;

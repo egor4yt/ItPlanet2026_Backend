@@ -2,6 +2,7 @@
 
 public class GetOneEmployerVerificationsQueryResponse
 {
+    public string CompanyName { get; set; } = null!;
     public string RequestMessage { get; set; } = null!;
     public string? ResponseMessage { get; set; } = null!;
     public string? TaxpayerIndividualNumber { get; set; }
