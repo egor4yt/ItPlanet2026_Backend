@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Launchpad.Application.SharedModels.Validators;
 
 namespace Launchpad.Application.Queries.Employers.Search;
 
@@ -6,11 +7,6 @@ public class SearchEmployersQueryValidator : AbstractValidator<SearchEmployersQu
 {
     public SearchEmployersQueryValidator()
     {
-        RuleFor(x => x.PageNumber)
-            .GreaterThan(0);
-
-        RuleFor(x => x.PageSize)
-            .GreaterThan(0)
-            .LessThanOrEqualTo(100);
+        Include(new PagingRequestValidator());
     }
 }
