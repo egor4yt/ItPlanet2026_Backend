@@ -17,6 +17,8 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
         var swaggerDocOptions = new SwaggerDocOptions();
         configuration.GetSection(nameof(SwaggerDocOptions)).Bind(swaggerDocOptions);
 
+        options.CustomSchemaIds(x => x.FullName);
+
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = swaggerDocOptions.Title,
