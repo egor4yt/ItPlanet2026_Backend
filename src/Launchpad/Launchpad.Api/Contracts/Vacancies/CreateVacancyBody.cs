@@ -3,7 +3,7 @@
 /// <summary>
 ///     Create vacancy
 /// </summary>
-public class CreateVacnacyBody
+public class CreateVacancyBody
 {
     /// <summary>
     ///     Title
@@ -14,6 +14,16 @@ public class CreateVacnacyBody
     ///     Description
     /// </summary>
     public string Description { get; set; } = null!;
+
+    /// <summary>
+    ///     City
+    /// </summary>
+    public string City { get; set; } = null!;
+
+    /// <summary>
+    ///     Full address
+    /// </summary>
+    public string FullAddress { get; set; } = null!;
 
     /// <summary>
     ///     Longitude

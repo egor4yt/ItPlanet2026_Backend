@@ -25,14 +25,16 @@ public class CreateVacanciesCommandHandler(ApplicationDbContext applicationDbCon
         {
             Title = request.Title,
             Description = request.Description,
-            Location = GeometryHelper.CreatePoint(request.Longitude, request.Latitude),
+            Location = GeographyHelper.CreatePoint(request.Longitude, request.Latitude),
             CreatedAt = DateTime.UtcNow,
             EmployerId = request.EmployerId,
             TypeId = request.TypeId,
-            StartDate =  request.StartDate,
+            StartDate = request.StartDate,
             EndDate = request.EndDate,
             WorkFormats = request.WorkFormatIds.Select(x => new WorkFormat { Id = x, Title = string.Empty }).ToList(),
-            Skills = request.Skills.Select(x => new Skill { Id = x.Id ?? 0, Title = x.Title }).ToList()
+            Skills = request.Skills.Select(x => new Skill { Id = x.Id ?? 0, Title = x.Title }).ToList(),
+            City = request.City,
+            FullAddress = request.FullAddress
         };
 
         foreach (var workFormat in newVacancy.WorkFormats)
@@ -44,7 +46,7 @@ public class CreateVacanciesCommandHandler(ApplicationDbContext applicationDbCon
         {
             applicationDbContext.Entry(skill).State = skill.Id != 0 ? EntityState.Unchanged : EntityState.Added;
         }
-        
+
         await applicationDbContext.Vacancies.AddAsync(newVacancy, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 

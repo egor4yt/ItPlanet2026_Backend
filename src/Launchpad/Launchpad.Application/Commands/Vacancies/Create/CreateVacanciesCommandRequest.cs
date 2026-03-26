@@ -10,6 +10,8 @@ public class CreateVacanciesCommandRequest : IRequest<CreateVacanciesCommandResp
     public required DateTime? StartDate { get; init; }
     public required DateTime? EndDate { get; init; }
     public required string Description { get; init; }
+    public required string City { get; init; }
+    public required string FullAddress { get; init; }
     public required double Longitude { get; init; }
     public required double Latitude { get; init; }
     public required List<int> WorkFormatIds { get; init; }

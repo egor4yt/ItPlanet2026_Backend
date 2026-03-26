@@ -11,5 +11,6 @@ public class GetOneEmployersQueryResponse
 public class GetOneEmployersQueryResponseVerification
 {
     public long Id { get; set; }
+    public int StatusId { get; set; }
     public string Title { get; set; } = null!;
 }

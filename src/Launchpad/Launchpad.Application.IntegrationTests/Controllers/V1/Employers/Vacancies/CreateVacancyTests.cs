@@ -34,7 +34,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         var newSkillName = Fixture.Create<string>();
         var randomPoint = Fixture.Create<Point>();
         var request = Fixture
-            .Build<CreateVacnacyBody>()
+            .Build<CreateVacancyBody>()
             .With(x => x.Longitude, randomPoint.X)
             .With(x => x.Latitude, randomPoint.Y)
             .With(x => x.TypeId, Domain.Metadata.VacancyTypeId.Intership)
@@ -96,7 +96,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
 
         Authenticate(employer);
 
-        var requestBody = Fixture.Create<CreateVacnacyBody>();
+        var requestBody = Fixture.Create<CreateVacancyBody>();
 
         // Act
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/{employer.Id}", requestBody);
@@ -119,7 +119,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
 
         Authenticate(employerMe);
 
-        var requestBody = Fixture.Create<CreateVacnacyBody>();
+        var requestBody = Fixture.Create<CreateVacancyBody>();
 
         // Act - стучимся в чужой ID
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/{employerOther.Id}", requestBody);
@@ -134,7 +134,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
     public async Task Create_ShouldReturnUnauthorized_WhenNotAuthenticated()
     {
         // Arrange
-        var requestBody = Fixture.Create<CreateVacnacyBody>();
+        var requestBody = Fixture.Create<CreateVacancyBody>();
 
         // Act
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/1", requestBody);

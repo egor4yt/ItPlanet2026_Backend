@@ -1,4 +1,4 @@
-﻿using Launchpad.Application.Abstrcations;
+﻿using Launchpad.Application.Abstractions;
 using Launchpad.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +24,7 @@ public class SearchEmployersQueryHandler(ApplicationDbContext applicationDbConte
                 IsVerified = x.Verification != null && x.Verification.StatusId == Domain.Metadata.EmployerVerificationStatusId.Approved,
                 VerificationId = x.Verification != null ? x.Verification.Id : null
             })
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize)
+            .Paging(request)
             .ToListAsync(cancellationToken);
 
         return new PagedResult<SearchEmployersQueryResponse>(employers, totalCount, request);

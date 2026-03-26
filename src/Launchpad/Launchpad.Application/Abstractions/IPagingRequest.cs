@@ -1,6 +1,6 @@
-﻿namespace Launchpad.Application.Abstrcations;
+﻿namespace Launchpad.Application.Abstractions;
 
-public interface IPaging
+public interface IPagingRequest
 {
     public int PageNumber { get; set; }
     public int PageSize { get; set; }

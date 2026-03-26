@@ -26,6 +26,7 @@ public class GetOneEmployersQueryHandler(ApplicationDbContext applicationDbConte
             response.Verification = new GetOneEmployersQueryResponseVerification
             {
                 Id = employer.Verification.Id,
+                StatusId = employer.Verification.StatusId,
                 Title = employer.Verification.Status!.Title
             };
 

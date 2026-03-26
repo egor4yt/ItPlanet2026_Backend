@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Launchpad.Application.Abstrcations;
+namespace Launchpad.Application.Abstractions;
 
 [method: JsonConstructor]
 public class PagedResult<T>(IReadOnlyCollection<T> items, int currentPage, int totalPages, int totalItems)
 {
-    public PagedResult(IReadOnlyCollection<T> items, int totalCount, IPaging pagingSettings) :
-        this(items, pagingSettings.PageNumber, (int)Math.Ceiling(totalCount / (double)pagingSettings.PageSize), totalCount)
+    public PagedResult(IReadOnlyCollection<T> items, int totalCount, IPagingRequest pagingRequestSettings) :
+        this(items, pagingRequestSettings.PageNumber, (int)Math.Ceiling(totalCount / (double)pagingRequestSettings.PageSize), totalCount)
     {
     }
 

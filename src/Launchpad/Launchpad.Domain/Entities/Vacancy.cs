@@ -7,6 +7,8 @@ public sealed class Vacancy
     public long Id { get; init; }
     public required string Title { get; init; }
     public required string Description { get; init; }
+    public required string FullAddress { get; init; }
+    public required string City { get; init; }
     public required Point Location { get; init; }
     public DateTime CreatedAt { get; init; }
     public DateTime? StartDate { get; init; }

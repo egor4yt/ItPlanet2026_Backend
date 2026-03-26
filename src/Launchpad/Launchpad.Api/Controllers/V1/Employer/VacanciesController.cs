@@ -21,7 +21,7 @@ public partial class VacanciesController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(GetOneEmployerVerificationsQueryResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create([FromRoute] long employerId, [FromBody] CreateVacnacyBody body)
+    public async Task<IActionResult> Create([FromRoute] long employerId, [FromBody] CreateVacancyBody body)
     {
         if (CurrentUserService.ProfileId != employerId && CurrentUserService.IsInRole(JwtDetailsRole.Employer))
             throw new ForbiddenException("UseYourProfileId");
@@ -33,6 +33,8 @@ public partial class VacanciesController
             StartDate = body.StartDate,
             EndDate = body.EndDate,
             Description = body.Description,
+            City = body.City,
+            FullAddress = body.FullAddress,
             Longitude = body.Longitude,
             Latitude = body.Latitude,
             WorkFormatIds = body.WorkFormatIds,

@@ -1,4 +1,4 @@
-﻿using Launchpad.Application.Abstrcations;
+﻿using Launchpad.Application.Abstractions;
 using Launchpad.Application.Queries.Employers.Search;
 using Launchpad.Shared;
 using Microsoft.AspNetCore.Authorization;
