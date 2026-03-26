@@ -34,6 +34,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
 
         var newSkillName = Fixture.Create<string>();
         var randomPoint = Fixture.Create<Point>();
+        var dates = Fixture.CreateMany<DateTime>(2).Order().ToList();
         var request = Fixture
             .Build<CreateVacancyBody>()
             .With(x => x.Location, new GeolocationPoint
@@ -55,6 +56,8 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
                 }
             ])
             .With(x => x.WorkFormatIds, [Domain.Metadata.WorkFormatId.Office])
+            .With(x => x.StartDate, dates[0])
+            .With(x => x.EndDate, dates[1])
             .Create();
 
         // Act
@@ -100,13 +103,17 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
 
         Authenticate(employer);
 
-        var requestBody = Fixture.Create<CreateVacancyBody>();
+        var dates = Fixture.CreateMany<DateTime>(2).Order().ToList();
+        var requestBody = Fixture.Build<CreateVacancyBody>()
+            .With(x => x.StartDate, dates[0])
+            .With(x => x.EndDate, dates[1])
+            .Create();
 
         // Act
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/{employer.Id}", requestBody);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
         var content = await response.Content.ReadAsStringAsync();
         content.Should().Contain("NeedsVerification");
     }
@@ -129,7 +136,7 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/{employerOther.Id}", requestBody);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden, await response.Content.ReadAsStringAsync());
         var content = await response.Content.ReadAsStringAsync();
         content.Should().Contain("UseYourProfileId");
     }
@@ -144,6 +151,6 @@ public class CreateVacancyTests(ApiWebApplicationFactory factory) : BaseIntegrat
         var response = await HttpClient.PostAsJsonAsync($"{BaseUrl}/1", requestBody);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized, await response.Content.ReadAsStringAsync());
     }
 }
