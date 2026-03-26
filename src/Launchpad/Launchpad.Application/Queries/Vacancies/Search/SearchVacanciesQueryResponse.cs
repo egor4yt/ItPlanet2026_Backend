@@ -1,4 +1,6 @@
-﻿namespace Launchpad.Application.Queries.Vacancies.Search;
+﻿using Launchpad.Application.SharedModels;
+
+namespace Launchpad.Application.Queries.Vacancies.Search;
 
 public class SearchVacanciesQueryResponse
 {
@@ -7,6 +9,5 @@ public class SearchVacanciesQueryResponse
     public required string Title { get; init; }
     public required string City { get; init; }
     public bool CompanyVerified { get; set; }
-    public double Longitude { get; set; }
-    public double Latitude { get; set; }
+    public required GeolocationPoint Coordinates { get; init; }
 }

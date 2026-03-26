@@ -1,4 +1,5 @@
 ﻿using Launchpad.Application.Abstractions;
+using Launchpad.Application.SharedModels;
 using Launchpad.Persistence;
 using Launchpad.Shared;
 using MediatR;
@@ -47,8 +48,11 @@ public class SearchVacanciesQueryHandler(ApplicationDbContext applicationDbConte
                 Title = x.Title,
                 City = x.City,
                 CompanyVerified = x.Employer.Verification!.StatusId == Domain.Metadata.EmployerVerificationStatusId.Approved,
-                Longitude = x.Location.Coordinate.X,
-                Latitude = x.Location.Coordinate.Y
+                Coordinates = new GeolocationPoint
+                {
+                    Longitude = x.Location.Coordinate.X,
+                    Latitude = x.Location.Coordinate.Y
+                }
             })
             .Paging(request)
             .ToListAsync(cancellationToken);
