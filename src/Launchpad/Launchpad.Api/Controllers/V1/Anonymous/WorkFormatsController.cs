@@ -8,9 +8,9 @@ namespace Launchpad.Api.Controllers.V1;
 public partial class WorkFormatsController
 {
     /// <summary>
-    ///     Get all vacancy types
+    ///     Get all work formats
     /// </summary>
-    /// <returns>Vacancy types</returns>
+    /// <returns>Work formats</returns>
     [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(GetAllWorkFormatsQueryResponse), StatusCodes.Status200OK)]
