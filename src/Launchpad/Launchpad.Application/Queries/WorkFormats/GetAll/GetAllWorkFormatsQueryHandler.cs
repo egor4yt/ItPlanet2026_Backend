@@ -10,7 +10,7 @@ public class GetAllWorkFormatsQueryHandler(ApplicationDbContext applicationDbCon
     {
         var response = new GetAllWorkFormatsQueryResponse();
 
-        response.Items = await applicationDbContext.VacancyTypes
+        response.Items = await applicationDbContext.WorkFormats
             .Select(x => new GetAllWorkFormatsQueryResponseItem
             {
                 Id = x.Id,
