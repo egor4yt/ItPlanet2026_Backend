@@ -24,7 +24,7 @@ public partial class EmployersController
     {
         var query = new SearchEmployersQueryRequest
         {
-            Name = companyName,
+            Name = companyName?.Trim().ToLower(),
             VerificationStatusId = verificationStatusId,
             PageNumber = pageNumber,
             PageSize = pageSize
