@@ -1,4 +1,5 @@
 using Launchpad.Api.Configuration;
+using Launchpad.Api.Configuration.Options;
 using Launchpad.Api.Services;
 using Launchpad.Application.Configuration;
 using Launchpad.Persistence.Configuration;
@@ -22,12 +23,21 @@ try
 
     var app = builder.Build();
 
+    var keycloakOptions = app.Configuration
+        .GetRequiredSection(ConfigurationKeys.Keyckloak)
+        .Get<KeycloakOptions>();
+
     app.UseRequestLogging();
     app.UseSwagger();
-    app.UseSwaggerUI(c => { c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None); });
+    app.UseSwaggerUI(c =>
+    {
+        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+        c.OAuthClientId(keycloakOptions!.Client);
+        c.OAuthUsePkce();
+    });
 
-    var appUrls = builder.Configuration["applicationUrl"]?.Split(';')
-                  ?? builder.Configuration.GetValue<string>("urls")?.Split(';')
+    var appUrls = app.Configuration["applicationUrl"]?.Split(';')
+                  ?? app.Configuration.GetValue<string>("urls")?.Split(';')
                   ?? [];
 
     var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);

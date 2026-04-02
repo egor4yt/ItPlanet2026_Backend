@@ -4,4 +4,5 @@ public class ConfigurationKeys
 {
     public const string SqlDatabaseConnectionString = "ConnectionStrings:SqlDatabase";
     public const string Environment = "ASPNETCORE_ENVIRONMENT";
+    public const string Keyckloak = "Keycloak";
 }

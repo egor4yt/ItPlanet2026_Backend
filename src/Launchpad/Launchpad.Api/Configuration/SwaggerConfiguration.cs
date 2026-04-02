@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Launchpad.Api.Configuration.Options;
+using Launchpad.Shared;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -14,8 +15,13 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
     /// <inheritdoc />
     public void Configure(SwaggerGenOptions options)
     {
+        var keycloakOptions = configuration
+            .GetRequiredSection(ConfigurationKeys.Keyckloak)
+            .Get<KeycloakOptions>()!;
+
         var swaggerDocOptions = new SwaggerDocOptions();
         configuration.GetSection(nameof(SwaggerDocOptions)).Bind(swaggerDocOptions);
+
 
         options.CustomSchemaIds(x => x.FullName);
 
@@ -37,23 +43,24 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
             }
         });
 
-        const string authorizationScheme = "Bearer";
-
-        options.AddSecurityDefinition(authorizationScheme, new OpenApiSecurityScheme
+        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
-            Type = SecuritySchemeType.Http,
-            Description = "Please provide a valid token",
-            Name = "JWT Bearer authorization",
-            In = ParameterLocation.Header,
-            Scheme = authorizationScheme,
-            BearerFormat = "JWT"
+            Type = SecuritySchemeType.OAuth2,
+            Flows = new OpenApiOAuthFlows
+            {
+                AuthorizationCode = new OpenApiOAuthFlow
+                {
+                    AuthorizationUrl = new Uri($"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}/protocol/openid-connect/auth"),
+                    TokenUrl = new Uri($"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}/protocol/openid-connect/token")
+                }
+            }
         });
 
         options.AddSecurityRequirement(document =>
         {
             var requirement = new OpenApiSecurityRequirement
             {
-                [new OpenApiSecuritySchemeReference(authorizationScheme, document)] = []
+                [new OpenApiSecuritySchemeReference("oauth2", document)] = []
             };
 
             return requirement;

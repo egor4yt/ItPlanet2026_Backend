@@ -669,11 +669,15 @@
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
         "http://localhost:3000/*",
-        "https://localhost:3000/*"
+        "https://localhost:3000/*",
+        "http://localhost:3333/*",
+        "https://localhost:3333/*"
       ],
       "webOrigins": [
         "https://localhost:3000",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://localhost:3333",
+        "http://localhost:3333"
       ],
       "notBefore": 0,
       "bearerOnly": false,
