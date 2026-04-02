@@ -59,8 +59,8 @@ body {
     margin-bottom: 32px;
 }
 
-form {
-    min-width: 400px;
+.bodyContent {
+    width: 400px;
 }
 
 .form-group {

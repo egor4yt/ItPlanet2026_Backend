@@ -13,7 +13,7 @@ services:
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
-      - KC_IMPORT=/opt/keycloak/data/import/frontend-realm-export.json
+      - KC_IMPORT=/opt/keycloak/data/import/launchpad-realm-export.json
     volumes:
       - launchpad-keycloak-local_data:/opt/keycloak/data
       - ./keycloak/themes:/opt/keycloak/themes:ro
