@@ -1,0 +1,63 @@
+﻿# docker compose -p launchpad up -d --build --force-recreate
+
+services:
+  employee.api:
+    image: launchpad.api
+    container_name: launchpad.employee.api
+    ports:
+      - "3333:8080"
+    build:
+      context: Launchpad/
+      dockerfile: Launchpad.Api/Dockerfile
+      no_cache: false
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      database:
+        condition: service_healthy
+  
+  database:
+    image: postgis/postgis:15-3.5-alpine
+    container_name: launchpad.database
+    restart: unless-stopped
+    ports:
+      - "1300:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - .infrastructure/database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d launchpad.employee" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  keycloack:
+    image: quay.io/keycloak/keycloak:26.5.6
+    container_name: launchpad.keycloak
+    restart: unless-stopped
+    command:
+      - start-dev
+      - --import-realm
+    ports:
+      - "1200:8080"
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_IMPORT=/opt/keycloak/data/import/launchpad-realm-export.json
+
+      # Database setup
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://database:5432/keycloak
+      - KC_DB_USERNAME=admin
+      - KC_DB_PASSWORD=admin
+      - KC_DB_SCHEMA=public
+    volumes:
+      - launchpad-keycloak-data:/opt/keycloak/data
+      - .infrastructure/keycloak/themes:/opt/keycloak/themes:ro
+      - .infrastructure/keycloak/data:/opt/keycloak/data/import:ro
+
+volumes:
+  launchpad-keycloak-data:
