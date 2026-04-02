@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Launchpad.Api.Configuration.Options;
+﻿using Launchpad.Api.Configuration.Options;
 using Launchpad.Api.Filters;
 using Launchpad.Api.HealthChecks;
 using Launchpad.Api.Services;
@@ -50,21 +49,11 @@ public static class DependencyInjection
 
     private static void ConfigureAuthorization(IServiceCollection services, IConfiguration configuration)
     {
-        var jwtOptions = new JwtOptions();
-        configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
-        services.Configure<JwtOptions>(x =>
-        {
-            x.Audience = jwtOptions.Audience;
-            x.Issuer = jwtOptions.Issuer;
-            x.Key = jwtOptions.Key;
-            x.TokenLifetimeInHours = jwtOptions.TokenLifetimeInHours;
-        });
+        var keycloakOptions = configuration
+            .GetRequiredSection(ConfigurationKeys.Keyckloak)
+            .Get<KeycloakOptions>()!;
 
-        services.AddAuthorizationBuilder()
-            .AddPolicy(JwtDetailsRole.Administrator, policy => policy.RequireRole(JwtDetailsRole.Administrator))
-            .AddPolicy(JwtDetailsRole.Curator, policy => policy.RequireRole(JwtDetailsRole.Curator, JwtDetailsRole.Administrator))
-            .AddPolicy(JwtDetailsRole.Employee, policy => { policy.RequireRole(JwtDetailsRole.Employee, JwtDetailsRole.Curator, JwtDetailsRole.Administrator); })
-            .AddPolicy(JwtDetailsRole.Employer, policy => policy.RequireRole(JwtDetailsRole.Employer, JwtDetailsRole.Curator, JwtDetailsRole.Administrator));
+        services.AddAuthorizationBuilder();
 
         services
             .AddAuthentication(x =>
@@ -73,19 +62,19 @@ public static class DependencyInjection
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(x =>
+            .AddJwtBearer(options =>
             {
-                x.TokenValidationParameters = new TokenValidationParameters
+                options.Authority = $"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}";
+                options.Audience = keycloakOptions.Client;
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtOptions.Issuer,
-                    ValidAudience = jwtOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
-                    RoleClaimType = UserJwtClaimNames.ProfileRole
+                    ValidateLifetime = true
                 };
+
+                options.RequireHttpsMetadata = false;
             });
     }
 

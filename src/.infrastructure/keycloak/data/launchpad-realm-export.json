@@ -83,6 +83,15 @@
         "attributes": {}
       },
       {
+        "id": "c2e171b4-201f-49a8-bbef-4a581a2f7872",
+        "name": "admin",
+        "description": "Administrator",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "376c7577-eae5-44fb-87d4-e6fdf7265c46",
+        "attributes": {}
+      },
+      {
         "id": "8a60d9df-5abe-4775-b3f9-c21cbe3e30a1",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
@@ -95,15 +104,6 @@
         "id": "fd0b8f26-44ac-4d12-875d-ff2378277166",
         "name": "curator",
         "description": "Curator",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "376c7577-eae5-44fb-87d4-e6fdf7265c46",
-        "attributes": {}
-      },
-      {
-        "id": "c2e171b4-201f-49a8-bbef-4a581a2f7872",
-        "name": "admin",
-        "description": "Administrator",
         "composite": false,
         "clientRole": false,
         "containerId": "376c7577-eae5-44fb-87d4-e6fdf7265c46",
@@ -668,16 +668,16 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
+        "http://localhost*",
         "http://localhost:3000/*",
-        "https://localhost:3000/*",
-        "http://localhost:3333/*",
-        "https://localhost:3333/*"
+        "https://localhost:3333/*",
+        "https://localhost:3000/*"
       ],
       "webOrigins": [
-        "https://localhost:3000",
-        "http://localhost:3000",
         "https://localhost:3333",
-        "http://localhost:3333"
+        "http://localhost:3333",
+        "https://localhost:3000",
+        "http://localhost:3000"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -720,6 +720,7 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "Audience",
         "profile",
         "roles",
         "basic",
@@ -1258,6 +1259,35 @@
       ]
     },
     {
+      "id": "f4ecd598-abbb-4c51-9bc3-1719430b1a9d",
+      "name": "Audience",
+      "description": "",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "true",
+        "gui.order": "",
+        "consent.screen.text": "",
+        "include.in.openid.provider.metadata": "true"
+      },
+      "protocolMappers": [
+        {
+          "id": "e2fdfd0c-b237-481e-b979-c0ace6bc8187",
+          "name": "Audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "frontend",
+            "id.token.claim": "false",
+            "lightweight.claim": "false",
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
       "id": "14785e7c-2f90-47d2-b450-e8f99ee96166",
       "name": "basic",
       "description": "OpenID Connect scope for add all basic claims to the token",
@@ -1541,7 +1571,8 @@
     "roles",
     "web-origins",
     "acr",
-    "basic"
+    "basic",
+    "Audience"
   ],
   "defaultOptionalClientScopes": [
     "offline_access",
@@ -1656,12 +1687,12 @@
           "allowed-protocol-mapper-types": [
             "saml-user-property-mapper",
             "oidc-address-mapper",
-            "oidc-usermodel-property-mapper",
             "saml-user-attribute-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "oidc-full-name-mapper",
             "saml-role-list-mapper",
-            "oidc-sha256-pairwise-sub-mapper"
+            "oidc-full-name-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-usermodel-property-mapper",
+            "oidc-usermodel-attribute-mapper"
           ]
         }
       },
@@ -1685,14 +1716,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-user-attribute-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "saml-user-property-mapper",
             "oidc-usermodel-property-mapper",
-            "saml-role-list-mapper",
-            "oidc-address-mapper",
+            "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
             "oidc-usermodel-attribute-mapper",
-            "oidc-full-name-mapper"
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-address-mapper",
+            "saml-user-property-mapper",
+            "saml-role-list-mapper"
           ]
         }
       }

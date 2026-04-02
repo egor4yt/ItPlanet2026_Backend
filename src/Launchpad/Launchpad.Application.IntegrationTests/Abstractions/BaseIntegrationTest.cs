@@ -48,25 +48,16 @@ public abstract class BaseIntegrationTest : IAsyncLifetime
 
     protected void Authenticate(Employee employee)
     {
-        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
-        var jwtDetails = new JwtDetails(employee);
-        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "employee");
     }
 
     protected void Authenticate(Employer employer)
     {
-        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
-        var jwtDetails = new JwtDetails(employer);
-        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "employee");
     }
 
     protected void Authenticate(Curator curator)
     {
-        var jwtOptions = _scope.ServiceProvider.GetRequiredService<IOptions<JwtOptions>>();
-        var jwtDetails = new JwtDetails(curator);
-        var token = SecurityHelper.GenerateJwtToken(jwtOptions.Value.ToJwtDescriptorDetails(), jwtDetails);
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "curator");
     }
 }

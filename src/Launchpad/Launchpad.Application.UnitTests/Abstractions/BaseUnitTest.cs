@@ -11,14 +11,6 @@ namespace Launchpad.Application.Tests.Abstractions;
 public abstract class BaseUnitTest : IDisposable
 {
     protected readonly ApplicationDbContext DbContext;
-
-    protected readonly JwtDescriptorDetails DefaultJwtDetails = new JwtDescriptorDetails
-    {
-        Key = "super_secret_key_that_is_long_enough_for_sha256",
-        Audience = "test-audience",
-        Issuer = "test-issuer",
-        TokenLifetimeInHours = 1
-    };
     protected readonly Fixture Fixture = new Fixture();
 
     protected BaseUnitTest(PostgisFixture postgis)

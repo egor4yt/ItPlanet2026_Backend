@@ -10,9 +10,10 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=launchpad
+    volumes:
+      - database:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d launchpad"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d launchpad_employee"]
       interval: 10s
       timeout: 5s
       retries: 5

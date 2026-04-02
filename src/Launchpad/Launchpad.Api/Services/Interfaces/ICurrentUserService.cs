@@ -16,11 +16,6 @@ public interface ICurrentUserService
     public string ContactEmail { get; }
 
     /// <summary>
-    ///     Profile role
-    /// </summary>
-    public string ProfileRole { get; }
-
-    /// <summary>
     ///     Is user authenticated or not
     /// </summary>
     /// <returns><see langword="true" /> if the user was authenticated, otherwise <see langword="false" /></returns>

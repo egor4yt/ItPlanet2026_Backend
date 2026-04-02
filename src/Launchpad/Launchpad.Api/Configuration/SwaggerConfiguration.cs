@@ -51,7 +51,11 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
                 AuthorizationCode = new OpenApiOAuthFlow
                 {
                     AuthorizationUrl = new Uri($"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}/protocol/openid-connect/auth"),
-                    TokenUrl = new Uri($"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}/protocol/openid-connect/token")
+                    TokenUrl = new Uri($"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}/protocol/openid-connect/token"),
+                    Scopes = new Dictionary<string, string>
+                    {
+                        ["api-audience"] = "Add audience"
+                    }
                 }
             }
         });

@@ -9,6 +9,6 @@ namespace Launchpad.Api.Controllers.V1;
 ///     Employees controller
 /// </summary>
 [Route("employees")]
-public partial class EmployeesController(IOptions<JwtOptions> jwtOptions) : ApiControllerBase
+public partial class EmployeesController : ApiControllerBase
 {
 }

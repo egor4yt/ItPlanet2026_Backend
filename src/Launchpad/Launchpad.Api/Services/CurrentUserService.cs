@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using Launchpad.Api.Services.Interfaces;
 using Launchpad.Application.Exceptions;
-using Launchpad.Shared;
 
 namespace Launchpad.Api.Services;
 
@@ -15,7 +14,7 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     {
         get
         {
-            var stringUserId = _user?.FindFirstValue(UserJwtClaimNames.ProfileId);
+            var stringUserId = _user?.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrWhiteSpace(stringUserId)) throw new ForbiddenException("User id was null");
 
             var longUserId = long.Parse(stringUserId);
@@ -24,10 +23,7 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     }
 
     /// <inheritdoc />
-    public string ContactEmail => _user?.FindFirstValue(UserJwtClaimNames.ContactEmail) ?? throw new ForbiddenException("User id was null");
-
-    /// <inheritdoc />
-    public string ProfileRole => _user?.FindFirstValue(UserJwtClaimNames.ProfileRole) ?? throw new ForbiddenException("User id was null");
+    public string ContactEmail => _user?.FindFirstValue(ClaimTypes.Email) ?? throw new ForbiddenException("User id was null");
 
     /// <inheritdoc />
     public bool IsAuthenticated => httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false;
