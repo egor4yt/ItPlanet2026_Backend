@@ -21,6 +21,16 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
             return longUserId;
         }
     }
+    public Guid Sub
+    {
+        get
+        {
+            var stringUserId = _user?.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(stringUserId) || !Guid.TryParse(stringUserId, out var guidUserId)) throw new ForbiddenException("User id was null");
+
+            return guidUserId;
+        }
+    }
 
     /// <inheritdoc />
     public string ContactEmail => _user?.FindFirstValue(ClaimTypes.Email) ?? throw new ForbiddenException("User id was null");

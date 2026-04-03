@@ -1,4 +1,4 @@
-﻿namespace Launchpad.Api.Services.Interfaces;
+﻿namespace Launchpad.Candidates.Api.Services.Interfaces;
 
 /// <summary>
 ///     Service for interact with current user data
@@ -6,22 +6,17 @@
 public interface ICurrentUserService
 {
     /// <summary>
-    ///     Profile ID
+    ///     Keycloak user id (parameter 'sub' in Bearer token)
     /// </summary>
-    public long ProfileId { get; }
-    
-    /// <summary>
-    ///     Sub
-    /// </summary>
-    public Guid Sub { get; }
+    public Guid IdentityId { get; }
 
     /// <summary>
-    ///     Contact email
+    ///     Keycloak user email (parameter 'email' in Bearer token)
     /// </summary>
-    public string ContactEmail { get; }
+    public string IdentityEmail { get; }
 
     /// <summary>
-    ///     Is user authenticated or not
+    ///     Is a user authenticated or not?
     /// </summary>
     /// <returns><see langword="true" /> if the user was authenticated, otherwise <see langword="false" /></returns>
     public bool IsAuthenticated { get; }

@@ -19,8 +19,8 @@ public partial class EmployeesController
     ///     Authorized employee account details
     /// </summary>
     /// <returns>Employee data</returns>
-    [Authorize(JwtDetailsRole.Employee)]
     [HttpGet]
+    [Authorize]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(GetOneEmployeesQueryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
