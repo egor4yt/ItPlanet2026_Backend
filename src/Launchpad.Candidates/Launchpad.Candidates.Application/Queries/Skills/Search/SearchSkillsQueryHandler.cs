@@ -1,5 +1,4 @@
-﻿using System.Net;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using Launchpad.Candidates.Domain.Common;
 using Launchpad.Candidates.Infrastructure.Persistence;
 using MediatR;

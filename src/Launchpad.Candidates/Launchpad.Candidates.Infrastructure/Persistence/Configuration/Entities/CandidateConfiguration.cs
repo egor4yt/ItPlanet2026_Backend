@@ -12,7 +12,7 @@ public class CandidateConfiguration : IEntityTypeConfiguration<Candidate>
         builder
             .Property(x => x.Id)
             .ValueGeneratedNever();
-        
+
         builder
             .Navigation(x => x.Skills)
             .Metadata

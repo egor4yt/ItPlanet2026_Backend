@@ -27,13 +27,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Contracts\" />
+        <Folder Include="Contracts\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Launchpad.Candidates.Shared\Launchpad.Candidates.Shared.csproj" />
-      <ProjectReference Include="..\Launchpad.Candidates.Application\Launchpad.Candidates.Application.csproj" />
-      <ProjectReference Include="..\Launchpad.Candidates.Infrastructure\Launchpad.Candidates.Infrastructure.csproj" />
+        <ProjectReference Include="..\Launchpad.Candidates.Shared\Launchpad.Candidates.Shared.csproj"/>
+        <ProjectReference Include="..\Launchpad.Candidates.Application\Launchpad.Candidates.Application.csproj"/>
+        <ProjectReference Include="..\Launchpad.Candidates.Infrastructure\Launchpad.Candidates.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

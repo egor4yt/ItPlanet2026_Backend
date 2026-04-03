@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Launchpad.Candidates.Infrastructure\Launchpad.Candidates.Infrastructure.csproj" />
+        <ProjectReference Include="..\Launchpad.Candidates.Infrastructure\Launchpad.Candidates.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

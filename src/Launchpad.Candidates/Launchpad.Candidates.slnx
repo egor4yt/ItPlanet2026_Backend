@@ -1,7 +1,7 @@
 <Solution>
-  <Project Path="Launchpad.Candidates.Api/Launchpad.Candidates.Api.csproj" />
-  <Project Path="Launchpad.Candidates.Application/Launchpad.Candidates.Application.csproj" />
-  <Project Path="Launchpad.Candidates.Domain/Launchpad.Candidates.Domain.csproj" />
-  <Project Path="Launchpad.Candidates.Infrastructure/Launchpad.Candidates.Infrastructure.csproj" />
-  <Project Path="Launchpad.Candidates.Shared/Launchpad.Candidates.Shared.csproj" />
+    <Project Path="Launchpad.Candidates.Api/Launchpad.Candidates.Api.csproj"/>
+    <Project Path="Launchpad.Candidates.Application/Launchpad.Candidates.Application.csproj"/>
+    <Project Path="Launchpad.Candidates.Domain/Launchpad.Candidates.Domain.csproj"/>
+    <Project Path="Launchpad.Candidates.Infrastructure/Launchpad.Candidates.Infrastructure.csproj"/>
+    <Project Path="Launchpad.Candidates.Shared/Launchpad.Candidates.Shared.csproj"/>
 </Solution>

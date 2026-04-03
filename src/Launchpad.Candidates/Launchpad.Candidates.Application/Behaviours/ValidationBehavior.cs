@@ -1,5 +1,4 @@
-﻿using System.Net;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 using Launchpad.Candidates.Domain.Common;
