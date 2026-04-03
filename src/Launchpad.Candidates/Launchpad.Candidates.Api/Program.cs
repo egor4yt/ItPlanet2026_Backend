@@ -1,6 +1,8 @@
 using Launchpad.Candidates.Api.Configuration;
 using Launchpad.Candidates.Api.Configuration.Options;
 using Launchpad.Candidates.Api.Services;
+using Launchpad.Candidates.Infrastructure.Configuration;
+using Launchpad.Candidates.Infrastructure.Persistence.Configuration;
 using Launchpad.Candidates.Shared;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -16,7 +18,7 @@ try
         .AddEnvironmentVariables();
 
     builder.ConfigureApi();
-    // builder.ConfigurePersistence();
+    builder.ConfigureInfrastructure();
     // builder.ConfigureApplication();
 
     var app = builder.Build();
@@ -55,7 +57,7 @@ try
                 .WithOrigins(corsOrigin.Value)
                 .AllowCredentials());
 
-    // app.UseInitializeDatabase();
+    app.UseInitializeDatabase();
 
     app.MapHealthChecks("/health", new HealthCheckOptions
     {

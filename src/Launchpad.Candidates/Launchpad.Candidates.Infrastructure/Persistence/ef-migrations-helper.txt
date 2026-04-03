@@ -1,0 +1,7 @@
+﻿dotnet ef migrations add Message --project LaunchPad.Candidates.Infrastructure --startup-project LaunchPad.Candidates.Api --output-dir Persistence/Migrations
+
+dotnet ef database update --project LaunchPad.Candidates.Infrastructure --startup-project LaunchPad.Candidates.Api
+
+dotnet ef database drop --project LaunchPad.Candidates.Infrastructure --startup-project LaunchPad.Candidates.Api
+
+dotnet ef migrations remove --project LaunchPad.Candidates.Infrastructure --startup-project LaunchPad.Candidates.Api
