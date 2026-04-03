@@ -41,7 +41,7 @@ public static class DependencyInjection
     /// <param name="builder">App builder instance</param>
     public static void ConfigureApi(this IHostApplicationBuilder builder)
     {
-        ConfigureInfrastructure(builder.Services, builder.Configuration);
+        ConfigureApiServices(builder.Services, builder.Configuration);
         ConfigureLogging(builder.Services, builder.Logging, builder.Configuration);
         ConfigureAuthorization(builder.Services, builder.Configuration);
     }
@@ -77,7 +77,7 @@ public static class DependencyInjection
             });
     }
 
-    private static void ConfigureInfrastructure(IServiceCollection services, IConfiguration configuration)
+    private static void ConfigureApiServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
         services.AddControllers();

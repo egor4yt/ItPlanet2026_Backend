@@ -4,8 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Launchpad.Candidates.Api.Extensions;
 
+/// <summary>
+///     Provides extension methods for handling <see cref="Result{TSuccess,TError}" /> and converting them into
+///     actionable responses in the context of ASP.NET Core MVC.
+/// </summary>
 public static class ResultExtensions
 {
+    /// <summary>
+    ///     Converts a <see cref="Result{TSuccess, TError}" /> to an <see cref="IActionResult" />
+    ///     with appropriate HTTP status codes and response details based on the success or failure state.
+    /// </summary>
+    /// <typeparam name="TSuccess">The type of the success value.</typeparam>
+    /// <typeparam name="TError">The type of the error value, which must inherit from <see cref="ErrorCollection" />.</typeparam>
+    /// <param name="result">The result object to be converted.</param>
+    /// <param name="successCode">The HTTP status code to use when the result is successful.</param>
+    /// <returns>
+    ///     An <see cref="IActionResult" /> representing the response. On success, returns an
+    ///     ObjectResult with the success data and specified status code. On failure, returns
+    ///     an ObjectResult with error details and an appropriate error status code.
+    /// </returns>
     public static IActionResult ToActionResult<TSuccess, TError>(this Result<TSuccess, TError> result, int successCode) where TError : ErrorCollection
     {
         if (result.IsSuccess)
