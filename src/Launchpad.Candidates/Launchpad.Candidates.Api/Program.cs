@@ -1,6 +1,7 @@
 using Launchpad.Candidates.Api.Configuration;
 using Launchpad.Candidates.Api.Configuration.Options;
 using Launchpad.Candidates.Api.Services;
+using Launchpad.Candidates.Application.Configuration;
 using Launchpad.Candidates.Infrastructure.Configuration;
 using Launchpad.Candidates.Infrastructure.Persistence.Configuration;
 using Launchpad.Candidates.Shared;
@@ -19,7 +20,7 @@ try
 
     builder.ConfigureApi();
     builder.ConfigureInfrastructure();
-    // builder.ConfigureApplication();
+    builder.ConfigureApplication();
 
     var app = builder.Build();
 

@@ -28,7 +28,6 @@
 
     <ItemGroup>
       <Folder Include="Contracts\" />
-      <Folder Include="Controllers\V1\Anonymous\" />
     </ItemGroup>
 
     <ItemGroup>
