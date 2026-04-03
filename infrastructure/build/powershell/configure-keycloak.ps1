@@ -9,3 +9,4 @@ if (Test-Path $sourceDir) {
 } else {
     Write-Host "Error: $sourceDir not found!" -ForegroundColor Red
 }
+exit 0

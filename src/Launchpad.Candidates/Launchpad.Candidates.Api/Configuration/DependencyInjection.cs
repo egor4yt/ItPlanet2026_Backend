@@ -63,11 +63,12 @@ public static class DependencyInjection
             })
             .AddJwtBearer(options =>
             {
-                options.Authority = $"{keycloakOptions.BaseUrl}/realms/{keycloakOptions.Realm}";
+                options.Authority = $"{keycloakOptions.AuthorityBaseUrl}/realms/{keycloakOptions.Realm}";
                 options.Audience = keycloakOptions.Client;
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidIssuer = $"{keycloakOptions.IssuerBaseUrl}/realms/{keycloakOptions.Realm}",
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true

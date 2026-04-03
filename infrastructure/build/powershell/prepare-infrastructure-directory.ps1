@@ -7,3 +7,4 @@ if (Test-Path $infrastructureDir) {
 
 Write-Host "Creating new configuration" -ForegroundColor Green
 New-Item -Path $infrastructureDir -ItemType Directory | Out-Null
+exit 0

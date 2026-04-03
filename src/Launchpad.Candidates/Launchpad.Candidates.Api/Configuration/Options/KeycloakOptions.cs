@@ -6,9 +6,14 @@
 public class KeycloakOptions
 {
     /// <summary>
-    ///     Keycloak base url
+    ///     Keycloak issuer base url
     /// </summary>
-    public string BaseUrl { get; set; } = string.Empty;
+    public string IssuerBaseUrl { get; set; } = string.Empty;
+    
+    /// <summary>
+    ///     Keycloak audience base url
+    /// </summary>
+    public string AuthorityBaseUrl { get; set; } = string.Empty;
 
     /// <summary>
     ///     Realm id
