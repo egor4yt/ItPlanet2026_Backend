@@ -36,7 +36,9 @@ Technologies used during the development process:
 - **coverlet.collector** - Data collection and analysis for code coverage.
 
 ## Data
-- PostgreSQL (OLTP database) <details><summary>Database schema</summary><img alt="Infrastructure" src="docs%2FImages%2Fdatabase-scheme.svg" title="Database schema"/></details>
+- PostgreSQL (OLTP database)
+- Redis (Cache)
+- Kafka (Event sourcing)
 
 ## Integrations
 - React frontend application - [GitHub](https://github.com/officer04/launchpad-front/tree/master)
