@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Launchpad.Candidates.Application.Queries.Skills.Search;
 
-public class SearchSkillsQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<SearchSkillsQueryRequest, Result<SearchSkillsQueryResponse, DomainErrorCollection>>
+public class SearchSkillsQueryHandler(ApplicationDbContext applicationDbContext) : IRequestHandler<SearchSkillsQueryRequest, Result<SearchSkillsQueryResponse, ErrorCollection>>
 {
-    public async Task<Result<SearchSkillsQueryResponse, DomainErrorCollection>> Handle(SearchSkillsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<Result<SearchSkillsQueryResponse, ErrorCollection>> Handle(SearchSkillsQueryRequest request, CancellationToken cancellationToken)
     {
         var response = new SearchSkillsQueryResponse();
 
@@ -24,9 +24,6 @@ public class SearchSkillsQueryHandler(ApplicationDbContext applicationDbContext)
             })
             .ToListAsync(cancellationToken);
 
-        if (response.Items.Count == 0)
-            return Result.Failure<SearchSkillsQueryResponse, DomainErrorCollection>(new DomainErrorCollection(new DomainError("test"), HttpStatusCode.BadRequest));
-
-        return Result.Success<SearchSkillsQueryResponse, DomainErrorCollection>(response);
+        return Result.Success<SearchSkillsQueryResponse, ErrorCollection>(response);
     }
 }

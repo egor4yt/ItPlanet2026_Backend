@@ -1,4 +1,5 @@
-﻿using Launchpad.Candidates.Application.Queries.Skills.Search;
+﻿using Launchpad.Candidates.Api.Extensions;
+using Launchpad.Candidates.Application.Queries.Skills.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,6 @@ public partial class SkillsController
 
         var response = await Mediator.Send(query);
 
-        if (response.IsFailure) return StatusCode((int)response.Error.StatusCode, response.Error.Errors);
-        return Ok(response.Value);
+        return response.ToActionResult(StatusCodes.Status200OK);
     }
 }
