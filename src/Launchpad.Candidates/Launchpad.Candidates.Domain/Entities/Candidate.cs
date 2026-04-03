@@ -21,44 +21,48 @@ public sealed class Candidate : EntityWithDomainEvents<Guid>
         KeycloakId = keycloakId;
     }
 
-    public required Guid KeycloakId { get; init; }
+    public Guid KeycloakId { get; init; }
     public string? Biography { get; private set; }
     public DateOnly? Birthdate { get; private set; }
 
     public IReadOnlyCollection<Skill> Skills => _skills.AsReadOnly();
 
-    public Result UpdateBiography(string? newBiography)
+    public UnitResult<ErrorCollection> UpdateBiography(string? newBiography)
     {
         if (newBiography?.Length > 2000)
-            return Result.Failure(DomainErrors.Candidate.InvalidBirthdate.Code);
+            return UnitResult.Failure(new ErrorCollection(DomainErrors.Candidate.TooLongBiography, ErrorCollectionType.InvalidOperation));
 
         Biography = newBiography;
 
-        return Result.Success();
+        return UnitResult.Success<ErrorCollection>();
     }
 
-    public Result UpdateBirthdate(DateOnly? newBirthdate)
+    public UnitResult<ErrorCollection> UpdateBirthdate(DateOnly? newBirthdate)
     {
         var minDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-12));
         var maxDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(80));
 
         if (newBirthdate < minDate || newBirthdate > maxDate)
-            return Result.Failure(DomainErrors.Candidate.TooLongBiography.Code);
+            return UnitResult.Failure(new ErrorCollection(DomainErrors.Candidate.InvalidBirthdate, ErrorCollectionType.InvalidOperation));
 
         Birthdate = newBirthdate;
 
-        return Result.Success();
+        return UnitResult.Success<ErrorCollection>();
     }
 
-    public Result AddSkill(Skill skill, bool isNewSkill)
+    public UnitResult<ErrorCollection> AddSkill(Skill skill, bool isNewSkill)
     {
-        if (Skills.Any(x => x.Id == skill.Id)) return Result.Failure(DomainErrors.Candidate.SkillsAlreadyAdded.Code);
-        if (Skills.Count >= 20) return Result.Failure(DomainErrors.Candidate.MaxSkillsReached.Code);
+        var errors = new List<Error>();
+        if (Skills.Any(x => x.Id == skill.Id)) errors.Add(DomainErrors.Candidate.SkillsAlreadyAdded);
+        if (Skills.Count >= 20) errors.Add(DomainErrors.Candidate.MaxSkillsReached);
+
+        if (errors.Count > 0)
+            return UnitResult.Failure(new ErrorCollection(errors, ErrorCollectionType.InvalidOperation));
 
         if (isNewSkill)
             AddDomainEvent(new Events.CandidateNewSkillCreated(skill.Id, skill.Title));
 
         _skills.Add(skill);
-        return Result.Success();
+        return UnitResult.Success<ErrorCollection>();
     }
 }
