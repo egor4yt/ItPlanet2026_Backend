@@ -18,7 +18,7 @@ services:
         condition: service_healthy
     networks:
       - launchpad-network
-  
+
   database:
     image: postgis/postgis:15-3.5-alpine
     container_name: launchpad.database
@@ -68,7 +68,7 @@ services:
 
 volumes:
   launchpad-keycloak-data:
-  
+
 networks:
   launchpad-network:
     driver: bridge

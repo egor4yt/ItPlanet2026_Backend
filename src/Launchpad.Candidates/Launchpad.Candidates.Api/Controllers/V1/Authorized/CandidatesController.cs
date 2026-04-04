@@ -1,5 +1,6 @@
 ﻿using Launchpad.Candidates.Api.Extensions;
 using Launchpad.Candidates.Application.Commands.Candidates.Create;
+using Launchpad.Candidates.Application.Queries.Candidates.GetOne;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,5 +25,24 @@ public partial class CandidatesController
 
         var response = await Mediator.Send(command);
         return response.ToActionResult(StatusCodes.Status201Created);
+    }
+
+    /// <summary>
+    ///     Get authorized candidate profile
+    /// </summary>
+    /// <returns>Skills</returns>
+    [HttpGet]
+    [Authorize]
+    [ProducesResponseType(typeof(GetOneCandidatesQueryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Me()
+    {
+        var query = new GetOneCandidatesQueryRequest
+        {
+            KeycloakId = CurrentUserService.IdentityId
+        };
+
+        var response = await Mediator.Send(query);
+        return response.ToActionResult(StatusCodes.Status200OK);
     }
 }
