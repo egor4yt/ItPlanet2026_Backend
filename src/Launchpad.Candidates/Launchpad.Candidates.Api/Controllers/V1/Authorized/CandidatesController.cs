@@ -1,4 +1,5 @@
-﻿using Launchpad.Candidates.Api.Extensions;
+﻿using Launchpad.Candidates.Api.Contracts.Candidates;
+using Launchpad.Candidates.Api.Extensions;
 using Launchpad.Candidates.Application.Commands.Candidates.Create;
 using Launchpad.Candidates.Application.Queries.Candidates.GetOne;
 using Microsoft.AspNetCore.Authorization;
@@ -16,11 +17,14 @@ public partial class CandidatesController
     [HttpPost]
     [Authorize]
     [ProducesResponseType(typeof(CreateCandidatesCommandResponse), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create([FromBody] CreateCandidatesBody body)
     {
         var command = new CreateCandidatesCommandRequest
         {
-            KeycloakId = CurrentUserService.IdentityId
+            KeycloakId = CurrentUserService.IdentityId,
+            FirstName = body.FirstName,
+            LastName = body.LastName,
+            MiddleName = body.MiddleName
         };
 
         var response = await Mediator.Send(command);

@@ -20,11 +20,12 @@ public class CreateCandidatesCommandHandler(ApplicationDbContext applicationDbCo
 
         if (existsCandidateId.HasValue)
         {
-            response.Id = existsCandidateId.Value;
-            return Result.Success<CreateCandidatesCommandResponse, ErrorCollection>(response);
+            var error = new Error("CandidateExists", "Candidate already exists");
+            var errorCollection = new ErrorCollection(error, ErrorCollectionType.Conflict);
+            return Result.Failure<CreateCandidatesCommandResponse, ErrorCollection>(errorCollection);
         }
 
-        var newCandidate = new Candidate(request.KeycloakId);
+        var newCandidate = new Candidate(request.KeycloakId, request.FirstName, request.LastName, request.MiddleName);
         await applicationDbContext.AddAsync(newCandidate, cancellationToken);
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 

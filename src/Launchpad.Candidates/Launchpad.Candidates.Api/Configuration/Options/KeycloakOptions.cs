@@ -9,7 +9,7 @@ public class KeycloakOptions
     ///     Keycloak issuer base url
     /// </summary>
     public string IssuerBaseUrl { get; set; } = string.Empty;
-    
+
     /// <summary>
     ///     Keycloak audience base url
     /// </summary>

@@ -3,9 +3,12 @@
 public class GetOneCandidatesQueryResponse
 {
     public Guid InternalId { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public string? MiddleName { get; init; }
     public string? Biography { get; init; }
     public DateOnly? Birthdate { get; init; }
-    public IEnumerable<GetOneCandidatesQueryResponseSkill> Skills { get; init; }
+    public required IEnumerable<GetOneCandidatesQueryResponseSkill> Skills { get; init; }
 }
 
 public class GetOneCandidatesQueryResponseSkill

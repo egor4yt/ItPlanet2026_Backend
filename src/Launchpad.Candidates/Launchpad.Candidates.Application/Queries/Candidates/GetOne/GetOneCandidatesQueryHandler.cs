@@ -22,6 +22,9 @@ public class GetOneCandidatesQueryHandler(ApplicationDbContext applicationDbCont
             .Select(x => new GetOneCandidatesQueryResponse
             {
                 InternalId = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                MiddleName = x.MiddleName,
                 Biography = x.Biography,
                 Birthdate = x.Birthdate,
                 Skills = x.Skills.Select(s => new GetOneCandidatesQueryResponseSkill

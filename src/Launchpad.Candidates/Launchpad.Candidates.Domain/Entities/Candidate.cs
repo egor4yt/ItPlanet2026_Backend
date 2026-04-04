@@ -12,16 +12,22 @@ public sealed class Candidate : EntityWithDomainEvents<Guid>
     {
     }
 
-    public Candidate(Guid keycloakId)
+    public Candidate(Guid keycloakId, string firstName, string lastName, string? middleName)
     {
         if (keycloakId == Guid.Empty)
             throw new ArgumentException("KeycloakId cannot be empty", nameof(keycloakId));
 
         Id = Guid.CreateVersion7();
         KeycloakId = keycloakId;
+        FirstName = firstName;
+        LastName = lastName;
+        MiddleName = middleName;
     }
 
     public Guid KeycloakId { get; init; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public string? MiddleName { get; private set; }
     public string? Biography { get; private set; }
     public DateOnly? Birthdate { get; private set; }
 
