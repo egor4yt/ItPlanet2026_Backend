@@ -26,10 +26,14 @@ public static class ResultExtensions
     public static IActionResult ToActionResult<TSuccess, TError>(this Result<TSuccess, TError> result, int successCode) where TError : ErrorCollection
     {
         if (result.IsSuccess)
+        {
+            if (successCode == StatusCodes.Status204NoContent) return new NoContentResult();
+            
             return new ObjectResult(result.Value)
             {
                 StatusCode = successCode
             };
+        }
 
         var problem = new ProblemDetails();
         problem.Detail = string.Join(";\n", result.Error.Errors.Select(x => x.Code));

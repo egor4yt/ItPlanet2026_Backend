@@ -1,6 +1,7 @@
 ﻿using Launchpad.Candidates.Api.Contracts.Candidates;
 using Launchpad.Candidates.Api.Extensions;
 using Launchpad.Candidates.Application.Commands.Candidates.Create;
+using Launchpad.Candidates.Application.Commands.Candidates.Update;
 using Launchpad.Candidates.Application.Queries.Candidates.GetOne;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,6 @@ public partial class CandidatesController
     /// <summary>
     ///     Create candidate profile
     /// </summary>
-    /// <returns>Skills</returns>
     [HttpPost]
     [Authorize]
     [ProducesResponseType(typeof(CreateCandidatesCommandResponse), StatusCodes.Status201Created)]
@@ -34,12 +34,11 @@ public partial class CandidatesController
     /// <summary>
     ///     Get authorized candidate profile
     /// </summary>
-    /// <returns>Skills</returns>
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(GetOneCandidatesQueryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Me()
+    public async Task<IActionResult> GetMe()
     {
         var query = new GetOneCandidatesQueryRequest
         {
@@ -48,5 +47,28 @@ public partial class CandidatesController
 
         var response = await Mediator.Send(query);
         return response.ToActionResult(StatusCodes.Status200OK);
+    }
+
+    /// <summary>
+    ///     Update authorized candidate profile
+    /// </summary>
+    [HttpPut]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMe([FromBody] UpdateCandidatesBody body)
+    {
+        var command = new UpdateCandidatesCommandRequest
+        {
+            KeycloakId = CurrentUserService.IdentityId,
+            FirstName = body.FirstName,
+            LastName = body.LastName,
+            MiddleName = body.MiddleName,
+            Biography = body.Biography,
+            Birthdate = body.Birthdate
+        };
+
+        var response = await Mediator.Send(command);
+        return response.ToActionResult(StatusCodes.Status204NoContent);
     }
 }

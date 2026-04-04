@@ -43,10 +43,35 @@ public sealed class Candidate : EntityWithDomainEvents<Guid>
         return UnitResult.Success<ErrorCollection>();
     }
 
+    public UnitResult<ErrorCollection> UpdateNames(string firstName, string lastName, string? middleName)
+    {
+        var errors = new List<Error>();
+        if (firstName.Length > 128)
+            errors.Add(DomainErrors.Candidate.InvalidFirstName);
+
+        if (lastName.Length > 128)
+            errors.Add(DomainErrors.Candidate.InvalidLastName);
+
+        if (middleName is { Length: > 128 or 0 })
+            errors.Add(DomainErrors.Candidate.InvalidMiddleName);
+
+        if (errors.Count > 0)
+        {
+            var errorCollection = new ErrorCollection(errors, ErrorCollectionType.InvalidOperation);
+            UnitResult.Failure(errorCollection);
+        }
+
+        FirstName = firstName;
+        LastName = lastName;
+        MiddleName = middleName;
+
+        return UnitResult.Success<ErrorCollection>();
+    }
+
     public UnitResult<ErrorCollection> UpdateBirthdate(DateOnly? newBirthdate)
     {
-        var minDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-12));
-        var maxDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(80));
+        var maxDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-12));
+        var minDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-100));
 
         if (newBirthdate < minDate || newBirthdate > maxDate)
             return UnitResult.Failure(new ErrorCollection(DomainErrors.Candidate.InvalidBirthdate, ErrorCollectionType.InvalidOperation));
