@@ -2,6 +2,8 @@
 
 The backend component of the project for participation in the IT-Planet 2026 Olympiad in the "Applied Programming" category.
 
+All the code in this project was written by author without using AI. AI only used to help create the documentation.
+
 # Running the Application
 
 To run the application, follow these steps:
