@@ -42,6 +42,7 @@ Technologies used during the development process:
 - Redis (Cache)
 - Kafka (Event sourcing)
 - Grafana + Prometheus (Monitoring)
+- Keycloak (OIDC provider)
 
 ## Integrations
 - React frontend application - [GitHub](https://github.com/officer04/launchpad-front/tree/master)

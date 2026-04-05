@@ -49,11 +49,17 @@ services:
       - --import-realm
     ports:
       - "1200:8080"
+      - "1250:9000"
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
       - KC_IMPORT=/opt/keycloak/data/import/launchpad-realm-export.json
       - KC_HEALTH_ENABLED=true
+    
+      # Management setup
+      - KC_HTTP_MANAGEMENT_PORT=9000
+      - KC_METRICS_ENABLED=true
+      - KC_EVENT_METRICS_USER_ENABLED=true
 
       # Database setup
       - KC_DB=postgres
