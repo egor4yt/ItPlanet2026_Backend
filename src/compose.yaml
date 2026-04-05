@@ -1,5 +1,6 @@
 ﻿# docker compose -p launchpad up -d --build --force-recreate
 # docker run --rm --network launchpad-network alpine/curl http://launchpad.keycloak:8080/realms/Launchpad/.well-known/openid-configuration
+# docker run --rm --network launchpad-network alpine/curl http://launchpad.keycloak:8080/health/live
 
 services:        
   candidates.api:
@@ -52,6 +53,7 @@ services:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
       - KC_IMPORT=/opt/keycloak/data/import/launchpad-realm-export.json
+      - KC_HEALTH_ENABLED=true
 
       # Database setup
       - KC_DB=postgres
@@ -63,6 +65,33 @@ services:
       - launchpad-keycloak-data:/opt/keycloak/data
       - .infrastructure/keycloak/themes:/opt/keycloak/themes:ro
       - .infrastructure/keycloak/data:/opt/keycloak/data/import:ro
+    networks:
+      - launchpad-network
+    
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: launchpad.prometheus
+    restart: unless-stopped
+    ports:
+      - "9080:9090"
+    volumes:
+      - .infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - launchpad-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: launchpad.grafana
+    ports:
+      - "3240:3000"
+    volumes:
+      - .infrastructure/monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - .infrastructure/monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
     networks:
       - launchpad-network
 

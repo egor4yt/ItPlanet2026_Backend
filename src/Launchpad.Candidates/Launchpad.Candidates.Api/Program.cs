@@ -68,6 +68,8 @@ try
 
     app.UseAuthentication();
     app.UseAuthorization();
+    
+    app.MapPrometheusScrapingEndpoint();
 
     app.MapControllers();
     app.Run();

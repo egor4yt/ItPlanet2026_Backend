@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -6,6 +7,9 @@ namespace Launchpad.Application.Behaviours;
 
 public partial class LoggingBehaviour<TRequest, TResponse>(ILogger<LoggingBehaviour<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse> where TRequest : IBaseRequest
 {
+    private static readonly Meter Meter = new Meter("Launchpad.Candidates", "1.0.0"); 
+    private static readonly Counter<int> MediatrHandlerExecuted = Meter.CreateCounter<int>("mediatr_handler_executed");
+    
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         var stopwatch = Stopwatch.StartNew();
@@ -19,6 +23,7 @@ public partial class LoggingBehaviour<TRequest, TResponse>(ILogger<LoggingBehavi
         try
         {
             response = await next(cancellationToken);
+            MediatrHandlerExecuted.Add(1, new KeyValuePair<string, object?>("request", requestName));
         }
         finally
         {

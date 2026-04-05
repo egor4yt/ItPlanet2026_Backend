@@ -7,6 +7,7 @@ using Launchpad.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Metrics;
 using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -45,6 +46,7 @@ public static class DependencyInjection
         ConfigureInfrastructure(builder.Services, builder.Configuration);
         ConfigureLogging(builder.Services, builder.Logging, builder.Configuration);
         ConfigureAuthorization(builder.Services, builder.Configuration);
+        ConfigureObservability(builder.Services);
     }
 
     private static void ConfigureAuthorization(IServiceCollection services, IConfiguration configuration)
@@ -100,5 +102,17 @@ public static class DependencyInjection
             .Enrich.WithMachineName()
             .ReadFrom.Configuration(configuration)
             .CreateLogger();
+    }
+
+    private static void ConfigureObservability(IServiceCollection services)
+    {
+        services.AddOpenTelemetry()
+            .WithMetrics(metrics =>
+            {
+                metrics.AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddPrometheusExporter();
+            });
     }
 }

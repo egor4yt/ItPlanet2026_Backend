@@ -1,6 +1,6 @@
 # About the Project
 
-The backend component of the project for participation in the IT-Planet 2026 Olympiad in the "Applied Programming" category.
+**Launchpad** is a modern platform that helps job seekers find their dream jobs and helps companies find the right talent.
 
 All the code in this project was written by author without using AI. AI only used to help create the documentation.
 
