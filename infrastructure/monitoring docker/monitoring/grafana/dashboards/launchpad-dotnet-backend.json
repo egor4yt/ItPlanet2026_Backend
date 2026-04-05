@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -152,66 +152,6 @@
         "type": "prometheus",
         "uid": "Prometheus"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 10
-      },
-      "id": 55,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.3",
-      "targets": [
-        {
-          "editorMode": "builder",
-          "expr": "sum(rate(http_server_request_duration_seconds_count{job=\"$service\"}[$__rate_interval]))",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Global RPS",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "Prometheus"
-      },
       "description": "Requests per second",
       "fieldConfig": {
         "defaults": {
@@ -271,9 +211,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 24,
         "x": 0,
-        "y": 18
+        "y": 10
       },
       "id": 49,
       "options": {
@@ -302,6 +242,66 @@
       ],
       "title": "RPS by endpoints",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "Prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 55,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "sum(rate(http_server_request_duration_seconds_count{job=\"$service\", instance=\"$instance\", http_route!=\"/metrics\", http_route!=\"\"}[$__rate_interval]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Global RPS",
+      "type": "stat"
     },
     {
       "datasource": {
@@ -366,7 +366,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
         "y": 18
@@ -389,7 +389,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket[$__rate_interval])))*1000",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=\"$service\", instance=\"$instance\", http_route!=\"/metrics\", http_route!=\"\"}[$__rate_interval])))*1000",
           "legendFormat": "P95",
           "range": true,
           "refId": "P95"
@@ -400,7 +400,7 @@
             "uid": "Prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.99, sum by(le) (rate(http_server_request_duration_seconds_bucket{job=\"$service\", instance=\"$instance\"}[$__rate_interval])))*1000",
+          "expr": "histogram_quantile(0.99, sum by(le) (rate(http_server_request_duration_seconds_bucket{job=\"$service\", instance=\"$instance\", http_route!=\"/metrics\", http_route!=\"\"}[$__rate_interval])))*1000",
           "hide": false,
           "instant": false,
           "legendFormat": "P99",
@@ -448,7 +448,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 25
       },
       "id": 52,
       "options": {
@@ -470,7 +470,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "(sum(rate(http_server_request_duration_seconds_count{http_response_status_code=~\"5..\"}[$__rate_interval])) / sum(rate(http_server_request_duration_seconds_count[$__rate_interval]))) * 100",
+          "expr": "(sum(rate(http_server_request_duration_seconds_count{http_response_status_code=~\"5..\", job=\"$service\", instance=\"$instance\", http_route!=\"/metrics\", http_route!=\"\"}[$__rate_interval])) / sum(rate(http_server_request_duration_seconds_count[$__rate_interval]))) * 100",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -544,7 +544,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 25
       },
       "id": 51,
       "options": {
@@ -579,7 +579,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 33
       },
       "id": 15,
       "panels": [],
@@ -680,7 +680,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 34
       },
       "id": 19,
       "options": {
@@ -800,7 +800,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 34
       },
       "id": 16,
       "options": {
@@ -844,7 +844,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 43
       },
       "id": 2,
       "panels": [],
@@ -922,7 +922,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 45
+        "y": 44
       },
       "id": 6,
       "options": {
@@ -1126,7 +1126,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 45
+        "y": 44
       },
       "id": 8,
       "options": {
@@ -1215,7 +1215,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "none"
         },
         "overrides": [
           {
@@ -1299,7 +1299,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 45
+        "y": 44
       },
       "id": 9,
       "options": {
@@ -1454,7 +1454,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 54
+        "y": 53
       },
       "id": 4,
       "options": {
@@ -1567,7 +1567,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 54
+        "y": 53
       },
       "id": 13,
       "options": {
@@ -1631,7 +1631,7 @@
         "h": 9,
         "w": 4,
         "x": 16,
-        "y": 54
+        "y": 53
       },
       "id": 11,
       "options": {
@@ -1699,7 +1699,7 @@
         "h": 9,
         "w": 4,
         "x": 20,
-        "y": 54
+        "y": 53
       },
       "id": 17,
       "options": {
@@ -1834,5 +1834,5 @@
   "timezone": "",
   "title": "Launchpad .NET Backend",
   "uid": "KdDACDp4z",
-  "version": 45
+  "version": 1
 }
