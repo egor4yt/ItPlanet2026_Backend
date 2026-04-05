@@ -41,6 +41,7 @@ Technologies used during the development process:
 - PostgreSQL (OLTP database)
 - Redis (Cache)
 - Kafka (Event sourcing)
+- Grafana + Prometheus (Monitoring)
 
 ## Integrations
 - React frontend application - [GitHub](https://github.com/officer04/launchpad-front/tree/master)
