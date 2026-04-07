@@ -1,8 +1,10 @@
-﻿using Launchpad.Candidates.Api.Configuration.Options;
+﻿using Launchpad.Candidates.Api.Authentication;
+using Launchpad.Candidates.Api.Configuration.Options;
 using Launchpad.Candidates.Api.HealthChecks;
 using Launchpad.Candidates.Api.Services;
 using Launchpad.Candidates.Api.Services.Interfaces;
 using Launchpad.Candidates.Shared;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -56,28 +58,35 @@ public static class DependencyInjection
 
         services.AddAuthorizationBuilder();
 
-        services
-            .AddAuthentication(x =>
-            {
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.Authority = $"{keycloakOptions.AuthorityBaseUrl}/realms/{keycloakOptions.Realm}";
-                options.Audience = keycloakOptions.Client;
+        var environment = configuration.GetSection(ConfigurationKeys.Environment);
+        if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
 
-                options.TokenValidationParameters = new TokenValidationParameters
+        if (environment.Value == Shared.Environments.LoadTest)
+            services.AddAuthentication("Test")
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", null);
+        else
+            services
+                .AddAuthentication(x =>
                 {
-                    ValidIssuer = $"{keycloakOptions.IssuerBaseUrl}/realms/{keycloakOptions.Realm}",
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true
-                };
+                    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = $"{keycloakOptions.AuthorityBaseUrl}/realms/{keycloakOptions.Realm}";
+                    options.Audience = keycloakOptions.Client;
 
-                options.RequireHttpsMetadata = false;
-            });
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuers = keycloakOptions.ValidIssuers.Select(issuerbaseUrl => $"{issuerbaseUrl}/realms/{keycloakOptions.Realm}"),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true
+                    };
+
+                    options.RequireHttpsMetadata = false;
+                });
     }
 
     private static void ConfigureApiServices(IServiceCollection services, IConfiguration configuration)

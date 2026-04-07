@@ -10,7 +10,20 @@ To run the application, follow these steps:
 1. Install Docker.
 2. Clone the repository using the command: `git clone <repository_url>`
 3. Navigate to the `infrastructure/build/powershell` directory and run `build-local.ps1` with powershell to start the application and all its dependencies.
-4. The application will be available at: `http://localhost:3333/swagger`
+
+# Docker Containers
+
+After you ran docker compose all your applications will be available on their ports:
+
+| Container                                                   | Port               | Profile        |
+|-------------------------------------------------------------|--------------------|----------------|
+| launchpad.candidates.api                                    | 3333               | all, load-test |
+| launchpad.database                                          | 1300               | all, load-test |
+| launchpad.database.metrics                                  | 9180               | all, load-test |
+| launchpad.keycloak<br/>_Identity Provider_<br/>_Management_ | <br/>1200<br/>1250 | all            |
+| launchpad.prometheus                                        | 9080               | all, load-test |
+| launchpad.grafana                                           | 3240               | all, load-test |
+| launchpad.k6                                                | -                  | all, load-test |
 
 # Repository Structure
 

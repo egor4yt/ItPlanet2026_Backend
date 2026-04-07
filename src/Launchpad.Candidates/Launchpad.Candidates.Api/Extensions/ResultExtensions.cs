@@ -28,7 +28,7 @@ public static class ResultExtensions
         if (result.IsSuccess)
         {
             if (successCode == StatusCodes.Status204NoContent) return new NoContentResult();
-            
+
             return new ObjectResult(result.Value)
             {
                 StatusCode = successCode

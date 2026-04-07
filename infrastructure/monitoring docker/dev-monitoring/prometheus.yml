@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'launchpad.candidates.api'
+    static_configs:
+      - targets: ['host.docker.internal:3334']
+        
+  - job_name: 'launchpad.keycloak'
+    static_configs:
+      - targets: ['host.docker.internal:1290']
+        
+  - job_name: 'launchpad.database'
+    static_configs:
+      - targets: ['host.docker.internal:9187']
+        
+  - job_name: 'launchpad.k6'
+    static_configs:
+      - targets: ['host.docker.internal:9187']

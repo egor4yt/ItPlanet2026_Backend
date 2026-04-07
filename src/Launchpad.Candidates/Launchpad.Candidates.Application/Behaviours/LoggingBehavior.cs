@@ -7,7 +7,7 @@ namespace Launchpad.Candidates.Application.Behaviours;
 
 public partial class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse> where TRequest : IBaseRequest
 {
-    private static readonly Meter Meter = new Meter("Launchpad.Candidates", "1.0.0"); 
+    private static readonly Meter Meter = new Meter("Launchpad.Candidates", "1.0.0");
     private static readonly Counter<int> MediatrHandlerExecuted = Meter.CreateCounter<int>("mediatr_handler_executed");
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)

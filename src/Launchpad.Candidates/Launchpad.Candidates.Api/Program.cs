@@ -60,15 +60,16 @@ try
 
     app.UseInitializeDatabase();
 
-    app.MapHealthChecks("/health", new HealthCheckOptions
+    app.MapHealthChecks("health", new HealthCheckOptions
     {
         ResponseWriter = HealthCheckService.WriterHealthCheckResponse,
         AllowCachingResponses = false
     });
+    app.Map("", (HttpContext context) => context.Response.Redirect("health"));
 
     app.UseAuthentication();
     app.UseAuthorization();
-    
+
     app.MapPrometheusScrapingEndpoint();
 
     app.MapControllers();

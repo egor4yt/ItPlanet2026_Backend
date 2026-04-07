@@ -27,7 +27,7 @@ public class UpdateCandidatesCommandHandler(ApplicationDbContext applicationDbCo
             candidate.UpdateBirthdate(request.Birthdate)
         );
 
-        if (updateResult.IsFailure) 
+        if (updateResult.IsFailure)
             return Result.Failure<UpdateCandidatesCommandResponse, ErrorCollection>(updateResult.Error);
 
         await applicationDbContext.SaveChangesAsync(cancellationToken);

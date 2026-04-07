@@ -1,11 +1,20 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Api": {
+    "Api [load test]": {
       "commandName": "Project",
       "dotnetRunMessages": false,
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:3333",
+      "applicationUrl": "http://localhost:3334",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "LoadTest"
+      }
+    },
+    "Api [development]": {
+      "commandName": "Project",
+      "dotnetRunMessages": false,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:3334",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

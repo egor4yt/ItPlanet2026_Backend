@@ -6,9 +6,14 @@
 public class KeycloakOptions
 {
     /// <summary>
-    ///     Keycloak issuer base url
+    ///     Keycloak authorization url
     /// </summary>
-    public string IssuerBaseUrl { get; set; } = string.Empty;
+    public string AuthorizationBaseUrl { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Keycloak issuer base urls
+    /// </summary>
+    public string[] ValidIssuers { get; set; } = [];
 
     /// <summary>
     ///     Keycloak audience base url

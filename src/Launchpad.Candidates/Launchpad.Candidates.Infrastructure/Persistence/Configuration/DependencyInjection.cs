@@ -25,12 +25,7 @@ internal static class DependencyInjection
             options.UseNpgsql(connectionString.Value);
             options.LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category);
 
-            if (environment.Value == Shared.Environments.Development)
-            {
-                options.EnableSensitiveDataLogging();
-                options.EnableDetailedErrors();
-            }
-            else if (environment.Value == Shared.Environments.IntegrationTests)
+            if (environment.Value == Shared.Environments.IntegrationTests)
             {
                 Log.Warning("PendingModelChangesWarning will be ignored");
 
@@ -43,7 +38,7 @@ internal static class DependencyInjection
                 // Mitigation: The warning is a false positive in this case and should be suppressed
                 options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
             }
-            else if (environment.Value == Shared.Environments.Docker)
+            else if (environment.Value is Shared.Environments.Docker or Shared.Environments.LoadTest or Shared.Environments.Development)
             {
                 options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();

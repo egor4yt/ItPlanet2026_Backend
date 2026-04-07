@@ -1,4 +1,5 @@
 # docker compose -p launchpad-local-keycloak up -d
+# docker run --rm --network launchpad-network alpine/curl http://launchpad.keycloak:9000/health/ready
 
 services:
   keycloack:
@@ -10,14 +11,31 @@ services:
       - --import-realm
     ports:
       - "1290:8080"
+      - "1280:9000"
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
       - KC_IMPORT=/opt/keycloak/data/import/launchpad-realm-export.json
+      
+      # Management setup
+      - KC_HTTP_MANAGEMENT_PORT=9000
+      - KC_METRICS_ENABLED=true
+      - KC_EVENT_METRICS_USER_ENABLED=true
+      - KC_HEALTH_ENABLED=true
     volumes:
-      - launchpad-keycloak-local_data:/opt/keycloak/data
+      - launchpad-keycloak-local-data:/opt/keycloak/data
       - ./keycloak/themes:/opt/keycloak/themes:ro
       - ./keycloak/data:/opt/keycloak/data/import:ro
-      
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/localhost/9000 && 
+        printf "GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && 
+        cat <&3' | grep -q "\"status\": \"UP\""
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+        
 volumes:
-  launchpad-keycloak-local_data:
+  launchpad-keycloak-local-data:
+    name: launchpad-keycloak-local-data

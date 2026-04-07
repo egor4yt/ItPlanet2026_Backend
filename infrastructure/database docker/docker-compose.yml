@@ -11,6 +11,7 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
     volumes:
+      - launchpad-database-local-data:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d keycloak"]
@@ -18,3 +19,18 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+  
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    container_name: launchpad-postgis-metrics-local
+    depends_on:
+      postgis:
+        condition: service_healthy
+    ports:
+      - "9187:9187"
+    environment:
+      DATA_SOURCE_NAME: "postgresql://admin:admin@postgis:5432?sslmode=disable"
+
+volumes:
+  launchpad-database-local-data:
+    name: launchpad-database-local-data
