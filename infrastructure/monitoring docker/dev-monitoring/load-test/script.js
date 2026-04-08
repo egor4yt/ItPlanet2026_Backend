@@ -5,16 +5,17 @@ export const options = {
     scenarios: {
         registration: {
             executor: "ramping-arrival-rate",
-            startRate: 111,
+            startRate: 250,
             timeUnit: "1s",
             preAllocatedVUs: 50,
-            maxVUs: 1000,
+            maxVUs: 250,
             stages:[
-                {target: 111, duration: "1m"},
-                {target: 200, duration: "10m"},
+                {target: 250, duration: "1m"},
                 {target: 300, duration: "1m"},
+                {target: 350, duration: "1m"},
                 {target: 400, duration: "1m"},
-                {target: 500, duration: "1m"},
+                {target: 450, duration: "1m"},
+                {target: 500, duration: "10m"},
                 {target: 50, duration: "1m"},
             ]
         }
@@ -30,7 +31,7 @@ export default function () {
     const uniqueId = uuidv4();
 
     var registerResult = http.post(
-        `${API_URL}/candidates`,
+        `${CANDIDATES_API_URL}/candidates`,
         JSON.stringify({
             firstName: uuidv4(),
             lastName: uuidv4(),

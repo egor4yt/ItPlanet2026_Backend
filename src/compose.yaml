@@ -55,6 +55,7 @@ services:
   database.metrics:
     image: quay.io/prometheuscommunity/postgres-exporter
     container_name: launchpad.database.metrics
+    profiles: ["all", "load-test"]
     depends_on:
       database:
         condition: service_healthy
@@ -133,6 +134,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: launchpad.grafana
+    profiles: ["all", "load-test"]
     ports:
       - "3240:3000"
     volumes:
@@ -159,7 +161,6 @@ services:
     volumes:
       - .infrastructure/monitoring/load-test/script.js:/script.js
     environment:
-      - K6_OUT=opentelemetry
       - CANDIDATES_API_URL=http://launchpad.candidates.api:8080
     command: run /script.js
     networks:

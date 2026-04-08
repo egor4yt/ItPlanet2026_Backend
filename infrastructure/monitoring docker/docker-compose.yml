@@ -44,7 +44,6 @@ services:
     volumes:
       - ./dev-monitoring/load-test/script.js:/script.js
     environment:
-      - K6_OUT=opentelemetry
       - CANDIDATES_API_URL=http://localhost:3334
     command: run /script.js
 
