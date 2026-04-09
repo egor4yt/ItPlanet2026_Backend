@@ -27,6 +27,7 @@ After you ran docker compose all your applications will be available on their po
 | launchpad.elasticsearch                                     | 9228               | all, load-test |
 | launchpad.logstash                                          | 5049               | all, load-test |
 | launchpad.kibana                                            | 5609               | all, load-test |
+| launchpad.kafka                                             | 9099               | all, load-test |
 
 # Repository Structure
 

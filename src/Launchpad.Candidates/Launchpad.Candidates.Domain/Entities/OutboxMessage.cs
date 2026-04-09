@@ -18,12 +18,19 @@ public sealed class OutboxMessage : Entity<Guid>
 
     public string Type { get; } = null!;
     public string Content { get; } = null!;
+    public string? Error { get; private set; }
     public DateTime CreatedAt { get; }
     public DateTime? ProcessedAt { get; private set; }
 
     public Result CompleteProcessing()
     {
         ProcessedAt = DateTime.UtcNow;
+        return Result.Success();
+    }
+
+    public Result FailProcessing(string error)
+    {
+        Error = error;
         return Result.Success();
     }
 }

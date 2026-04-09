@@ -15,7 +15,7 @@ internal static class DependencyInjection
         app.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>("Database");
 
         var connectionString = app.Configuration.GetSection(ConfigurationKeys.SqlDatabaseConnectionString);
-        if (string.IsNullOrWhiteSpace(connectionString.Value)) throw new InvalidOperationException("The connection string is missing in the configuration file.");
+        if (string.IsNullOrWhiteSpace(connectionString.Value)) throw new InvalidOperationException("Database connection string is missing in the configuration file.");
 
         var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
