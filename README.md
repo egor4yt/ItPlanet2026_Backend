@@ -59,6 +59,7 @@ Technologies used during the development process:
 - Kafka (Event sourcing)
 - Grafana + Prometheus (Monitoring)
 - Keycloak (OIDC provider)
+- ELK stack (Logging)
 
 ## Integrations
 - React frontend application - [GitHub](https://github.com/officer04/launchpad-front/tree/master)

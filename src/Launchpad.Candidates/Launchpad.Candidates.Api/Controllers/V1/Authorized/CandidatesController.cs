@@ -2,6 +2,7 @@
 using Launchpad.Candidates.Api.Extensions;
 using Launchpad.Candidates.Application.Commands.Candidates.Create;
 using Launchpad.Candidates.Application.Commands.Candidates.Update;
+using Launchpad.Candidates.Application.Commands.Candidates.UpdateSkills;
 using Launchpad.Candidates.Application.Queries.Candidates.GetOne;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +67,29 @@ public partial class CandidatesController
             MiddleName = body.MiddleName,
             Biography = body.Biography,
             Birthdate = body.Birthdate
+        };
+
+        var response = await Mediator.Send(command);
+        return response.ToActionResult(StatusCodes.Status204NoContent);
+    }
+
+    /// <summary>
+    ///     Update authorized candidate skills
+    /// </summary>
+    [HttpPut("skills")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMySkills([FromBody] UpdateCandidatesSkillsBody body)
+    {
+        var command = new UpdateSkillsCandidatesCommandRequest
+        {
+            KeycloakId = CurrentUserService.IdentityId,
+            Skills = body.Skills.Select(x => new UpdateSkillsCandidatesCommandRequestSkill
+            {
+                Id = x.Id,
+                Title = x.Title
+            })
         };
 
         var response = await Mediator.Send(command);

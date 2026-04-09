@@ -15,7 +15,7 @@ public sealed class Skill : Entity<Guid>
         PendingVerification = true;
     }
 
-    public required string Title { get; init; }
-    public required bool PendingVerification { get; init; }
-    public ICollection<Candidate> Candidates { get; init; }
+    public string Title { get; init; } = null!;
+    public bool PendingVerification { get; init; }
+    public ICollection<Candidate> Candidates { get; init; } = null!;
 }

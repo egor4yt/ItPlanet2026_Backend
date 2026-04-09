@@ -28,9 +28,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .SelectMany(x => x.DomainEvents)
             .ToList();
 
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var domainEvent in domainEvents)
         {
-            var message = new OutboxMessage(domainEvent.GetType().Name, JsonSerializer.Serialize(domainEvent));
+            var message = new OutboxMessage(domainEvent.GetType().Name, JsonSerializer.Serialize(domainEvent, domainEvent.GetType()));
             OutboxMessages.Add(message);
         }
 

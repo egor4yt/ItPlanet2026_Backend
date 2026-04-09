@@ -81,19 +81,27 @@ public sealed class Candidate : EntityWithDomainEvents<Guid>
         return UnitResult.Success<ErrorCollection>();
     }
 
-    public UnitResult<ErrorCollection> AddSkill(Skill skill, bool isNewSkill)
+    public UnitResult<ErrorCollection> UpdateSkills(List<(Skill skill, bool isNewSkill)> skills)
     {
         var errors = new List<Error>();
-        if (Skills.Any(x => x.Id == skill.Id)) errors.Add(DomainErrors.Candidate.SkillsAlreadyAdded);
-        if (Skills.Count >= 20) errors.Add(DomainErrors.Candidate.MaxSkillsReached);
+        if (skills.Count >= 20) errors.Add(DomainErrors.Candidate.MaxSkillsReached);
+
+        foreach (var (skill, isNewSkill) in skills)
+        {
+            if (Skills.Any(x => x.Id == skill.Id)) errors.Add(DomainErrors.Candidate.SkillsAlreadyAdded);
+
+            if (isNewSkill)
+                AddDomainEvent(new Events.CandidateNewSkillCreated(skill.Id, skill.Title));
+
+            _skills.Add(skill);
+        }
 
         if (errors.Count > 0)
+        {
+            ClearDomainEvents();
             return UnitResult.Failure(new ErrorCollection(errors, ErrorCollectionType.InvalidOperation));
+        }
 
-        if (isNewSkill)
-            AddDomainEvent(new Events.CandidateNewSkillCreated(skill.Id, skill.Title));
-
-        _skills.Add(skill);
         return UnitResult.Success<ErrorCollection>();
     }
 }

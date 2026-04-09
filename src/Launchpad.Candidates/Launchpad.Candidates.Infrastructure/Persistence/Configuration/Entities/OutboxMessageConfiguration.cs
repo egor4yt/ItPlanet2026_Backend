@@ -18,6 +18,10 @@ public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage
             .HasColumnType("text");
 
         builder
+            .Property(x => x.Type)
+            .HasColumnType("text");
+
+        builder
             .Property(x => x.CreatedAt)
             .HasColumnType("timestamp with time zone");
 
