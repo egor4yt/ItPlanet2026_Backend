@@ -1,0 +1,54 @@
+# docker compose -p launchpad-local-elastic up -d
+
+services:
+  elasticsearch:
+    image: elasticsearch:9.3.2
+    container_name: launchpad-local-elasricsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - launchpad-elastic-local-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      
+  logstash:
+    image: logstash:9.3.2
+    container_name: launchpad-local-logstash
+    restart: unless-stopped
+    ports:
+      - "5044:5044"
+    environment:
+      - ES_HOST=http://elasticsearch:9200
+    volumes:
+      - ./elastic/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+        
+  kibana:
+    image: kibana:9.3.2
+    container_name: launchpad-local-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "-f", "http://localhost:5601/api/status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  launchpad-elastic-local-data:
+    name: launchpad-elastic-local-data

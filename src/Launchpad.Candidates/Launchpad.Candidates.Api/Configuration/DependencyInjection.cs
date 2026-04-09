@@ -1,6 +1,7 @@
 ﻿using Launchpad.Candidates.Api.Authentication;
 using Launchpad.Candidates.Api.Configuration.Options;
 using Launchpad.Candidates.Api.HealthChecks;
+using Launchpad.Candidates.Api.Middlewares;
 using Launchpad.Candidates.Api.Services;
 using Launchpad.Candidates.Api.Services.Interfaces;
 using Launchpad.Candidates.Shared;
@@ -11,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Compact;
+using Serilog.Sinks.Tcp;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Launchpad.Candidates.Api.Configuration;
@@ -36,6 +39,7 @@ public static class DependencyInjection
                 diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
             };
         });
+        app.UseMiddleware<LoggingMiddleware>();
     }
 
     /// <summary>
@@ -105,8 +109,10 @@ public static class DependencyInjection
         logging.ClearProviders();
         logging.AddSerilog();
         services.AddSerilog();
-
+        
         Log.Logger = new LoggerConfiguration()
+            .Enrich.WithProperty("ServiceName", "candidates.api")
+            .Enrich.WithEnvironment(Shared.ConfigurationKeys.Environment)
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .ReadFrom.Configuration(configuration)

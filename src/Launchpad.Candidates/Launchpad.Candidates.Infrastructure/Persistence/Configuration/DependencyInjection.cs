@@ -24,7 +24,7 @@ internal static class DependencyInjection
         {
             options.UseNpgsql(connectionString.Value);
             options.LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category);
-
+            
             if (environment.Value == Shared.Environments.IntegrationTests)
             {
                 Log.Warning("PendingModelChangesWarning will be ignored");

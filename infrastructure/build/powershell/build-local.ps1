@@ -3,6 +3,7 @@ $scripts = @(
     "prepare-infrastructure-directory.ps1",
     "configure-keycloak.ps1",
     "configure-database.ps1",
+    "configure-elastic.ps1",
     "configure-monitoring.ps1",
     "configure-environment.ps1",
     "compose-up.ps1"

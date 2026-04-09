@@ -18,6 +18,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     networks:
       - launchpad-network
     healthcheck:
@@ -168,6 +170,57 @@ services:
     depends_on:
       candidates.api:
         condition: service_healthy
+  
+  elasticsearch:
+    image: elasticsearch:9.3.2
+    container_name: launchpad.elasricsearch
+    restart: unless-stopped
+    profiles: ["all", "load-test"]
+    ports:
+      - "9228:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - launchpad-elastic-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  logstash:
+    image: logstash:9.3.2
+    container_name: launchpad.logstash
+    restart: unless-stopped
+    profiles: ["all", "load-test"]
+    ports:
+      - "5049:5044"
+    environment:
+      - ES_HOST=http://elasticsearch:9200
+    volumes:
+      - .infrastructure/elastic/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  kibana:
+    image: kibana:9.3.2
+    container_name: launchpad.kibana
+    profiles: ["all", "load-test"]
+    ports:
+      - "5609:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "-f", "http://localhost:5601/api/status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   launchpad-keycloak-data:
@@ -176,6 +229,8 @@ volumes:
     name: launchpad-metrics-data
   launchpad-database-data:
     name: launchpad-database-data
+  launchpad-elastic-data:
+    name: launchpad-elastic-data
 
 networks:
   launchpad-network:
