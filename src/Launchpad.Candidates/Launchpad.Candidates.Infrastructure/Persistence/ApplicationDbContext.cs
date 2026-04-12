@@ -37,7 +37,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         var result = await base.SaveChangesAsync(ct);
 
-        foreach (var entity in ChangeTracker.Entries<Candidate>())
+        foreach (var entity in ChangeTracker.Entries<IHasDomainEvents>())
         {
             entity.Entity.ClearDomainEvents();
         }

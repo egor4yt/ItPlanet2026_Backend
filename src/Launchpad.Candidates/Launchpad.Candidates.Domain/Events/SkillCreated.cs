@@ -2,6 +2,6 @@
 
 namespace Launchpad.Candidates.Domain.Events;
 
-public record CandidateNewSkillCreated(Guid Id, string Title) : IDomainEvent
+public record SkillCreated(Guid Id, string Title) : IDomainEvent
 {
 }

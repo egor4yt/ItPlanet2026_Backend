@@ -1,0 +1,5 @@
+﻿namespace Launchpad.Warehouse.Application.Commands._Template.Action;
+
+public class Action_TemplateCommandResponse
+{
+}

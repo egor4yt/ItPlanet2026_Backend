@@ -91,7 +91,7 @@ public sealed class Candidate : EntityWithDomainEvents<Guid>
             if (Skills.Any(x => x.Id == skill.Id)) errors.Add(DomainErrors.Candidate.SkillsAlreadyAdded);
 
             if (isNewSkill)
-                AddDomainEvent(new Events.CandidateNewSkillCreated(skill.Id, skill.Title));
+                AddDomainEvent(new Events.SkillCreated(skill.Id, skill.Title));
 
             _skills.Add(skill);
         }

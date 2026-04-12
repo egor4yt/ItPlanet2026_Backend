@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Launchpad.Candidates.Api.Configuration.Options;
-using Launchpad.Candidates.Shared;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -16,7 +15,7 @@ public class SwaggerConfiguration(IConfiguration configuration) : IConfigureOpti
     public void Configure(SwaggerGenOptions options)
     {
         var keycloakOptions = configuration
-            .GetRequiredSection(ConfigurationKeys.Keyckloak)
+            .GetRequiredSection(Shared.ConfigurationKeys.Keyckloak)
             .Get<KeycloakOptions>()!;
 
         var swaggerDocOptions = new SwaggerDocOptions();

@@ -37,7 +37,6 @@ public class OutboxProcessor(ILogger<OutboxProcessor> logger, IServiceScopeFacto
         using var scope = scopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        // Берем пачку (Batch) сообщений, которые еще не были обработаны
         var messages = await dbContext.OutboxMessages
             .Where(m => m.ProcessedAt == null)
             .Take(25)
@@ -50,7 +49,6 @@ public class OutboxProcessor(ILogger<OutboxProcessor> logger, IServiceScopeFacto
                 var topic = eventTopicResolver.GetTopicName(message.Type);
                 await producer.ProduceAsync(topic, message.Id.ToString(), message.Content, ct);
 
-                // Помечаем как обработанное
                 message.CompleteProcessing();
             }
             catch (Exception ex)

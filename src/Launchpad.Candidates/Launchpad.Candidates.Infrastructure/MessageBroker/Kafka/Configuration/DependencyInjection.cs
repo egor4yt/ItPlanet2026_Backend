@@ -1,6 +1,5 @@
 ﻿using Confluent.Kafka;
 using Launchpad.Candidates.Infrastructure.Background;
-using Launchpad.Candidates.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -11,7 +10,7 @@ internal static class DependencyInjection
 {
     internal static void ConfigureMessageBrokers(this IHostApplicationBuilder app)
     {
-        var kafkaConnectionString = app.Configuration.GetSection(ConfigurationKeys.KafkaConnectionString);
+        var kafkaConnectionString = app.Configuration.GetSection(Shared.ConfigurationKeys.KafkaConnectionString);
         if (string.IsNullOrWhiteSpace(kafkaConnectionString.Value))
         {
             Log.Warning("Kafka connection string is missing in the configuration file");

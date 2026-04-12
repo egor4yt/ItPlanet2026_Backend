@@ -6,7 +6,7 @@ public class EventTopicResolver : IEventTopicResolver
 {
     private readonly Dictionary<string, string> _topicMap = new Dictionary<string, string>
     {
-        { nameof(CandidateNewSkillCreated), "skill-created" }
+        { nameof(SkillCreated), "skill-created" }
     };
 
 

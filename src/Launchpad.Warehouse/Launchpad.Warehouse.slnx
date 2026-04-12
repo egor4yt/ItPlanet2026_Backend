@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Launchpad.Warehouse.Api/Launchpad.Warehouse.Api.csproj" />
+  <Project Path="Launchpad.Warehouse.Application/Launchpad.Warehouse.Application.csproj" />
+  <Project Path="Launchpad.Warehouse.Domain/Launchpad.Warehouse.Domain.csproj" />
+  <Project Path="Launchpad.Warehouse.Infrastructure/Launchpad.Warehouse.Infrastructure.csproj" />
+  <Project Path="Launchpad.Warehouse.Shared/Launchpad.Warehouse.Shared.csproj" />
+</Solution>

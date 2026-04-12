@@ -1,5 +1,4 @@
-﻿using Launchpad.Candidates.Shared;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,17 +13,17 @@ internal static class DependencyInjection
     {
         app.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>("Database");
 
-        var connectionString = app.Configuration.GetSection(ConfigurationKeys.SqlDatabaseConnectionString);
+        var connectionString = app.Configuration.GetSection(Shared.ConfigurationKeys.SqlDatabaseConnectionString);
         if (string.IsNullOrWhiteSpace(connectionString.Value)) throw new InvalidOperationException("Database connection string is missing in the configuration file.");
 
-        var environment = app.Configuration.GetSection(ConfigurationKeys.Environment);
+        var environment = app.Configuration.GetSection(Shared.ConfigurationKeys.Environment);
         if (string.IsNullOrWhiteSpace(environment.Value)) environment.Value = Shared.Environments.Production;
 
         app.Services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseNpgsql(connectionString.Value);
             options.LogTo(Log.Information, LogLevel.Information, DbContextLoggerOptions.Id | DbContextLoggerOptions.Category);
-            
+
             if (environment.Value == Shared.Environments.IntegrationTests)
             {
                 Log.Warning("PendingModelChangesWarning will be ignored");

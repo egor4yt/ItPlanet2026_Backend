@@ -1,0 +1,7 @@
+﻿dotnet ef migrations add Message --project LaunchPad.Warehouse.Infrastructure --startup-project LaunchPad.Warehouse.Api --output-dir Persistence/Migrations
+
+dotnet ef database update --project LaunchPad.Warehouse.Infrastructure --startup-project LaunchPad.Warehouse.Api
+
+dotnet ef database drop --project LaunchPad.Warehouse.Infrastructure --startup-project LaunchPad.Warehouse.Api
+
+dotnet ef migrations remove --project LaunchPad.Warehouse.Infrastructure --startup-project LaunchPad.Warehouse.Api
